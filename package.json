@@ -7,6 +7,16 @@
     "name": "stefan judis",
     "email": "stefanjudis@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Stefan Judis",
+      "email": "stefanjudis@gmail.com"
+    },
+    {
+      "name": "Christian Häringer",
+      "email": "christian@haeringer.net"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/stefan/grunt-photoBox.git"
