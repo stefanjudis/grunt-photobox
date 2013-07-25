@@ -2,7 +2,7 @@
 
 ![image](./tasks/assets/img/photoBox.png)
 
-> Plugin to prevent projects of broken layout via screenshot photo sessions.
+> Plugin to prevent your project of broken layout via screenshot photo sessions of your site.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -36,7 +36,7 @@ grunt.initConfig({
 
 PhotoBox helps you to not deploy any broken layout to production. It takes screenshots of you current site. 
 
-Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not.
+**Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not. BE ALWAYS SURE, THAT YOU HAVEN'T BROKEN LAYOUT THE EASY WAY.**
 
 
 
@@ -99,4 +99,4 @@ This will generate you 9 screenshots - each url in each size.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+0.1.0 - Initial release.
