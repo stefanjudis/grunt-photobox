@@ -99,4 +99,8 @@ This will generate you 9 screenshots - each url in each size.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+0.1.2 - fixed Photobox-image on NPM, it really has to be there. ;)
+
+0.1.1 - renamed everything from PhotoBox to Photobox, because NPM didn't like it
+
 0.1.0 - Initial release.
