@@ -1,6 +1,6 @@
 # grunt-photobox
 
-![image](./tasks/assets/img/photoBox.png)
+![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/photoBox.png)
 
 > Plugin to prevent your project of broken layout via screenshot photo sessions of your site.
 
