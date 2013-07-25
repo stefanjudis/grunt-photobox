@@ -1,7 +1,7 @@
 {
   "name": "grunt-photobox",
-  "description": "Plugin to prevent projects of broken CSS via screenshots.",
-  "version": "0.1.0",
+  "description": "Plugin to prevent your project of broken layout via screenshot photo sessions of your site.",
+  "version": "0.1.1",
   "homepage": "https://github.com/stefan/grunt-photoBox",
   "author": {
     "name": "stefan judis",
