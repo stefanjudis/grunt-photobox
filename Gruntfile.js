@@ -11,17 +11,24 @@
 module.exports = function(grunt) {
 
   // Project configuration.
-  grunt.initConfig({
+  grunt.initConfig( {
+    // Before generating any new files, remove any previously-created files.
+    clean: {
+      tests: [ 'tmp' ],
+    },
+
+
     jshint: {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<%= nodeunit.tests %>'
+        'test/**/*.js'
       ],
       options: {
         jshintrc: '.jshintrc'
       }
     },
+
 
     // Configuration to be run (and then tested).
     photoBox: {
@@ -32,25 +39,24 @@ module.exports = function(grunt) {
       }
     },
 
+
     // Unit tests.
     nodeunit: {
-      tests: ['test/*Test.js']
+      tests: ['test/**/*Test.js']
     }
-  });
+  } );
 
   // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
+  grunt.loadTasks( 'tasks' );
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+  grunt.loadNpmTasks( 'grunt-contrib-clean' );
+  grunt.loadNpmTasks( 'grunt-contrib-nodeunit' );
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['photoBox', 'nodeunit']);
+  grunt.registerTask( 'test', [ 'clean:tests', 'nodeunit' ] );
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask( 'default', [ 'jshint', 'test' ] );
 
 };
