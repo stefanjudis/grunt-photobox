@@ -19,7 +19,6 @@ var PhotoBox = function( grunt, options, callback ) {
   this.callback     = callback;
   this.emitter      = new events.EventEmitter();
   this.grunt        = grunt;
-  this.log          = grunt.log.writeln;
   this.options      = options;
   this.pictureCount = 0;
 
@@ -28,10 +27,13 @@ var PhotoBox = function( grunt, options, callback ) {
   }
 
   this.movePictures();
-  this.preparePictures();
+  this.pictures = this.getPreparedPictures();
 };
 
 
+/**
+ * Create index file.
+ */
 PhotoBox.prototype.createIndexFile = function() {
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
@@ -40,7 +42,30 @@ PhotoBox.prototype.createIndexFile = function() {
       { data : { pictures : this.pictures } }
     )
   );
+
+  this.grunt.log.ok(
+    'PhotoBox created new index.html at \'' + this.options.indexPath + '\'.'
+  );
 };
+
+
+/**
+ * Get picture array.
+ *
+ * @return {Array} Array with concatenated picture information
+ */
+PhotoBox.prototype.getPreparedPictures = function() {
+  var pictures = [];
+
+  this.options.urls.forEach( function( url ) {
+    this.options.screensizes.forEach( function( size ) {
+      pictures.push( url + '|' + size );
+    } );
+  }, this );
+
+  return pictures;
+};
+
 
 /**
  * Move current pictures to latest directory
@@ -51,7 +76,7 @@ PhotoBox.prototype.movePictures = function() {
   }
 
   if ( !this.grunt.file.exists( this.options.indexPath + '/img/current' ) ) {
-    this.log(
+    this.grunt.log.error(
       'No old pictures are existant. So there will be nothing to compare'
     );
   } else {
@@ -60,7 +85,7 @@ PhotoBox.prototype.movePictures = function() {
       this.options.indexPath + '/img/last',
       function( err ) {
         if ( err ) {
-          this.grunt.log.error();
+          this.grunt.log.error( err );
           this.grunt.verbose.error();
           this.grunt.fail.warn( 'Rename operation failed.' );
         }
@@ -70,19 +95,6 @@ PhotoBox.prototype.movePictures = function() {
 };
 
 
-/**
- * Prepare an Array containing all url concatenated
- * with needed sizes
- */
-PhotoBox.prototype.preparePictures = function() {
-  this.pictures = [];
-
-  this.options.screensizes.forEach( function( size ) {
-    this.options.urls.forEach( function( url ) {
-      this.pictures.push( url + '|' + size );
-    }, this );
-  }, this );
-};
 
 
 /**
@@ -97,6 +109,7 @@ PhotoBox.prototype.setupEmitter = function() {
  * Start a session of taking pictures
  */
 PhotoBox.prototype.startPhotoSession = function() {
+  this.grunt.log.ok( 'PhotoBox started photo session.' );
   this.setupEmitter();
 
   phantom.create( function( ph ) {
@@ -143,10 +156,12 @@ PhotoBox.prototype.takePicture = function( ph, page, picture ) {
                     '-' + width + 'x' + height +
                     '.png';
 
-    this.log( 'Opened ' + url + '!!! Got status: ' + status );
+    this.grunt.verbose.writeln( 'Opened ' + url + '!!! Got status: ' + status );
 
     page.render( imgPath, function() {
-      this.grunt.log.writeln( 'Photo of ' + url + ' taken.\n' );
+      this.grunt.log.ok(
+        'Photo of ' + url + ' in ' + width + 'x' + height + ' taken.'
+      );
 
       ++this.pictureCount;
 
@@ -164,6 +179,8 @@ PhotoBox.prototype.takePicture = function( ph, page, picture ) {
  */
 PhotoBox.prototype.tookPictureHandler = function( ph, page ) {
   if ( this.pictureCount === this.pictures.length ) {
+    this.grunt.log.ok( 'PhotoBox finished photo session successfully.' );
+
     page.close();
     ph.exit();
 

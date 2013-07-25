@@ -16,7 +16,7 @@ module.exports = function( grunt ) {
     function() {
       var done     = this.async(),
           options  = this.options( {
-            indexPath   : 'tmp/photoBox/',
+            indexPath   : 'photoBox/',
             screensizes : [ {
               width  : 400,
               height : 900
