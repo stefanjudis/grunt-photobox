@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     photoBox: {
       options: {
-        indexPath   : 'test/test/',
+        indexPath   : 'photoBox/',
         screensizes : [ '960x1200', '1200x500', '350x1200' ],
         urls        : [ 'http://google.com', 'http://4waisenkinder.de', 'http://4waisenkinder.de/blog/2013/07/07/see-how-your-project-performs-at-travis-ci/' ]
       }
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/*_test.js']
+      tests: ['test/*Test.js']
     }
   });
 
