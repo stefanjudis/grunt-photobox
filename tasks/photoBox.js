@@ -18,10 +18,10 @@ module.exports = function( grunt ) {
           options  = this.options( {
             indexPath   : 'photoBox/',
             screensizes : [ {
-              width  : 400,
+              width  : 800,
               height : 900
             } ],
-            urls        : [ 'http://google.com' ]
+            urls        : [ 'http://4waisenkinder.de' ]
           } ),
           PhotoBox = require( './lib/photoBox' ),
           pb       = new PhotoBox( grunt, options, done );
