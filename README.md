@@ -1,6 +1,6 @@
 # grunt-photoBox
 
-> Plugin to prevent projects of broken CSS via screenshots.
+> Plugin to prevent projects of broken layout via screenshot photo sessions.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -27,27 +27,34 @@ grunt.initConfig({
   photoBox: {
     options: {
       // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+    }
   },
 })
 ```
 
 ### Options
 
-#### options.separator
+#### options.indexPath
 Type: `String`
-Default value: `',  '`
+Default value: `photoBox/`
 
-A string value that is used to do something with whatever.
+A string value that is used to set the path to the generated images and **index.html**.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+Per default the ```photoBox``` will be generated and inside of that folder is the index.html to check for broken layout.
 
-A string value that is used to do something else with whatever else.
+#### options.screenSizes
+Type: `Array`
+Default value: `[ '800x600' ]`
+
+An array containing strings, that represent the wished dimensions of the pictures.
+
+E.g. **'800x600'** -> width: 800px; height: 600px;
+
+#### options.urls
+Type: `Array`
+Default value: `[ 'http://4waisenkinder.de' ]`
+
+An array containing strings, that represent the wished urls for the photosession.
 
 ### Usage Examples
 
@@ -57,11 +64,8 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   photoBox: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    options: {}
+  }
 })
 ```
 

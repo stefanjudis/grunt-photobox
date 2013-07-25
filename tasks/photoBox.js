@@ -17,10 +17,7 @@ module.exports = function( grunt ) {
       var done     = this.async(),
           options  = this.options( {
             indexPath   : 'photoBox/',
-            screenSizes : [ {
-              width  : 800,
-              height : 900
-            } ],
+            screenSizes : [ '800x600' ],
             urls        : [ 'http://4waisenkinder.de' ]
           } ),
           PhotoBox = require( './lib/photoBox' ),
