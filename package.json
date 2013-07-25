@@ -1,5 +1,5 @@
 {
-  "name": "grunt-photoBox",
+  "name": "grunt-photobox",
   "description": "Plugin to prevent projects of broken CSS via screenshots.",
   "version": "0.1.0",
   "homepage": "https://github.com/stefan/grunt-photoBox",
