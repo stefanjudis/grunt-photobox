@@ -1,5 +1,5 @@
 /*
- * grunt-photoBox
+ * grunt-photobox
  * https://github.com/stefan/grunt-photoBox
  *
  * Copyright (c) 2013 stefan judis
@@ -16,7 +16,7 @@ var events  = require( 'events' ),
 
 
 /**
- * Constructor for PhotoBox
+ * Constructor for Photobox
  *
  * @param  {Object}   grunt    grunt
  * @param  {Object}   options  plugin options
@@ -24,7 +24,7 @@ var events  = require( 'events' ),
  *
  * @tested
  */
-var PhotoBox = function( grunt, options, callback ) {
+var Photobox = function( grunt, options, callback ) {
   this.callback          = callback;
   this.emitter           = new events.EventEmitter();
   this.grunt             = grunt;
@@ -42,7 +42,7 @@ var PhotoBox = function( grunt, options, callback ) {
  *
  * @tested
  */
-PhotoBox.prototype.createIndexFile = function() {
+Photobox.prototype.createIndexFile = function() {
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
     this.grunt.template.process(
@@ -52,7 +52,7 @@ PhotoBox.prototype.createIndexFile = function() {
   );
 
   this.grunt.log.ok(
-    'PhotoBox created new index.html at \'' + this.options.indexPath + '\'.'
+    'Photobox created new index.html at \'' + this.options.indexPath + '\'.'
   );
 };
 
@@ -63,7 +63,7 @@ PhotoBox.prototype.createIndexFile = function() {
  *
  * @return {Function} callback
  */
-PhotoBox.prototype.getCallback = function() {
+Photobox.prototype.getCallback = function() {
   return this.callback;
 };
 
@@ -75,7 +75,7 @@ PhotoBox.prototype.getCallback = function() {
  *
  * @tested
  */
-PhotoBox.prototype.getIndexPath = function() {
+Photobox.prototype.getIndexPath = function() {
   var indexPath = this.options.indexPath;
 
   if ( !indexPath ) {
@@ -95,7 +95,7 @@ PhotoBox.prototype.getIndexPath = function() {
  *
  * @return {Object} options
  */
-PhotoBox.prototype.getOptions = function() {
+Photobox.prototype.getOptions = function() {
   return this.options;
 };
 
@@ -106,7 +106,7 @@ PhotoBox.prototype.getOptions = function() {
  *
  * @return {Number} pictureCount
  */
-PhotoBox.prototype.getPictureCount = function() {
+Photobox.prototype.getPictureCount = function() {
   return this.pictureCount;
 };
 
@@ -117,7 +117,7 @@ PhotoBox.prototype.getPictureCount = function() {
  *
  * @return {Array} pictures
  */
-PhotoBox.prototype.getPictures = function() {
+Photobox.prototype.getPictures = function() {
   return this.pictures || null;
 };
 
@@ -128,7 +128,7 @@ PhotoBox.prototype.getPictures = function() {
  *
  * @tested
  */
-PhotoBox.prototype.getPreparedPictures = function() {
+Photobox.prototype.getPreparedPictures = function() {
   var pictures = [];
 
   this.options.urls.forEach( function( url ) {
@@ -146,7 +146,7 @@ PhotoBox.prototype.getPreparedPictures = function() {
  *
  * @tested
  */
-PhotoBox.prototype.movePictures = function() {
+Photobox.prototype.movePictures = function() {
   if ( this.grunt.file.exists( this.options.indexPath + '/img/last' ) ) {
     this.grunt.file.delete( this.options.indexPath + '/img/last' );
   }
@@ -178,7 +178,7 @@ PhotoBox.prototype.movePictures = function() {
  * @param  {Number} count count
  * @return {Number}       new set count
  */
-PhotoBox.prototype.setPictureCount = function( count ) {
+Photobox.prototype.setPictureCount = function( count ) {
   this.pictureCount = count;
 
   return this.pictureCount;
@@ -188,7 +188,7 @@ PhotoBox.prototype.setPictureCount = function( count ) {
 /**
  * Setup the handler for 'tookPicture' event
  */
-PhotoBox.prototype.setupEmitter = function() {
+Photobox.prototype.setupEmitter = function() {
   this.emitter.on( 'tookPicture', this.tookPictureHandler.bind( this ) );
 };
 
@@ -196,8 +196,8 @@ PhotoBox.prototype.setupEmitter = function() {
 /**
  * Start a session of taking pictures
  */
-PhotoBox.prototype.startPhotoSession = function() {
-  this.grunt.log.ok( 'PhotoBox started photo session.' );
+Photobox.prototype.startPhotoSession = function() {
+  this.grunt.log.ok( 'Photobox started photo session.' );
   this.setupEmitter();
 
   phantom.create( function( ph ) {
@@ -219,7 +219,7 @@ PhotoBox.prototype.startPhotoSession = function() {
  * @param  {Object} page phantom page object
  * @param  {String} url  url to take picture of
  */
-PhotoBox.prototype.takePicture = function( ph, page, picture ) {
+Photobox.prototype.takePicture = function( ph, page, picture ) {
 
   var split  = picture.split( '|' ),
       url    = split[ 0 ],
@@ -267,9 +267,9 @@ PhotoBox.prototype.takePicture = function( ph, page, picture ) {
  *
  * @tested
  */
-PhotoBox.prototype.tookPictureHandler = function( ph, page ) {
+Photobox.prototype.tookPictureHandler = function( ph, page ) {
   if ( this.pictureCount === this.pictures.length ) {
-    this.grunt.log.ok( 'PhotoBox finished photo session successfully.' );
+    this.grunt.log.ok( 'Photobox finished photo session successfully.' );
 
     page.close();
     ph.exit();
@@ -287,4 +287,4 @@ PhotoBox.prototype.tookPictureHandler = function( ph, page ) {
 };
 
 
-module.exports = PhotoBox;
+module.exports = Photobox;

@@ -2,7 +2,7 @@
 
 var fs       = require( 'fs' ),
     grunt    = require( 'grunt' ),
-    PhotoBox = require( '../../tasks/lib/photoBox' );
+    Photobox = require( '../../tasks/lib/photobox' );
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -37,7 +37,7 @@ exports.photoBox = {
           screenSizes : [ '1000x400' ],
           urls        : [ 'http://google.com' ]
         },
-        pb         = new PhotoBox( grunt, options, cbFunction );
+        pb         = new Photobox( grunt, options, cbFunction );
 
     test.strictEqual( pb.getCallback(), cbFunction );
     test.strictEqual( pb.getOptions(), options );
@@ -55,7 +55,7 @@ exports.photoBox = {
           screenSizes : [ '1000x400' ],
           urls        : [ 'http://google.com' ]
         },
-        pb         = new PhotoBox( grunt, options, cbFunction );
+        pb         = new Photobox( grunt, options, cbFunction );
 
     pb.createIndexFile();
 
@@ -72,7 +72,7 @@ exports.photoBox = {
             screenSizes : [ '1000x400' ],
             urls        : [ 'http://google.com' ]
           },
-          pb         = new PhotoBox( grunt, options, cbFunction );
+          pb         = new Photobox( grunt, options, cbFunction );
 
       test.strictEqual( pb.getIndexPath(), 'tmp/' );
       test.done();
@@ -85,7 +85,7 @@ exports.photoBox = {
             screenSizes : [ '1000x400' ],
             urls        : [ 'http://google.com' ]
           },
-          pb         = new PhotoBox( grunt, options, cbFunction );
+          pb         = new Photobox( grunt, options, cbFunction );
 
       test.strictEqual( pb.getIndexPath(), 'tmp/' );
       test.done();
@@ -100,7 +100,7 @@ exports.photoBox = {
           screenSizes : [ '1000x400', '1200x600' ],
           urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
         },
-        pb         = new PhotoBox( grunt, options, cbFunction ),
+        pb         = new Photobox( grunt, options, cbFunction ),
         pictures;
 
     pictures = pb.getPreparedPictures();
@@ -123,7 +123,7 @@ exports.photoBox = {
             screenSizes : [ '1000x400', '1200x600' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
-          pb         = new PhotoBox( grunt, options, cbFunction );
+          pb         = new Photobox( grunt, options, cbFunction );
 
       grunt.file.write( 'tmp/img/current/test.txt', 'joooo' );
 
@@ -140,7 +140,7 @@ exports.photoBox = {
             screenSizes : [ '1000x400', '1200x600' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
-          pb         = new PhotoBox( grunt, options, cbFunction ),
+          pb         = new Photobox( grunt, options, cbFunction ),
           error      = grunt.log.error;
 
       grunt.log.error = function( msg ) {
@@ -172,7 +172,7 @@ exports.photoBox = {
           page       = {
             close : function() {}
           },
-          pb         = new PhotoBox( grunt, options, cbFunction ),
+          pb         = new Photobox( grunt, options, cbFunction ),
           ph         = {
             exit : function() {}
           };
@@ -190,7 +190,7 @@ exports.photoBox = {
           page        = {
             close : function() {}
           },
-          pb          = new PhotoBox( grunt, options, cbFunction ),
+          pb          = new Photobox( grunt, options, cbFunction ),
           ph          = {
             exit : function() {}
           },

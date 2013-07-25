@@ -19,10 +19,10 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-photobox');
 ```
 
-## The "photoBox" task
+## The "photobox" task
 
 ### Overview
-In your project's Gruntfile, add a section named `photoBox` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `photobox` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
@@ -34,7 +34,7 @@ grunt.initConfig({
 })
 ```
 
-PhotoBox helps you to not deploy any broken layout to production. It takes screenshots of you current site. 
+Photobox helps you to not deploy any broken layout to production. It takes screenshots of you current site. 
 
 **Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not. BE ALWAYS SURE, THAT YOU HAVEN'T BROKEN LAYOUT THE EASY WAY.**
 
@@ -44,11 +44,11 @@ PhotoBox helps you to not deploy any broken layout to production. It takes scree
 
 #### options.indexPath
 Type: `String`
-Default value: `photoBox/`
+Default value: `photobox/`
 
 A string value that is used to set the path to the generated images and **index.html**.
 
-Per default the ```photoBox``` will be generated and inside of that folder is the index.html to check for broken layout.
+Per default the ```photobox``` will be generated and inside of that folder is the index.html to check for broken layout.
 
 #### options.screenSizes
 Type: `Array`
@@ -67,13 +67,13 @@ An array containing strings, that represent the wished urls for the photosession
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do just show what is possible. Run ```grunt photoBox``` without any custom options and you will get a new file at ```photoBox/index.html```. 
+In this example, the default options are used to do just show what is possible. Run ```grunt photobox``` without any custom options and you will get a new file at ```photobox/index.html```. 
 
 It will consist of on screenshot for the default url ( http://4waisenkinder.de ) and the default size ( 800x600 ).
 
 ```js
 grunt.initConfig({
-  photoBox: {
+  photobox: {
     options: {}
   }
 })
@@ -84,7 +84,7 @@ Now let's customize everything for your needs.
 
 ```js
 grunt.initConfig({
-  photoBox: {
+  photobox: {
     options: {
       sizes: [ '600x900', '1000x900', '1200x900' ],
       urls:  [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]

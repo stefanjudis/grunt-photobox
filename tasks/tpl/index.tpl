@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>photoBox</title>
+  <title>photobox</title>
   <style type="text/css">
     * {
       box-sizing: border-box;
@@ -132,7 +132,7 @@
   </style>
 </head>
 <body>
-  <h1>PhotoBox</h1>
+  <h1>Photobox</h1>
   <p>Have a nice photosession with your website to guarantee that nothing is broken.</p>
   <button id="overlayImagesBtn">overlay images</button>
   <div id="main" class="">

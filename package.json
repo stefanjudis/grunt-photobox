@@ -19,15 +19,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/stefan/grunt-photoBox.git"
+    "url": "git://github.com/stefan/grunt-photobox.git"
   },
   "bugs": {
-    "url": "https://github.com/stefan/grunt-photoBox/issues"
+    "url": "https://github.com/stefan/grunt-photobox/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/stefan/grunt-photoBox/blob/master/LICENSE-MIT"
+      "url": "https://github.com/stefan/grunt-photobox/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
