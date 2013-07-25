@@ -18,6 +18,7 @@
 
       padding: 260px 1% 1% 1%;
       margin: 0 auto;
+      color: #3da1fe;
 
       text-align: center;
     }
@@ -42,6 +43,16 @@
       text-align: center;
       display: block;
       padding: 10px;
+
+      background-color: #3da1fe;
+      color: #fff;
+
+      border: 0;
+
+      cursor: pointer;
+
+      font-size: 1.5em;
+      font-weight: 800;
     }
 
     #main {
@@ -52,7 +63,11 @@
 
     .row {
       width: 100%;
-      margin: 1% 0;
+
+      padding: 1% 0;
+      margin: 2% 0;
+
+      border-bottom: 2px solid #3da1fe;
     }
 
     .col {
@@ -66,8 +81,15 @@
       width: 100%;
     }
 
+    .colContainer {
+      position: relative;
+    }
+
     .name, .size {
       text-align: center;
+      font-size: 2em;
+      font-weight: 800;
+      color: #3da1fe;
     }
 
     .name {
@@ -86,22 +108,21 @@
 
     .overlayImages .col {
       float: none;
-      width: 75%;
-    }
-
-    .overlayImages .col:nth-child(2n + 1) {
+      width: 100%;
     }
 
     .overlayImages .col:nth-child(2n) {
       position: absolute;
 
-      left: 20%;
+      left: 0;
       top: 0;
-
-      width: 60%;
     }
 
-    .overlayImages h2, .overlayImages .name, .overlayImages .size {
+    .overlayImages .colContainer, .overlayImages .name, .overlayImages .size {
+      width: 75%;
+    }
+
+    .overlayImages h2 {
       display: none;
     }
 
@@ -112,22 +133,24 @@
 </head>
 <body>
   <h1>PhotoBox</h1>
-  <p>little helper page to compare screenshots created by our friend grunt</p>
+  <p>Have a nice photosession with your website to guarantee that nothing is broken.</p>
   <button id="overlayImagesBtn">overlay images</button>
   <div id="main" class="">
     <% _.each( pictures, function( picture ) { %>
       <% var split = picture.split( '|' ); %>
-      <% var name  = split[ 0 ].replace( /(http:\/\/|https:\/\/)/, '' ); %>
+      <% var name  = split[ 0 ].replace( /(http:\/\/|https:\/\/)/, '' ).replace( /\//g, '-' ); %>
 
       <div class="row">
         <div class="name"><%= name %></div>
         <div class="size"><%= split[ 1 ] %></div>
-        <div class="col">
-          <h2>old screens</h2>
-          <img src="img/last/<%= name %>-<%= split[ 1 ] %>.png">
-        </div><div class="col">
-          <h2>new screens</h2>
-          <img src="img/current/<%= name %>-<%= split[ 1 ] %>.png">
+        <div class="colContainer">
+          <div class="col">
+            <h2>old screens</h2>
+            <img src="" data-src="img/last/<%= name %>-<%= split[ 1 ] %>.png" data-size="<%= split[ 1 ] %>">
+          </div><div class="col">
+            <h2>new screens</h2>
+            <img src="" data-src="img/current/<%= name %>-<%= split[ 1 ] %>.png" data-size="<%= split[ 1 ] %>">
+          </div>
         </div>
       </div>
     <% } );%>
@@ -137,9 +160,12 @@
   <script type="text/javascript">
   (function(){
     'use strict';
-    var mainContainer   = document.getElementById('main'),
-        btn             = document.getElementById('overlayImagesBtn'),
-        overlayCssClass = 'overlayImages';
+    var btn             = document.getElementById('overlayImagesBtn'),
+        imagesList      = document.querySelectorAll( 'img' ),
+        images          = Array.prototype.slice.call( imagesList, 0 ),
+        mainContainer   = document.getElementById('main'),
+        overlayCssClass = 'overlayImages',
+        i               = 0;
 
     var toggleOverlay = function() {
       if ( mainContainer.className === overlayCssClass ){
@@ -148,7 +174,19 @@
         mainContainer.className = overlayCssClass;
       }
     };
+
     btn.addEventListener('click', toggleOverlay, false);
+
+    function placeKitten() {
+      var size = this.dataset.size.replace( /x/, '/')
+      this.src = 'http://placekitten.com/' + size;
+    }
+
+    images.forEach( function( image ) {
+      image.onerror = placeKitten;
+      image.src = image.dataset.src;
+    } );
+
 
   })();
   </script>

@@ -153,7 +153,7 @@ PhotoBox.prototype.movePictures = function() {
 
   if ( !this.grunt.file.exists( this.options.indexPath + '/img/current' ) ) {
     this.grunt.log.error(
-      'No old pictures are existant. So there will be nothing to compare.'
+      'No old pictures are existant. So you can compare kittens with the new pictures.'
     );
   } else {
     fs.renameSync(
