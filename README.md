@@ -1,5 +1,7 @@
 # grunt-photoBox
 
+![image](./tasks/assets/img/photoBox.png)
+
 > Plugin to prevent projects of broken layout via screenshot photo sessions.
 
 ## Getting Started
@@ -32,6 +34,12 @@ grunt.initConfig({
 })
 ```
 
+PhotoBox helps you to not deploy any broken layout to production. It takes screenshots of you current site. 
+
+Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not.
+
+
+
 ### Options
 
 #### options.indexPath
@@ -59,7 +67,9 @@ An array containing strings, that represent the wished urls for the photosession
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, the default options are used to do just show what is possible. Run ```grunt photoBox``` without any custom options and you will get a new file at ```photoBox/index.html```. 
+
+It will consist of on screenshot for the default url ( http://4waisenkinder.de ) and the default size ( 800x600 ).
 
 ```js
 grunt.initConfig({
@@ -70,21 +80,20 @@ grunt.initConfig({
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+Now let's customize everything for your needs. 
 
 ```js
 grunt.initConfig({
   photoBox: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+      sizes: [ '600x900', '1000x900', '1200x900' ],
+      urls:  [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]
+    }
+  }
 })
 ```
+
+This will generate you 9 screenshots - each url in each size.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
