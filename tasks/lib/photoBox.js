@@ -132,7 +132,7 @@ PhotoBox.prototype.getPreparedPictures = function() {
   var pictures = [];
 
   this.options.urls.forEach( function( url ) {
-    this.options.screensizes.forEach( function( size ) {
+    this.options.screenSizes.forEach( function( size ) {
       pictures.push( url + '|' + size );
     } );
   }, this );
