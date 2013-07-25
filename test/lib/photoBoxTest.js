@@ -146,11 +146,11 @@ exports.photoBox = {
       grunt.log.error = function( msg ) {
         test.strictEqual(
           msg,
-          'No old pictures are existant. So there will be nothing to compare.'
+          'No old pictures are existant. So you can compare kittens with the new pictures.'
         );
 
         test.done();
-      }
+      };
 
       pb.movePictures();
 
@@ -206,7 +206,7 @@ exports.photoBox = {
         test.strictEqual( arguments[ 2 ], 'http://4waisenkinder.de|1200x600' );
 
         test.done();
-      }
+      };
 
       pb.tookPictureHandler( ph, page );
 
