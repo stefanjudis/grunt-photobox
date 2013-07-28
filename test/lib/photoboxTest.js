@@ -169,48 +169,10 @@ exports.photoBox = {
             screenSizes : [ '1000x400', '1200x600' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
-          page       = {
-            close : function() {}
-          },
-          pb         = new Photobox( grunt, options, cbFunction ),
-          ph         = {
-            exit : function() {}
-          };
+          pb = new Photobox( grunt, options, cbFunction );
 
       pb.setPictureCount( 4 );
-      pb.tookPictureHandler( ph, page );
-    },
-    notAllPicturesTaken : function( test ) {
-      var cbFunction  = function() {},
-          options     = {
-            indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
-            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
-          },
-          page        = {
-            close : function() {}
-          },
-          pb          = new Photobox( grunt, options, cbFunction ),
-          ph          = {
-            exit : function() {}
-          },
-          takePicture = pb.takePicture;
-
-      pb.setPictureCount( 3 );
-
-      pb.takePicture = function() {
-        test.strictEqual( arguments.length, 3 );
-
-        test.strictEqual( arguments[ 0 ], ph );
-        test.strictEqual( arguments[ 1 ], page );
-        test.strictEqual( arguments[ 2 ], 'http://4waisenkinder.de|1200x600' );
-
-        test.done();
-      };
-
-      pb.tookPictureHandler( ph, page );
-
-      pb.takePicture = takePicture;
+      pb.tookPictureHandler();
     }
   }
 };

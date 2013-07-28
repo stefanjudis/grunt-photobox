@@ -1,22 +1,22 @@
 /*
- * grunt-photobox
+ * grunt-photoBox
  * https://github.com/stefan/grunt-photoBox
  *
  * Copyright (c) 2013 stefan judis
  * Licensed under the MIT license.
  */
 
-var events  = require( 'events' ),
-    fs      = require( 'fs' ),
-    path    = require( 'path' ),
-    phantom = require( 'phantom' );
+var fs           = require( 'fs' ),
+    path         = require( 'path' ),
+    phantomjs    = require( 'phantomjs' ),
+    phantomPath  = phantomjs.path;
 
 
 'use strict';
 
 
 /**
- * Constructor for Photobox
+ * Constructor for PhotoBox
  *
  * @param  {Object}   grunt    grunt
  * @param  {Object}   options  plugin options
@@ -24,9 +24,8 @@ var events  = require( 'events' ),
  *
  * @tested
  */
-var Photobox = function( grunt, options, callback ) {
+var PhotoBox = function( grunt, options, callback ) {
   this.callback          = callback;
-  this.emitter           = new events.EventEmitter();
   this.grunt             = grunt;
   this.options           = options;
   this.options.indexPath = this.getIndexPath();
@@ -42,7 +41,7 @@ var Photobox = function( grunt, options, callback ) {
  *
  * @tested
  */
-Photobox.prototype.createIndexFile = function() {
+PhotoBox.prototype.createIndexFile = function() {
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
     this.grunt.template.process(
@@ -52,7 +51,7 @@ Photobox.prototype.createIndexFile = function() {
   );
 
   this.grunt.log.ok(
-    'Photobox created new index.html at \'' + this.options.indexPath + '\'.'
+    'PhotoBox created new index.html at \'' + this.options.indexPath + '\'.'
   );
 };
 
@@ -63,7 +62,7 @@ Photobox.prototype.createIndexFile = function() {
  *
  * @return {Function} callback
  */
-Photobox.prototype.getCallback = function() {
+PhotoBox.prototype.getCallback = function() {
   return this.callback;
 };
 
@@ -75,7 +74,7 @@ Photobox.prototype.getCallback = function() {
  *
  * @tested
  */
-Photobox.prototype.getIndexPath = function() {
+PhotoBox.prototype.getIndexPath = function() {
   var indexPath = this.options.indexPath;
 
   if ( !indexPath ) {
@@ -95,7 +94,7 @@ Photobox.prototype.getIndexPath = function() {
  *
  * @return {Object} options
  */
-Photobox.prototype.getOptions = function() {
+PhotoBox.prototype.getOptions = function() {
   return this.options;
 };
 
@@ -106,7 +105,7 @@ Photobox.prototype.getOptions = function() {
  *
  * @return {Number} pictureCount
  */
-Photobox.prototype.getPictureCount = function() {
+PhotoBox.prototype.getPictureCount = function() {
   return this.pictureCount;
 };
 
@@ -117,7 +116,7 @@ Photobox.prototype.getPictureCount = function() {
  *
  * @return {Array} pictures
  */
-Photobox.prototype.getPictures = function() {
+PhotoBox.prototype.getPictures = function() {
   return this.pictures || null;
 };
 
@@ -128,7 +127,7 @@ Photobox.prototype.getPictures = function() {
  *
  * @tested
  */
-Photobox.prototype.getPreparedPictures = function() {
+PhotoBox.prototype.getPreparedPictures = function() {
   var pictures = [];
 
   this.options.urls.forEach( function( url ) {
@@ -146,7 +145,7 @@ Photobox.prototype.getPreparedPictures = function() {
  *
  * @tested
  */
-Photobox.prototype.movePictures = function() {
+PhotoBox.prototype.movePictures = function() {
   if ( this.grunt.file.exists( this.options.indexPath + '/img/last' ) ) {
     this.grunt.file.delete( this.options.indexPath + '/img/last' );
   }
@@ -178,7 +177,7 @@ Photobox.prototype.movePictures = function() {
  * @param  {Number} count count
  * @return {Number}       new set count
  */
-Photobox.prototype.setPictureCount = function( count ) {
+PhotoBox.prototype.setPictureCount = function( count ) {
   this.pictureCount = count;
 
   return this.pictureCount;
@@ -186,74 +185,40 @@ Photobox.prototype.setPictureCount = function( count ) {
 
 
 /**
- * Setup the handler for 'tookPicture' event
- */
-Photobox.prototype.setupEmitter = function() {
-  this.emitter.on( 'tookPicture', this.tookPictureHandler.bind( this ) );
-};
-
-
-/**
  * Start a session of taking pictures
  */
-Photobox.prototype.startPhotoSession = function() {
-  this.grunt.log.ok( 'Photobox started photo session.' );
-  this.setupEmitter();
+PhotoBox.prototype.startPhotoSession = function() {
+  this.grunt.log.ok( 'PhotoBox started photo session.' );
 
-  phantom.create( function( ph ) {
-    ph.createPage( function( page ) {
-      this.takePicture(
-        ph,
-        page,
-        this.pictures[ this.pictureCount ]
+  this.pictures.forEach( function( picture ) {
+    this.grunt.log.ok( 'Started photo session for ' + picture );
+    this.grunt.util.spawn( {
+      cmd  : phantomPath,
+      args : [
+        path.resolve(__dirname, 'photoboxScript.js'),
+        picture,
+        this.options.indexPath
+      ]
+    }, function( err, result, code ) {
+      if ( err ) {
+        this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );
+        this.grunt.log.error( err );
+
+        return
+      }
+
+      this.grunt.log.verbose.writeln(
+        'Result for ' + picture + ' was ' + result
       );
-    }.bind( this ) );
-  }.bind( this ) );
-};
-
-
-/**
- * Action to take picture of given url
- *
- * @param  {Object} ph   general phantom object
- * @param  {Object} page phantom page object
- * @param  {String} url  url to take picture of
- */
-Photobox.prototype.takePicture = function( ph, page, picture ) {
-
-  var split  = picture.split( '|' ),
-      url    = split[ 0 ],
-      size   = split[ 1 ].split( 'x' ),
-      width  = +size[ 0 ],
-      height = +size[ 1 ];
-
-  page.set( 'viewportSize', {
-      height : height,
-      width  : width
-  } );
-
-  page.set( 'clipRect', {
-    height : height,
-    width  : width
-  } );
-
-  page.open( url, function( status ) {
-    var imgPath = this.options.indexPath +
-                    'img/current/' +
-                    url.replace( /(http:\/\/|https:\/\/)/, '').replace( /\//g, '-') +
-                    '-' + width + 'x' + height +
-                    '.png';
-
-    this.grunt.verbose.writeln( 'Opened ' + url + '!!! Got status: ' + status );
-
-    page.render( imgPath, function() {
-      this.grunt.log.ok(
-        'Photo of ' + url + ' in ' + width + 'x' + height + ' taken.'
+      this.grunt.log.verbose.writeln(
+        'Code for ' + picture + ' was ' + code
       );
+
+      this.grunt.log.ok( 'Picture of ' + picture + ' taken.' );
 
       ++this.pictureCount;
 
-      this.emitter.emit( 'tookPicture', ph, page );
+      this.tookPictureHandler();
     }.bind( this ) );
   }.bind( this ) );
 };
@@ -267,24 +232,15 @@ Photobox.prototype.takePicture = function( ph, page, picture ) {
  *
  * @tested
  */
-Photobox.prototype.tookPictureHandler = function( ph, page ) {
+PhotoBox.prototype.tookPictureHandler = function() {
   if ( this.pictureCount === this.pictures.length ) {
-    this.grunt.log.ok( 'Photobox finished photo session successfully.' );
-
-    page.close();
-    ph.exit();
+    this.grunt.log.ok( 'PhotoBox finished photo session successfully.' );
 
     this.createIndexFile();
     // call done() to exit grunt task
     this.callback();
-  } else {
-    this.takePicture(
-      ph,
-      page,
-      this.pictures[ this.pictureCount ]
-    );
   }
 };
 
 
-module.exports = Photobox;
+module.exports = PhotoBox;
