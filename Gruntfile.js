@@ -34,8 +34,8 @@ module.exports = function(grunt) {
     photobox: {
       options: {
         indexPath   : 'photobox/',
-        screenSizes : [ '960x1200', '1200x500', '350x1200' ],
-        urls        : [ 'http://google.com', 'http://4waisenkinder.de', 'http://4waisenkinder.de/blog/2013/07/07/see-how-your-project-performs-at-travis-ci/' ]
+        screenSizes : [ '960x1200', '350x1200', '1200x500' ],
+        urls        : [ 'http://google.com' ]
       }
     },
 
