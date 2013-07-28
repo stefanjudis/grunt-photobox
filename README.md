@@ -99,6 +99,8 @@ This will generate you 9 screenshots - each url in each size.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+0.2.0 - removed global phantomjs dependency
+
 0.1.4 - notice for phantom to be installed
 
 0.1.3 - minor fixes
