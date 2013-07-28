@@ -1,3 +1,11 @@
+/*
+ * grunt-photoBox
+ * https://github.com/stefan/grunt-photoBox
+ *
+ * Copyright (c) 2013 stefan judis
+ * Licensed under the MIT license.
+ */
+
 var system    = require ( 'system' ),
     webpage   = require( 'webpage' ),
     page      = webpage.create(),
