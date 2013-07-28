@@ -19,14 +19,6 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-photobox');
 ```
 
-## Important
-
-First, make sure PhantomJS is installed. This module expects the phantomjs binary to be in PATH somewhere. In other words, type this (and check if it's available):
-
-```$ phantomjs```
-
-If so, go on. ;)
-
 ## The "photobox" task
 
 ### Overview
