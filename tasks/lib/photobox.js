@@ -192,13 +192,24 @@ PhotoBox.prototype.startPhotoSession = function() {
 
   this.pictures.forEach( function( picture ) {
     this.grunt.log.ok( 'Started photo session for ' + picture );
+
+    var args = [
+      path.resolve(__dirname, 'photoboxScript.js'),
+      picture,
+      this.options.indexPath,
+      JSON.stringify( {
+        javascriptEnabled             : this.options.javascriptEnabled,
+        loadImages                    : this.options.localToRemoteUrlAccessEnabled,
+        localToRemoteUrlAccessEnabled : this.options.localToRemoteUrlAccessEnabled,
+        password                      : this.options.password,
+        userAgent                     : this.options.userAgent,
+        userName                      : this.options.userName
+      } )
+    ];
+
     this.grunt.util.spawn( {
       cmd  : phantomPath,
-      args : [
-        path.resolve(__dirname, 'photoboxScript.js'),
-        picture,
-        this.options.indexPath
-      ]
+      args : args
     }, function( err, result, code ) {
       if ( err ) {
         this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );

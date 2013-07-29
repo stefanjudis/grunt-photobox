@@ -16,9 +16,15 @@ module.exports = function( grunt ) {
     function() {
       var done     = this.async(),
           options  = this.options( {
-            indexPath   : 'photobox/',
-            screenSizes : [ '800x600' ],
-            urls        : [ 'http://4waisenkinder.de' ]
+            indexPath                     : 'photobox/',
+            javascriptEnabled             : true,
+            localToRemoteUrlAccessEnabled : true,
+            loadImages                    : true,
+            password                      : '',
+            screenSizes                   : [ '800x600' ],
+            userAgent                     : 'Photobox',
+            userName                      : '',
+            urls                          : [ 'http://4waisenkinder.de' ]
           } ),
           Photobox = require( './lib/photobox' ),
           pb       = new Photobox( grunt, options, done );
