@@ -32,18 +32,18 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     photobox : {
-      staging : {
+      waisenkinder : {
         options : {
           indexPath   : 'photobox/',
           screenSizes : [ '960x1200', '350x1200', '1200x500' ],
-          urls        : [ 'http://www-staging.natue.com.br' ]
+          urls        : [ 'http://4waisenkinder.de' ]
         }
       }
     },
 
 
     // Unit tests.
-    nodeunit : {
+    nodeunit :  {
       tests : ['test/**/*Test.js']
     }
   } );

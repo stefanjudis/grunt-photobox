@@ -27,8 +27,10 @@ In your project's Gruntfile, add a section named `photobox` to the data object p
 ```js
 grunt.initConfig({
   photobox: {
-    options: {
-      // Task-specific options go here.
+  	task : {
+      options: {
+      	// Task-specific options go here.
+      }
     }
   },
 })
