@@ -13,13 +13,13 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig( {
     // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: [ 'tmp' ],
+    clean : {
+      tests : [ 'tmp' ],
     },
 
 
-    jshint: {
-      all: [
+    jshint : {
+      all : [
         'Gruntfile.js',
         'tasks/*.js',
         'test/**/*.js'
@@ -31,18 +31,20 @@ module.exports = function(grunt) {
 
 
     // Configuration to be run (and then tested).
-    photobox: {
-      options: {
-        indexPath   : 'photobox/',
-        screenSizes : [ '960x1200', '350x1200', '1200x500' ],
-        urls        : [ 'http://google.com' ]
+    photobox : {
+      staging : {
+        options : {
+          indexPath   : 'photobox/',
+          screenSizes : [ '960x1200', '350x1200', '1200x500' ],
+          urls        : [ 'http://www-staging.natue.com.br' ]
+        }
       }
     },
 
 
     // Unit tests.
-    nodeunit: {
-      tests: ['test/**/*Test.js']
+    nodeunit : {
+      tests : ['test/**/*Test.js']
     }
   } );
 

@@ -10,7 +10,7 @@
 
 
 module.exports = function( grunt ) {
-  grunt.registerTask(
+  grunt.registerMultiTask(
     'photobox',
     'Take screenshots for different url\'s and compare them.',
     function() {
