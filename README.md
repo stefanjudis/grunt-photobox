@@ -66,6 +66,18 @@ Default value: `[ 'http://4waisenkinder.de' ]`
 
 An array containing strings, that represent the wished urls for the photosession.
 
+#### options.userName
+Type: `String`
+Default value: ``
+
+A string representing the username in case of HTTP-Authentification.
+
+#### options.password
+Type: `String`
+Default value: ``
+
+A string representing the password in case of HTTP-Authentification.
+
 ### Usage Examples
 
 #### Default Options
