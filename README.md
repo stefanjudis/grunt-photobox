@@ -40,7 +40,13 @@ Photobox helps you to not deploy any broken layout to production. It takes scree
 
 **Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not. BE ALWAYS SURE, THAT YOU HAVEN'T BROKEN LAYOUT THE EASY WAY.**
 
+#### Default representation (no diff generation but overlay option):
 
+![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/default.png)
+
+#### ImageMagick representation (generated diff):
+
+![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/imageMagick.png)
 
 ### Options
 
