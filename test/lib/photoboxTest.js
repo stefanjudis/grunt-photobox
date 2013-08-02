@@ -221,6 +221,63 @@ exports.photoBox = {
   },
 
 
+  photoSessionCallback : {
+    errorAppeared : function( test ) {
+      var options            = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000x400', '1200x600' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb                 = new Photobox( grunt, options ),
+          error              = 'dudelidoooooo',
+          errorFunction      = grunt.log.error,
+          errorMsgCount      = 0,
+          tookPictureHandler = pb.tookPictureHandler;
+
+      grunt.log.error = function() {
+        ++errorMsgCount;
+      }
+
+      pb.tookPictureHandler = function() {
+        test.strictEqual( pb.getPictureCount(), 1 );
+        test.strictEqual( errorMsgCount, 2 );
+        test.done();
+      }
+
+      pb.photoSessionCallback( error );
+
+      grunt.log.error    = errorFunction;
+      pb.tookPictureHandler = tookPictureHandler;
+    },
+    noErrorAppeared : function( test ) {
+      var options            = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000x400', '1200x600' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb                 = new Photobox( grunt, options ),
+          picture            = 'picture',
+          okFunction         = grunt.log.ok,
+          tookPictureHandler = pb.tookPictureHandler;
+
+      grunt.log.ok = function() {
+        test.strictEqual( arguments.length, 1 );
+        test.strictEqual( arguments[ 0 ], 'picture of ' + picture + ' taken.' );
+      }
+
+      pb.tookPictureHandler = function() {
+        test.strictEqual( pb.getPictureCount(), 1 );
+        test.done();
+      }
+
+      pb.photoSessionCallback( null, null, null, picture );
+
+      grunt.log.ok          = okFunction;
+      pb.tookPictureHandler = tookPictureHandler;
+    }
+  },
+
+
   tookPictureHandler : {
     allPicturesTaken : function( test ) {
       var cbFunction = function() {

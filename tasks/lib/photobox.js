@@ -339,8 +339,8 @@ PhotoBox.prototype.photoSessionCallback = function( err, result, code, picture )
   if ( err ) {
     this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );
     this.grunt.log.error( err );
-
-    return
+  } else {
+    this.grunt.log.ok( 'picture of ' + picture + ' taken.' );
   }
 
   this.grunt.log.verbose.writeln(
@@ -349,8 +349,6 @@ PhotoBox.prototype.photoSessionCallback = function( err, result, code, picture )
   this.grunt.log.verbose.writeln(
     'PhotoSessionCallback: Code for ' + picture + ' was ' + code
   );
-
-  this.grunt.log.ok( 'picture of ' + picture + ' taken.' );
 
   ++this.pictureCount;
 
