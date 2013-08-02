@@ -22,6 +22,7 @@ module.exports = function( grunt ) {
             loadImages                    : true,
             password                      : '',
             screenSizes                   : [ '800x600' ],
+            useImageMagick                : false,
             userAgent                     : 'Photobox',
             userName                      : '',
             urls                          : [ 'http://4waisenkinder.de' ]

@@ -26,13 +26,108 @@ var fs           = require( 'fs' ),
  */
 var PhotoBox = function( grunt, options, callback ) {
   this.callback          = callback;
+  this.diffCount         = 0;
   this.grunt             = grunt;
   this.options           = options;
   this.options.indexPath = this.getIndexPath();
   this.pictureCount      = 0;
+  this.template          = options.useImageMagick ? 'magic' : 'default';
 
   this.movePictures();
   this.pictures = this.getPreparedPictures();
+};
+
+
+PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
+  if ( err ) {
+    this.grunt.log.error( err );
+  }
+
+  this.grunt.log.verbose.writeln(
+    'CompareCallback: Result for ' + picture + ' was ' + result
+  );
+  this.grunt.log.verbose.writeln(
+    'CompareCallback: Code for ' + picture + ' was ' + code
+  );
+
+  var args = [
+    '-alpha',
+    'on',
+    this.options.indexPath + 'img/diff/' + picture + '-diff.png',
+    this.options.indexPath + 'img/last/' + picture + '.png',
+    this.options.indexPath + 'img/diff/' + picture + '.png'
+  ];
+
+  this.grunt.util.spawn( {
+    cmd  : 'composite',
+    args : args
+  }, function( err, code, result ) {
+    this.overlayCallback( err, code, result, picture );
+  }.bind( this ) );
+
+}
+
+
+PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
+  if ( err ) {
+    this.grunt.log.error( err );
+  } else {
+    this.grunt.log.ok( 'diff for ' + picture + ' generated.' );
+  }
+
+  this.grunt.log.verbose.writeln(
+    'OverlayCallback: Result for ' + picture + ' was ' + result
+  );
+  this.grunt.log.verbose.writeln(
+    'OverlayCallback: Code for ' + picture + ' was ' + code
+  );
+
+  ++this.diffCount;
+
+  this.tookDiffHandler();
+}
+
+
+PhotoBox.prototype.createDiffImages = function() {
+  var imgPath = this.options.indexPath + 'img/' ;
+
+  this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.')
+  this.pictures.forEach( function( picture ) {
+    picture = picture.replace( /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g, '-');
+    this.grunt.log.writeln( 'started diff for ' + picture );
+
+    var oldFileExists = this.grunt.file.exists(
+                          this.options.indexPath + 'img/last/' + picture + '.png'
+                        );
+
+    var currentFileExists = this.grunt.file.exists(
+                              this.options.indexPath + 'img/current/' + picture + '.png'
+                            );
+    if ( oldFileExists && currentFileExists ) {
+      var args = [
+        '-compose',
+        'src',
+        this.options.indexPath + 'img/current/' + picture + '.png',
+        this.options.indexPath + 'img/last/' + picture + '.png',
+        this.options.indexPath + 'img/diff/' + picture + '-diff.png'
+      ];
+
+      this.grunt.util.spawn( {
+        cmd  : 'compare',
+        args : args
+      }, function( err, result, code ) {
+        this.compareCallback( err, result, code, picture )
+      }.bind ( this ) );
+    } else {
+      this.grunt.log.error(
+        'Nothing to diff here - no old pictures available.'
+      );
+
+      ++this.diffCount;
+
+      this.tookDiffHandler();
+    }
+  }.bind( this ) );
 };
 
 
@@ -42,16 +137,17 @@ var PhotoBox = function( grunt, options, callback ) {
  * @tested
  */
 PhotoBox.prototype.createIndexFile = function() {
+  this.grunt.log.subhead( 'PHOTOBOX STARTED INDEX FILE GENERATION' );
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
     this.grunt.template.process(
-      this.grunt.file.read( path.dirname( __dirname ) + '/tpl/index.tpl'),
+      this.grunt.file.read( path.dirname( __dirname ) + '/tpl/' + this.template + '.tpl'),
       { data : { pictures : this.pictures } }
     )
   );
 
   this.grunt.log.ok(
-    'PhotoBox created new index.html at \'' + this.options.indexPath + '\'.'
+    'PHOTOBOX CREATED NEW \'index.html\' AT \'' + this.options.indexPath + '\'.'
   );
 };
 
@@ -120,6 +216,7 @@ PhotoBox.prototype.getPictures = function() {
   return this.pictures || null;
 };
 
+
 /**
  * Get prepared picture array.
  *
@@ -150,6 +247,11 @@ PhotoBox.prototype.movePictures = function() {
     this.grunt.file.delete( this.options.indexPath + '/img/last' );
   }
 
+  if ( this.grunt.file.exists( this.options.indexPath + '/img/diff' ) ) {
+    this.grunt.file.delete( this.options.indexPath + '/img/diff' );
+    this.grunt.file.mkdir( this.options.indexPath + '/img/diff' );
+  }
+
   if ( !this.grunt.file.exists( this.options.indexPath + '/img/current' ) ) {
     this.grunt.log.error(
       'No old pictures are existant. So you can compare kittens with the new pictures.'
@@ -167,6 +269,29 @@ PhotoBox.prototype.movePictures = function() {
       }
     )
   }
+};
+
+
+PhotoBox.prototype.photoSessionCallback = function( err, result, code, picture ) {
+  if ( err ) {
+    this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );
+    this.grunt.log.error( err );
+
+    return
+  }
+
+  this.grunt.log.verbose.writeln(
+    'PhotoSessionCallback: Result for ' + picture + ' was ' + result
+  );
+  this.grunt.log.verbose.writeln(
+    'PhotoSessionCallback: Code for ' + picture + ' was ' + code
+  );
+
+  this.grunt.log.ok( 'picture of ' + picture + ' taken.' );
+
+  ++this.pictureCount;
+
+  this.tookPictureHandler();
 };
 
 
@@ -188,10 +313,10 @@ PhotoBox.prototype.setPictureCount = function( count ) {
  * Start a session of taking pictures
  */
 PhotoBox.prototype.startPhotoSession = function() {
-  this.grunt.log.ok( 'PhotoBox started photo session.' );
+  this.grunt.log.subhead( 'PHOTOBOX STARTED PHOTO SESSION.' );
 
   this.pictures.forEach( function( picture ) {
-    this.grunt.log.ok( 'Started photo session for ' + picture );
+    this.grunt.log.writeln( 'started photo session for ' + picture );
 
     var args = [
       path.resolve(__dirname, 'photoboxScript.js'),
@@ -211,27 +336,20 @@ PhotoBox.prototype.startPhotoSession = function() {
       cmd  : phantomPath,
       args : args
     }, function( err, result, code ) {
-      if ( err ) {
-        this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );
-        this.grunt.log.error( err );
-
-        return
-      }
-
-      this.grunt.log.verbose.writeln(
-        'Result for ' + picture + ' was ' + result
-      );
-      this.grunt.log.verbose.writeln(
-        'Code for ' + picture + ' was ' + code
-      );
-
-      this.grunt.log.ok( 'Picture of ' + picture + ' taken.' );
-
-      ++this.pictureCount;
-
-      this.tookPictureHandler();
-    }.bind( this ) );
+      this.photoSessionCallback( err, result, code, picture );
+    }.bind( this ) )
   }.bind( this ) );
+};
+
+
+PhotoBox.prototype.tookDiffHandler = function() {
+  if ( this.diffCount === this.pictures.length ) {
+    this.grunt.log.ok( 'PHOTOBOX FINISHED DIFF GENERATION SUCCESSFULLY.' );
+
+    this.createIndexFile( 'default' );
+    // call done() to exit grunt task
+    this.callback();
+  }
 };
 
 
@@ -245,11 +363,15 @@ PhotoBox.prototype.startPhotoSession = function() {
  */
 PhotoBox.prototype.tookPictureHandler = function() {
   if ( this.pictureCount === this.pictures.length ) {
-    this.grunt.log.ok( 'PhotoBox finished photo session successfully.' );
+    this.grunt.log.ok( 'PHOTOBOX FINISHED PHOTO SESSION SUCCESSFULLY.' );
 
-    this.createIndexFile();
-    // call done() to exit grunt task
-    this.callback();
+    if ( this.options.useImageMagick ) {
+      this.createDiffImages();
+    } else {
+      this.createIndexFile();
+      // call done() to exit grunt task
+      this.callback();
+    }
   }
 };
 
