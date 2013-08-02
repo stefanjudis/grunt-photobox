@@ -34,9 +34,10 @@ module.exports = function(grunt) {
     photobox : {
       waisenkinder : {
         options : {
-          indexPath   : 'photobox/',
-          screenSizes : [ '960x1200', '350x1200', '1200x500' ],
-          urls        : [ 'http://4waisenkinder.de' ]
+          indexPath      : 'photobox/',
+          screenSizes    : [ '960x1200', '350x1200', '1200x500' ],
+          urls           : [ 'http://google.com' ],
+          useImageMagick : true
         }
       }
     },
