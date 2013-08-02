@@ -38,6 +38,14 @@ var PhotoBox = function( grunt, options, callback ) {
 };
 
 
+/**
+ * Callback for image comparision
+ *
+ * @param  {String} err     error
+ * @param  {Object} result  result
+ * @param  {Number} code    exit code
+ * @param  {String} picture name of current picture iteration
+ */
 PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
   if ( err ) {
     this.grunt.log.error( err );
@@ -68,6 +76,16 @@ PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
 }
 
 
+/**
+ * Callback for image overlay operation
+ *
+ * @param  {String} err     error
+ * @param  {Object} result  result
+ * @param  {Number} code    exit code
+ * @param  {String} picture name of current picture iteration
+ *
+ * @tested
+ */
 PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
   if ( err ) {
     this.grunt.log.error( err );
@@ -88,6 +106,9 @@ PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
 }
 
 
+/**
+ * Actuel function to create the diff images
+ */
 PhotoBox.prototype.createDiffImages = function() {
   var imgPath = this.options.indexPath + 'img/' ;
 
@@ -184,6 +205,18 @@ PhotoBox.prototype.getIndexPath = function() {
   return indexPath;
 };
 
+
+/**
+ * Getter for diffCount
+ * Mostly for testing purposes
+ *
+ * @return {Number} pictureCount
+ */
+PhotoBox.prototype.getDiffCount = function() {
+  return this.diffCount;
+};
+
+
 /**
  * Getter for options
  * Mostly for testing purposes
@@ -272,6 +305,14 @@ PhotoBox.prototype.movePictures = function() {
 };
 
 
+/**
+ * Callback after phantomjs operation
+ *
+ * @param  {String} err     error
+ * @param  {Object} result  result
+ * @param  {Number} code    exit code
+ * @param  {String} picture name of current picture iteration
+ */
 PhotoBox.prototype.photoSessionCallback = function( err, result, code, picture ) {
   if ( err ) {
     this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );
@@ -342,6 +383,9 @@ PhotoBox.prototype.startPhotoSession = function() {
 };
 
 
+/**
+ * Handler for emitted 'tookDiff'
+ */
 PhotoBox.prototype.tookDiffHandler = function() {
   if ( this.diffCount === this.pictures.length ) {
     this.grunt.log.ok( 'PHOTOBOX FINISHED DIFF GENERATION SUCCESSFULLY.' );
@@ -354,10 +398,7 @@ PhotoBox.prototype.tookDiffHandler = function() {
 
 
 /**
- * Handler for emitted event 'tookPicture'
- *
- * @param  {Object} ph   general phantom object
- * @param  {Object} page phantom page object
+ * Handler for emitted 'tookPicture'
  *
  * @tested
  */

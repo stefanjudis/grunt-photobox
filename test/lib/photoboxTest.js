@@ -159,6 +159,68 @@ exports.photoBox = {
   },
 
 
+  overlayCallback : {
+    errorAppeared : function( test ) {
+      var options         = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000x400', '1200x600' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb              = new Photobox( grunt, options ),
+          error           = 'dudelidoooooo',
+          errorFunction   = grunt.log.error,
+          tookDiffHandler = pb.tookDiffHandler;
+
+      grunt.log.error = function() {
+        test.strictEqual( arguments.length, 1);
+        test.strictEqual( arguments[ 0 ], error );
+      }
+
+      pb.tookDiffHandler = function() {
+        test.strictEqual( pb.getDiffCount(), 1 );
+
+        test.done();
+      }
+
+      pb.overlayCallback( error );
+
+      grunt.log.error    = errorFunction;
+      pb.tookDiffHandler = tookDiffHandler;
+    },
+    noErrorAppeared : function( test ) {
+      var options         = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000x400', '1200x600' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb              = new Photobox( grunt, options ),
+          error           = null,
+          okFunction      = grunt.log.ok,
+          picture         = 'picture',
+          tookDiffHandler = pb.tookDiffHandler;
+
+      grunt.log.ok = function() {
+        test.strictEqual( arguments.length, 1);
+        test.strictEqual(
+          arguments[ 0 ],
+          'diff for ' + picture + ' generated.'
+        );
+      }
+
+      pb.tookDiffHandler = function() {
+        test.strictEqual( pb.getDiffCount(), 1 );
+
+        test.done();
+      }
+
+      pb.overlayCallback( error, null, null, picture );
+
+      grunt.log.ok       = okFunction;
+      pb.tookDiffHandler = tookDiffHandler;
+    }
+  },
+
+
   tookPictureHandler : {
     allPicturesTaken : function( test ) {
       var cbFunction = function() {
