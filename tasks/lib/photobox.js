@@ -58,17 +58,9 @@ PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
     'CompareCallback: Code for ' + picture + ' was ' + code
   );
 
-  var args = [
-    '-alpha',
-    'on',
-    this.options.indexPath + 'img/diff/' + picture + '-diff.png',
-    this.options.indexPath + 'img/last/' + picture + '.png',
-    this.options.indexPath + 'img/diff/' + picture + '.png'
-  ];
-
   this.grunt.util.spawn( {
     cmd  : 'composite',
-    args : args
+    args : this.getCompositArguments( picture )
   }, function( err, code, result ) {
     this.overlayCallback( err, code, result, picture );
   }.bind( this ) );
@@ -125,20 +117,14 @@ PhotoBox.prototype.createDiffImages = function() {
                               this.options.indexPath + 'img/current/' + picture + '.png'
                             );
     if ( oldFileExists && currentFileExists ) {
-      var args = [
-        '-compose',
-        'src',
-        this.options.indexPath + 'img/current/' + picture + '.png',
-        this.options.indexPath + 'img/last/' + picture + '.png',
-        this.options.indexPath + 'img/diff/' + picture + '-diff.png'
-      ];
 
       this.grunt.util.spawn( {
         cmd  : 'compare',
-        args : args
+        args : this.getCompareArguments( picture )
       }, function( err, result, code ) {
         this.compareCallback( err, result, code, picture )
       }.bind ( this ) );
+
     } else {
       this.grunt.log.error(
         'Nothing to diff here - no old pictures available.'
@@ -203,6 +189,42 @@ PhotoBox.prototype.getIndexPath = function() {
   }
 
   return indexPath;
+};
+
+
+/**
+ * Helper function to build up the arguments
+ * array for the compare command
+ *
+ * @param  {String} picture picture
+ * @return {Array}          Array including all arguments
+ */
+PhotoBox.prototype.getCompareArguments = function( picture ) {
+  return [
+    '-compose',
+    'src',
+    this.options.indexPath + 'img/current/' + picture + '.png',
+    this.options.indexPath + 'img/last/' + picture + '.png',
+    this.options.indexPath + 'img/diff/' + picture + '-diff.png'
+  ];
+};
+
+
+/**
+ * Helper function to build up the arguments
+ * array for the composit command
+ *
+ * @param  {String} picture picture
+ * @return {Array}          Array including all arguments
+ */
+PhotoBox.prototype.getCompositArguments = function( picture ) {
+  return [
+    '-alpha',
+    'on',
+    this.options.indexPath + 'img/diff/' + picture + '-diff.png',
+    this.options.indexPath + 'img/last/' + picture + '.png',
+    this.options.indexPath + 'img/diff/' + picture + '.png'
+  ];
 };
 
 
