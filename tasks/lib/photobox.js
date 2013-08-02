@@ -298,15 +298,20 @@ PhotoBox.prototype.getPreparedPictures = function() {
  * @tested
  */
 PhotoBox.prototype.movePictures = function() {
+  // delete old images
   if ( this.grunt.file.exists( this.options.indexPath + '/img/last' ) ) {
     this.grunt.file.delete( this.options.indexPath + '/img/last' );
   }
 
+  // delete old diffs
   if ( this.grunt.file.exists( this.options.indexPath + '/img/diff' ) ) {
     this.grunt.file.delete( this.options.indexPath + '/img/diff' );
-    this.grunt.file.mkdir( this.options.indexPath + '/img/diff' );
   }
 
+  // create new diff fole - imageMagick is not able to create it on its own
+  this.grunt.file.mkdir( this.options.indexPath + '/img/diff' );
+
+  // move current picture to old pictures
   if ( !this.grunt.file.exists( this.options.indexPath + '/img/current' ) ) {
     this.grunt.log.error(
       'No old pictures are existant. So you can compare kittens with the new pictures.'
@@ -429,6 +434,10 @@ PhotoBox.prototype.tookPictureHandler = function() {
     this.grunt.log.ok( 'PHOTOBOX FINISHED PHOTO SESSION SUCCESSFULLY.' );
 
     if ( this.options.useImageMagick ) {
+      this.grunt.log.writeln(
+        '\nNOTE: You defined to use ImageMagick, make sure it is installed.'
+      );
+
       this.createDiffImages();
     } else {
       this.createIndexFile();

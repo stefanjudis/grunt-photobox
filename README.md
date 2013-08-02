@@ -78,6 +78,23 @@ Default value: ``
 
 A string representing the password in case of HTTP-Authentification.
 
+#### options.useImageMagick
+Type: `Boolean`
+Default value: false
+
+Switch on the usage of imageMagick to see the difference of old and new images even clearer.
+**make sure imageMagick and included commands are installed on your system:**
+Check the following commands in your environmant:
+
+```
+$ which compare
+/opt/local/bin/compare
+```
+```
+$ which composite
+/opt/local/bin/composite
+```
+
 ### Usage Examples
 
 #### Default Options
@@ -88,7 +105,9 @@ It will consist of on screenshot for the default url ( http://4waisenkinder.de )
 ```js
 grunt.initConfig({
   photobox: {
-    options: {}
+  	task: {
+	  options: {}
+	}
   }
 })
 ```
@@ -99,9 +118,11 @@ Now let's customize everything for your needs.
 ```js
 grunt.initConfig({
   photobox: {
-    options: {
-      sizes: [ '600x900', '1000x900', '1200x900' ],
-      urls:  [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]
+    task: {
+      options: {
+        sizes: [ '600x900', '1000x900', '1200x900' ],
+        urls:  [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]
+      }
     }
   }
 })
@@ -113,6 +134,8 @@ This will generate you 9 screenshots - each url in each size.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+0.3.0 - added imageMagick support
+
 0.2.1 - added options for userName and password, made photobox a multitask
 
 0.2.0 - removed global phantomjs dependency
