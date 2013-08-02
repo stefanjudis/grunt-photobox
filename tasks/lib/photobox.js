@@ -334,6 +334,8 @@ PhotoBox.prototype.movePictures = function() {
  * @param  {Object} result  result
  * @param  {Number} code    exit code
  * @param  {String} picture name of current picture iteration
+ *
+ * @tested
  */
 PhotoBox.prototype.photoSessionCallback = function( err, result, code, picture ) {
   if ( err ) {
