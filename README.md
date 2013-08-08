@@ -52,6 +52,7 @@ Photobox helps you to not deploy any broken layout to production. It takes scree
 
 #### options.indexPath
 Type: `String`
+
 Default value: `photobox/`
 
 A string value that is used to set the path to the generated images and **index.html**.
@@ -60,6 +61,7 @@ Per default the ```photobox``` will be generated and inside of that folder is th
 
 #### options.screenSizes
 Type: `Array`
+
 Default value: `[ '800x600' ]`
 
 An array containing strings, that represent the wished dimensions of the pictures.
@@ -68,24 +70,28 @@ E.g. **'800x600'** -> width: 800px; height: 600px;
 
 #### options.urls
 Type: `Array`
+
 Default value: `[ 'http://4waisenkinder.de' ]`
 
 An array containing strings, that represent the wished urls for the photosession.
 
 #### options.userName
 Type: `String`
+
 Default value: ``
 
 A string representing the username in case of HTTP-Authentification.
 
 #### options.password
 Type: `String`
+
 Default value: ``
 
 A string representing the password in case of HTTP-Authentification.
 
 #### options.useImageMagick
 Type: `Boolean`
+
 Default value: false
 
 Switch on the usage of imageMagick to see the difference of old and new images even clearer.
@@ -100,6 +106,13 @@ $ which compare
 $ which composite
 /opt/local/bin/composite
 ```
+
+#### options.highlightColor
+Type: `String`
+
+Default value: `crimson`
+
+If you switched on the usage of ImageMagick you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. Choose a color of this [list](http://www.imagemagick.org/script/color.php).
 
 ### Usage Examples
 
@@ -126,8 +139,8 @@ grunt.initConfig({
   photobox: {
     task: {
       options: {
-        sizes: [ '600x900', '1000x900', '1200x900' ],
-        urls:  [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]
+        screenSizes : [ '600x900', '1000x900', '1200x900' ],
+        urls        : [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]
       }
     }
   }
@@ -140,6 +153,8 @@ This will generate you 9 screenshots - each url in each size.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+0.4.0 - several bug fixes ( options handling and phantomjs system output ), included highlight color settings
+
 0.3.1 - fixed really misleading typo in readme
 
 0.3.0 - added imageMagick support

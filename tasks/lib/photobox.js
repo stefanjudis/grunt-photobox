@@ -203,6 +203,8 @@ PhotoBox.prototype.getCompareArguments = function( picture ) {
   return [
     '-compose',
     'src',
+    '-highlight-color',
+    this.options.highlightColor,
     this.options.indexPath + 'img/current/' + picture + '.png',
     this.options.indexPath + 'img/last/' + picture + '.png',
     this.options.indexPath + 'img/diff/' + picture + '-diff.png'
@@ -386,23 +388,36 @@ PhotoBox.prototype.startPhotoSession = function() {
   this.pictures.forEach( function( picture ) {
     this.grunt.log.writeln( 'started photo session for ' + picture );
 
+    this.writeOptionsFile( {
+      javascriptEnabled             : this.options.javascriptEnabled,
+      loadImages                    : this.options.localToRemoteUrlAccessEnabled,
+      localToRemoteUrlAccessEnabled : this.options.localToRemoteUrlAccessEnabled,
+      password                      : this.options.password,
+      userAgent                     : this.options.userAgent,
+      userName                      : this.options.userName
+    } );
+
     var args = [
       path.resolve(__dirname, 'photoboxScript.js'),
       picture,
       this.options.indexPath,
-      JSON.stringify( {
-        javascriptEnabled             : this.options.javascriptEnabled,
-        loadImages                    : this.options.localToRemoteUrlAccessEnabled,
-        localToRemoteUrlAccessEnabled : this.options.localToRemoteUrlAccessEnabled,
-        password                      : this.options.password,
-        userAgent                     : this.options.userAgent,
-        userName                      : this.options.userName
-      } )
+      this.options.indexPath + 'options.json'
     ];
+
+    var opts = {};
+
+    if ( this.grunt.option( 'verbose' ) ) {
+      opts = {
+        stdio: 'inherit'
+      };
+    }
+
+    this.grunt.log.verbose.writeln( 'Command: phantomjs ' + args.join( ' ' ) + '\n' );
 
     this.grunt.util.spawn( {
       cmd  : phantomPath,
-      args : args
+      args : args,
+      opts : opts
     }, function( err, result, code ) {
       this.photoSessionCallback( err, result, code, picture );
     }.bind( this ) )
@@ -445,6 +460,22 @@ PhotoBox.prototype.tookPictureHandler = function() {
       this.callback();
     }
   }
+};
+
+
+/**
+ * Write options file to pass it to
+ * phantomjs
+ * -> JSON.stringify brings only troubles
+ *     as a system argument
+ *
+ * @param  {Object} options options
+ */
+PhotoBox.prototype.writeOptionsFile = function( options ) {
+  this.grunt.file.write(
+    this.options.indexPath + 'options.json',
+    JSON.stringify( options )
+  );
 };
 
 

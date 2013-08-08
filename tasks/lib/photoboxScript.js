@@ -8,6 +8,7 @@
 
 var system        = require ( 'system' ),
     webpage       = require( 'webpage' ),
+    fs            = require( 'fs' ),
     page          = webpage.create(),
     picture       = system.args[ 1 ],
     split         = picture.split( '|' ),
@@ -16,27 +17,28 @@ var system        = require ( 'system' ),
     width         = +size[ 0 ],
     height        = +size[ 1 ],
     indexPath     = system.args[ 2 ],
-    settings      = system.args[ 3 ];
+    settings      = fs.read( indexPath + 'options.json' );
 
 if ( settings !== '{}' ) {
   try {
+    system.stderr.writeLine( 'Read settings: ' + settings );
     settings = JSON.parse( settings );
 
     page.settings = settings;
   } catch( e ) {
     console.warn( 'CONSOLE: Error parsing settings | ' + e );
+
+    phantom.exit( 1 );
   }
 }
 
 page.onError = function ( msg ) {
-    system.stderr.writeLine( msg );
-    phantom.exit();
+    system.stderr.writeLine( 'error:' + msg );
 };
 
 page.onConsoleMessage = function( msg, lineNum, sourceId ) {
-    system.stderr.writeLine('console: ' + msg, lineNum, sourceId );
+    system.stderr.writeLine( 'console: ' + msg, lineNum, sourceId );
 };
-
 
 page.viewportSize = {
     height : height,
@@ -47,7 +49,6 @@ page.clipRect = {
   height : height,
   width  : width
 };
-
 
 page.open( url, function( status ) {
   window.setTimeout( function() {
