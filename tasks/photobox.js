@@ -16,6 +16,7 @@ module.exports = function( grunt ) {
     function() {
       var done     = this.async(),
           options  = this.options( {
+            highlightColor                : 'crimson',
             indexPath                     : 'photobox/',
             javascriptEnabled             : true,
             localToRemoteUrlAccessEnabled : true,
