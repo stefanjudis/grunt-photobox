@@ -33,11 +33,11 @@ if ( settings !== '{}' ) {
 }
 
 page.onError = function ( msg ) {
-    system.stderr.writeLine( 'error:' + msg );
+    system.stderr.writeLine( 'ERROR:' + msg );
 };
 
 page.onConsoleMessage = function( msg, lineNum, sourceId ) {
-    system.stderr.writeLine( 'console: ' + msg, lineNum, sourceId );
+    system.stderr.writeLine( 'CONSOLE: ' + msg, lineNum, sourceId );
 };
 
 page.viewportSize = {

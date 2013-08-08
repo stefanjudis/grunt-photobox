@@ -347,7 +347,7 @@ PhotoBox.prototype.movePictures = function() {
 PhotoBox.prototype.photoSessionCallback = function( err, result, code, picture ) {
   if ( err ) {
     this.grunt.log.error( 'Takin\' picture of ' + picture + 'did not work correclty...' );
-    this.grunt.log.error( err );
+    this.grunt.log.writeln( err );
   } else {
     this.grunt.log.ok( 'picture of ' + picture + ' taken.' );
   }
