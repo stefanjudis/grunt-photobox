@@ -240,7 +240,7 @@ exports.photoBox = {
 
       pb.tookPictureHandler = function() {
         test.strictEqual( pb.getPictureCount(), 1 );
-        test.strictEqual( errorMsgCount, 2 );
+        test.strictEqual( errorMsgCount, 1 );
         test.done();
       }
 
