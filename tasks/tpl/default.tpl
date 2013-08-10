@@ -122,7 +122,7 @@
       width: 75%;
     }
 
-    .overlayImages h2 {
+    .overlayImages h2, .overlayImages p {
       display: none;
     }
 
@@ -146,9 +146,11 @@
         <div class="colContainer">
           <div class="col">
             <h2>old screens</h2>
+            <p><%= timestamps.last %></p>
             <img src="" data-src="img/last/<%= name %>-<%= split[ 1 ] %>.png" data-size="<%= split[ 1 ] %>">
           </div><div class="col">
             <h2>new screens</h2>
+            <p><%= timestamps.current %></p>
             <img src="" data-src="img/current/<%= name %>-<%= split[ 1 ] %>.png" data-size="<%= split[ 1 ] %>">
           </div>
         </div>

@@ -145,11 +145,15 @@ PhotoBox.prototype.createDiffImages = function() {
  */
 PhotoBox.prototype.createIndexFile = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED INDEX FILE GENERATION' );
+
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
     this.grunt.template.process(
       this.grunt.file.read( path.dirname( __dirname ) + '/tpl/' + this.template + '.tpl'),
-      { data : { pictures : this.pictures } }
+      { data : {
+        pictures   : this.pictures,
+        timestamps : this.getTimestamps()
+      } }
     )
   );
 
@@ -295,6 +299,51 @@ PhotoBox.prototype.getPreparedPictures = function() {
 
 
 /**
+ * Get timestampe for given file by reading timestamp.json file
+ *
+ * @param  {String} name name
+ * @return {String}      actual timestamp
+ *
+ * @tested
+ */
+PhotoBox.prototype.getTimestamp = function( name ) {
+  var timestampContent,
+      timestamp;
+
+  try {
+    timestampContent = this.grunt.file.read(
+                            this.options.indexPath + '/img/' + name + '/timestamp.json'
+                          ),
+
+    timestamp = JSON.parse( timestampContent ).timestamp;
+  } catch ( e ) {
+    this.grunt.log.error(
+      'Something went wrong with reading timestamp file for ' + name + ' photosession'
+    );
+
+    timestamp = 'Not available';
+  }
+
+  return timestamp;
+};
+
+
+/**
+ * Get object with current and last timestamps
+ *
+ * @return {Object} timestamps
+ *
+ * @tested
+ */
+PhotoBox.prototype.getTimestamps = function() {
+  return {
+    current : this.getTimestamp( 'current' ),
+    last    : this.getTimestamp( 'last' )
+  };
+};
+
+
+/**
  * Move current pictures to latest directory
  *
  * @tested
@@ -384,6 +433,8 @@ PhotoBox.prototype.setPictureCount = function( count ) {
  */
 PhotoBox.prototype.startPhotoSession = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED PHOTO SESSION.' );
+
+  this.writeTimestampFile();
 
   this.pictures.forEach( function( picture ) {
     this.grunt.log.writeln( 'started photo session for ' + picture );
@@ -475,6 +526,29 @@ PhotoBox.prototype.writeOptionsFile = function( options ) {
   this.grunt.file.write(
     this.options.indexPath + 'options.json',
     JSON.stringify( options )
+  );
+};
+
+
+/**
+ * Write JSON file to store timestamp
+ * of current photosession
+ *
+ * @tested
+ */
+PhotoBox.prototype.writeTimestampFile = function() {
+  var date       = new Date(),
+      dateString = date.toString();
+
+  this.grunt.file.write(
+    this.options.indexPath + '/img/current/timestamp.json',
+    JSON.stringify( {
+      timestamp: dateString
+    } )
+  );
+
+  this.grunt.log.verbose.writeln(
+    'Wrote timestamp file with ' + dateString + '.'
   );
 };
 
