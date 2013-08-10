@@ -521,6 +521,8 @@ PhotoBox.prototype.tookPictureHandler = function() {
  *     as a system argument
  *
  * @param  {Object} options options
+ *
+ * @tested
  */
 PhotoBox.prototype.writeOptionsFile = function( options ) {
   this.grunt.file.write(

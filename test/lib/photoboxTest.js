@@ -49,18 +49,26 @@ exports.photoBox = {
 
 
   createIndexFile : function( test ) {
-    var cbFunction = function() {},
-        options    = {
+    var cbFunction    = function() {},
+        options       = {
           indexPath   : 'tmp/',
           screenSizes : [ '1000x400' ],
           urls        : [ 'http://google.com' ]
         },
-        pb         = new Photobox( grunt, options, cbFunction );
+        pb            = new Photobox( grunt, options, cbFunction ),
+        getTimestamps = pb.getTimeStamps;
+
+    pb.getTimestamps = function() {
+      return {};
+    }
 
     pb.createIndexFile();
 
     test.ok( grunt.file.exists( 'tmp/index.html' ) );
     test.done();
+
+    grunt.file.delete( 'tmp/index.html' );
+    pb.getTimestamps = getTimestamps;
   },
 
 
@@ -112,6 +120,70 @@ exports.photoBox = {
     test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de|1200x600' );
 
     test.done();
+  },
+
+
+  getTimestamp : {
+    fileExists : function( test ) {
+      var timestampFilePath = './tmp/img/test/timestamp.json',
+          options           = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000x400', '1200x600' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb                = new Photobox( grunt, options );
+
+      grunt.file.write(
+        timestampFilePath,
+        JSON.stringify( { timestamp : 'someTimestamp' } )
+      );
+
+      test.strictEqual( pb.getTimestamp( 'test' ), 'someTimestamp' );
+      test.done();
+
+      grunt.file.delete(
+        timestampFilePath
+      );
+    },
+
+    fileDoesntExist : function( test ) {
+      var timestampFilePath = 'img/test/timestamp.json',
+          options           = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000x400', '1200x600' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb                = new Photobox( grunt, options );
+
+      test.strictEqual( pb.getTimestamp( 'test' ), 'Not available' );
+      test.done();
+    }
+  },
+
+
+  getTimestamps : function( test ) {
+    var options      = {
+          indexPath   : 'tmp',
+          screenSizes : [ '1000x400', '1200x600' ],
+          urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+        },
+        pb           = new Photobox( grunt, options ),
+        getTimestamp = pb.getTimestamp,
+        timestamps;
+
+    pb.getTimestamp = function( name ) {
+      return name;
+    }
+
+    timestamps = pb.getTimestamps();
+
+    test.strictEqual( typeof timestamps, 'object' );
+    test.strictEqual( timestamps.current, 'current' );
+    test.strictEqual( timestamps.last, 'last' );
+    test.strictEqual( Object.keys( timestamps ).length, 2 );
+    test.done();
+
+    pb.getTimestamp = getTimestamp;
   },
 
 
@@ -293,5 +365,56 @@ exports.photoBox = {
       pb.setPictureCount( 4 );
       pb.tookPictureHandler();
     }
+  },
+
+
+  writeOptionsFile : function( test ) {
+    var options            = {
+          indexPath   : 'tmp',
+          screenSizes : [ '1000x400' ],
+          urls        : [ 'http://google.com' ]
+        },
+        pb                 = new Photobox( grunt, options ),
+        readOptions;
+
+    pb.writeOptionsFile( options );
+
+    readOptions = JSON.parse( grunt.file.read( 'tmp/options.json' ) );
+
+    test.strictEqual( grunt.file.exists( 'tmp/options.json' ), true );
+    test.strictEqual( readOptions.indexPath, 'tmp/' );
+    test.strictEqual( readOptions.screenSizes.length, 1 );
+    test.strictEqual( readOptions.screenSizes[ 0 ], '1000x400' );
+    test.strictEqual( readOptions.urls.length, 1 );
+    test.strictEqual( readOptions.urls[ 0 ], 'http://google.com' );
+    test.done();
+
+    grunt.file.delete( 'tmp/options.json' );
+  },
+
+
+  writeTimestampFile : function( test ) {
+    var options            = {
+          indexPath   : 'tmp',
+          screenSizes : [ '1000x400', '1200x600' ],
+          urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+        },
+        pb                 = new Photobox( grunt, options );
+
+    pb.writeTimestampFile();
+
+    test.strictEqual(
+      grunt.file.exists( 'tmp/img/current/timestamp.json' ),
+      true
+    );
+    test.ok(
+      JSON.parse(
+        grunt.file.read( 'tmp/img/current/timestamp.json' )
+      ).timestamp
+    );
+
+    test.done();
+
+    grunt.file.delete( 'tmp/img/current/timestamp.json' );
   }
 };
