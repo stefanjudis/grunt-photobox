@@ -357,7 +357,7 @@ PhotoBox.prototype.movePictures = function() {
     this.grunt.file.delete( this.options.indexPath + '/img/diff' );
   }
 
-  // create new diff fole - imageMagick is not able to create it on its own
+  // create new diff folder - imageMagick is not able to create it on its own
   this.grunt.file.mkdir( this.options.indexPath + '/img/diff' );
 
   // move current picture to old pictures
