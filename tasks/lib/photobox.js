@@ -162,6 +162,32 @@ PhotoBox.prototype.createIndexFile = function() {
 
 
 /**
+ * Check if folder of given path exists
+ * and if so delete it
+ *
+ * @param  {Array|String} folder folder path(s)
+ */
+PhotoBox.prototype.deleteFolder = function( folder ) {
+  var grunt   = this.grunt,
+      options = this.options;
+
+  function deleteIt( folderPath ) {
+    if ( grunt.file.exists( options.indexPath + folder ) ) {
+      grunt.file.delete( options.indexPath + folder );
+    }
+  }
+
+  if ( folder instanceof Array ) {
+    folder.forEach( function( folderPath ) {
+      deleteIt( folderPath );
+    }.bind( this ) )
+  } else {
+    deleteIt( folderPath );
+  }
+};
+
+
+/**
  * Getter for in constructor set callback function
  * Mostly for testing purposes
  *
@@ -347,15 +373,7 @@ PhotoBox.prototype.getTimestamps = function() {
  * @tested
  */
 PhotoBox.prototype.movePictures = function() {
-  // delete old images
-  if ( this.grunt.file.exists( this.options.indexPath + '/img/last' ) ) {
-    this.grunt.file.delete( this.options.indexPath + '/img/last' );
-  }
-
-  // delete old diffs
-  if ( this.grunt.file.exists( this.options.indexPath + '/img/diff' ) ) {
-    this.grunt.file.delete( this.options.indexPath + '/img/diff' );
-  }
+  this.deleteFolder( [ '/img/last', '/img/diff' ] );
 
   // create new diff folder - imageMagick is not able to create it on its own
   this.grunt.file.mkdir( this.options.indexPath + '/img/diff' );
