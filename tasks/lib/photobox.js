@@ -180,9 +180,9 @@ PhotoBox.prototype.deleteFolder = function( folder ) {
   if ( folder instanceof Array ) {
     folder.forEach( function( folderPath ) {
       deleteIt( folderPath );
-    }.bind( this ) )
+    }.bind( this ) );
   } else {
-    deleteIt( folderPath );
+    deleteIt( folder );
   }
 };
 
