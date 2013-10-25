@@ -36,7 +36,7 @@ grunt.initConfig({
 })
 ```
 
-Photobox helps you to not deploy any broken layout to production. It takes screenshots of you current site. 
+Photobox helps you to not deploy any broken layout to production. It takes screenshots of you current site.
 
 **Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not. BE ALWAYS SURE, THAT YOU HAVEN'T BROKEN LAYOUT THE EASY WAY.**
 
@@ -57,14 +57,14 @@ Default value: `photobox/`
 
 A string value that is used to set the path to the generated images and **index.html**.
 
-Per default the ```photobox``` will be generated and inside of that folder is the index.html to check for broken layout.
+Per default a ```photobox``` folder will be generated and inside of that folder an index.html is located to check for broken layout.
 
 #### options.screenSizes
 Type: `Array`
 
 Default value: `[ '800x600' ]`
 
-An array containing strings, that represent the wished dimensions of the pictures.
+An array containing strings, that represents the wished dimensions of the pictures.
 
 E.g. **'800x600'** -> width: 800px; height: 600px;
 
@@ -73,7 +73,7 @@ Type: `Array`
 
 Default value: `[ 'http://4waisenkinder.de' ]`
 
-An array containing strings, that represent the wished urls for the photosession.
+An array containing strings, that represents the wished urls for the photosession.
 
 #### options.userName
 Type: `String`
@@ -96,7 +96,7 @@ Default value: false
 
 Switch on the usage of imageMagick to see the difference of old and new images even clearer.
 **make sure imageMagick and included commands are installed on your system:**
-Check the following commands in your environmant:
+Check the following commands in your environment:
 
 ```
 $ which compare
@@ -117,9 +117,9 @@ If you switched on the usage of ImageMagick you have got the possibility to set 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do just show what is possible. Run ```grunt photobox``` without any custom options and you will get a new file at ```photobox/index.html```. 
+In this example, the default options are used to do just show what is possible. Run ```grunt photobox``` without any custom options and you will get a new file at ```photobox/index.html```.
 
-It will consist of on screenshot for the default url ( http://4waisenkinder.de ) and the default size ( 800x600 ).
+It will consist of a screenshot for the default url ( http://4waisenkinder.de ) in the default size ( 800x600 ).
 
 ```js
 grunt.initConfig({
@@ -132,7 +132,7 @@ grunt.initConfig({
 ```
 
 #### Custom Options
-Now let's customize everything for your needs. 
+Now let's customize everything for your needs.
 
 ```js
 grunt.initConfig({
@@ -153,7 +153,7 @@ This will generate you 9 screenshots - each url in each size.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-0.4.2 - added timestamp display in templates, increased test coverage	
+0.4.2 - added timestamp display in templates, increased test coverage
 
 0.4.1 - fixes to make tests pass, I was to quick with publishing ;)
 
