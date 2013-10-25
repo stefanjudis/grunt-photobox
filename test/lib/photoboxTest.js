@@ -60,7 +60,7 @@ exports.photoBox = {
 
     pb.getTimestamps = function() {
       return {};
-    }
+    };
 
     pb.createIndexFile();
 
@@ -173,7 +173,7 @@ exports.photoBox = {
 
     pb.getTimestamp = function( name ) {
       return name;
-    }
+    };
 
     timestamps = pb.getTimestamps();
 
@@ -246,13 +246,13 @@ exports.photoBox = {
       grunt.log.error = function() {
         test.strictEqual( arguments.length, 1);
         test.strictEqual( arguments[ 0 ], error );
-      }
+      };
 
       pb.tookDiffHandler = function() {
         test.strictEqual( pb.getDiffCount(), 1 );
 
         test.done();
-      }
+      };
 
       pb.overlayCallback( error );
 
@@ -277,13 +277,13 @@ exports.photoBox = {
           arguments[ 0 ],
           'diff for ' + picture + ' generated.'
         );
-      }
+      };
 
       pb.tookDiffHandler = function() {
         test.strictEqual( pb.getDiffCount(), 1 );
 
         test.done();
-      }
+      };
 
       pb.overlayCallback( error, null, null, picture );
 
@@ -308,13 +308,13 @@ exports.photoBox = {
 
       grunt.log.error = function() {
         ++errorMsgCount;
-      }
+      };
 
       pb.tookPictureHandler = function() {
         test.strictEqual( pb.getPictureCount(), 1 );
         test.strictEqual( errorMsgCount, 1 );
         test.done();
-      }
+      };
 
       pb.photoSessionCallback( error );
 
@@ -335,12 +335,12 @@ exports.photoBox = {
       grunt.log.ok = function() {
         test.strictEqual( arguments.length, 1 );
         test.strictEqual( arguments[ 0 ], 'picture of ' + picture + ' taken.' );
-      }
+      };
 
       pb.tookPictureHandler = function() {
         test.strictEqual( pb.getPictureCount(), 1 );
         test.done();
-      }
+      };
 
       pb.photoSessionCallback( null, null, null, picture );
 

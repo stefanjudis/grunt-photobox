@@ -6,14 +6,12 @@
  * Licensed under the MIT license.
  */
 
+'use strict';
+
 var fs           = require( 'fs' ),
     path         = require( 'path' ),
     phantomjs    = require( 'phantomjs' ),
     phantomPath  = phantomjs.path;
-
-
-'use strict';
-
 
 /**
  * Constructor for PhotoBox
@@ -64,8 +62,7 @@ PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
   }, function( err, code, result ) {
     this.overlayCallback( err, code, result, picture );
   }.bind( this ) );
-
-}
+};
 
 
 /**
@@ -95,7 +92,7 @@ PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
   ++this.diffCount;
 
   this.tookDiffHandler();
-}
+};
 
 
 /**
@@ -104,7 +101,8 @@ PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
 PhotoBox.prototype.createDiffImages = function() {
   var imgPath = this.options.indexPath + 'img/' ;
 
-  this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.')
+  this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
+
   this.pictures.forEach( function( picture ) {
     picture = picture.replace( /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g, '-');
     this.grunt.log.writeln( 'started diff for ' + picture );
@@ -122,7 +120,7 @@ PhotoBox.prototype.createDiffImages = function() {
         cmd  : 'compare',
         args : this.getCompareArguments( picture )
       }, function( err, result, code ) {
-        this.compareCallback( err, result, code, picture )
+        this.compareCallback( err, result, code, picture );
       }.bind ( this ) );
 
     } else {
@@ -313,7 +311,7 @@ PhotoBox.prototype.getTimestamp = function( name ) {
   try {
     timestampContent = this.grunt.file.read(
                             this.options.indexPath + '/img/' + name + '/timestamp.json'
-                          ),
+                          );
 
     timestamp = JSON.parse( timestampContent ).timestamp;
   } catch ( e ) {
@@ -378,7 +376,7 @@ PhotoBox.prototype.movePictures = function() {
           this.grunt.fail.warn( 'Rename operation failed.' );
         }
       }
-    )
+    );
   }
 };
 
@@ -471,7 +469,7 @@ PhotoBox.prototype.startPhotoSession = function() {
       opts : opts
     }, function( err, result, code ) {
       this.photoSessionCallback( err, result, code, picture );
-    }.bind( this ) )
+    }.bind( this ) );
   }.bind( this ) );
 };
 

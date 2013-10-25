@@ -9,5 +9,9 @@
   "undef": true,
   "boss": true,
   "eqnull": true,
-  "node": true
+  "node": true,
+  "globals": {
+    "phantom": false,
+    "window": false
+  }
 }
