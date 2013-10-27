@@ -144,13 +144,32 @@ PhotoBox.prototype.createDiffImages = function() {
 PhotoBox.prototype.createIndexFile = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED INDEX FILE GENERATION' );
 
+  var templateData = this.pictures.map(
+    function( picture ) {
+      var split = picture.split('|');
+
+      return {
+        url : split[0],
+        size: split[1]
+      }
+    }
+  ).reduce( function( prev, current ) {
+    if ( !prev[ current.url ] ) {
+      prev[ current.url ] = [];
+    }
+
+    prev[ current.url ].push( current.size );
+
+    return prev;
+  }, {});
+
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
     this.grunt.template.process(
       this.grunt.file.read( path.dirname( __dirname ) + '/tpl/' + this.template + '.tpl'),
       { data : {
-        pictures   : this.pictures,
-        timestamps : this.getTimestamps()
+        templateData : templateData,
+        timestamps   : this.getTimestamps()
       } }
     )
   );
@@ -172,8 +191,8 @@ PhotoBox.prototype.deleteFolder = function( folder ) {
       options = this.options;
 
   function deleteIt( folderPath ) {
-    if ( grunt.file.exists( options.indexPath + folder ) ) {
-      grunt.file.delete( options.indexPath + folder );
+    if ( grunt.file.exists( options.indexPath + folderPath ) ) {
+      grunt.file.delete( options.indexPath + folderPath );
     }
   }
 
