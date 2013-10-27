@@ -151,7 +151,7 @@ PhotoBox.prototype.createIndexFile = function() {
       return {
         url : split[0],
         size: split[1]
-      }
+      };
     }
   ).reduce( function( prev, current ) {
     if ( !prev[ current.url ] ) {
