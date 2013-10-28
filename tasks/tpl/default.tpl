@@ -11,6 +11,10 @@
       text-decoration: none;
     }
 
+    a:hover {
+      color: #BF4F2B;
+    }
+
     body {
       font-family: Helvetica;
       font-size: 14px;
@@ -192,34 +196,6 @@
 
       background-color: #F4882D;
       box-shadow: 0 1px 1px #333;
-    }
-
-    .name a {
-      position: relative;
-    }
-
-    .name a:before {
-      content: attr(data-name);
-      position: absolute;
-
-      top: 0;
-      left: 0;
-
-      width: 0;
-      height: 100%;
-
-      overflow: hidden;
-      color: #BF4F2B;
-
-      -moz-transition: width 0.5s;
-      -webkit-transition: width 0.5s;
-      -o-transition: width 0.5s;
-      transition: width 0.5s;
-    }
-
-    .name a:hover:before {
-      width: 100%;
-      max-width: 200px;
     }
 
     .size {
