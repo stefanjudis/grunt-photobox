@@ -142,7 +142,7 @@
       float: left;
 
       color: #fff;
-      
+
     }
 
     .name {
@@ -179,14 +179,14 @@
           <div class="colContainer">
             <div class="col">
               <h2>Old screens</h2>
-              <img src="" data-src="img/last/<%= name %>-<%= size %>.png" data-size="<%= size %>">
+              <img src="" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
               <p><%= timestamps.last %></p>
             </div><div class="col">
               <h2>Difference</h2>
-              <img src="" data-src="img/diff/<%= name %>-<%= size %>.png" data-size="<%= size %>">
+              <img src="" data-src="img/diff/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
             </div><div class="col">
               <h2>New Screens</h2>
-              <img src="" data-src="img/current/<%= name %>-<%= size %>.png" data-size="<%= size %>">
+              <img src="" data-src="img/current/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
               <p><%= timestamps.current %></p>
             </div>
           </div>
