@@ -73,7 +73,7 @@ E.g. **'800x600'** -> width: 800px; height: 600px;
 #### options.urls
 Type: `Array`
 
-Default value: `[ 'http://4waisenkinder.de' ]`
+Default value: `[ 'http://google.com' ]`
 
 An array containing strings, that represents the wished urls for the photosession.
 
@@ -121,7 +121,7 @@ If you switched on the usage of ImageMagick you have got the possibility to set 
 #### Default Options
 In this example, the default options are used to do just show what is possible. Run ```grunt photobox``` without any custom options and you will get a new file at ```photobox/index.html```.
 
-It will consist of a screenshot for the default url ( http://4waisenkinder.de ) in the default size ( 800x600 ).
+It will consist of a screenshot for the default url ( http://google.com ) in the default size ( 800x600 ).
 
 ```js
 grunt.initConfig({

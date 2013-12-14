@@ -36,8 +36,7 @@ module.exports = function(grunt) {
         options : {
           indexPath      : 'photobox/',
           screenSizes    : [ '960x1200', '350x1200', '1200x500' ],
-          urls           : [ 'http://google.com' ],
-          useImageMagick : true
+          urls           : [ 'http://google.com' ]
         }
       }
     },
