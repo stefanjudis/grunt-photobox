@@ -1,3 +1,5 @@
+/* global document */
+
 /*
  * grunt-photoBox
  * https://github.com/stefan/grunt-photoBox
