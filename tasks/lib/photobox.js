@@ -66,36 +66,6 @@ PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
 
 
 /**
- * Callback for image overlay operation
- *
- * @param  {String} err     error
- * @param  {Object} result  result
- * @param  {Number} code    exit code
- * @param  {String} picture name of current picture iteration
- *
- * @tested
- */
-PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
-  if ( err ) {
-    this.grunt.log.error( err );
-  } else {
-    this.grunt.log.ok( 'diff for ' + picture + ' generated.' );
-  }
-
-  this.grunt.log.verbose.writeln(
-    'OverlayCallback: Result for ' + picture + ' was ' + result
-  );
-  this.grunt.log.verbose.writeln(
-    'OverlayCallback: Code for ' + picture + ' was ' + code
-  );
-
-  ++this.diffCount;
-
-  this.tookDiffHandler();
-};
-
-
-/**
  * Actuel function to create the diff images
  */
 PhotoBox.prototype.createDiffImages = function() {
@@ -416,6 +386,36 @@ PhotoBox.prototype.movePictures = function() {
       }
     );
   }
+};
+
+
+/**
+ * Callback for image overlay operation
+ *
+ * @param  {String} err     error
+ * @param  {Object} result  result
+ * @param  {Number} code    exit code
+ * @param  {String} picture name of current picture iteration
+ *
+ * @tested
+ */
+PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
+  if ( err ) {
+    this.grunt.log.error( err );
+  } else {
+    this.grunt.log.ok( 'diff for ' + picture + ' generated.' );
+  }
+
+  this.grunt.log.verbose.writeln(
+    'OverlayCallback: Result for ' + picture + ' was ' + result
+  );
+  this.grunt.log.verbose.writeln(
+    'OverlayCallback: Code for ' + picture + ' was ' + code
+  );
+
+  ++this.diffCount;
+
+  this.tookDiffHandler();
 };
 
 
