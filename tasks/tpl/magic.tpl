@@ -7,12 +7,38 @@
     }
 
     a {
+      position: relative;
       color: #fff;
       text-decoration: none;
     }
 
-    a:hover {
+    a:before {
+      content: attr(data-name);
+      position: absolute;
+
       color: #BF4F2B;
+
+      text-overflow: clip;
+      white-space: nowrap;
+      text-align: left;
+      text-shadow: 0 1px 1px #000;
+
+      width: 0;
+      height: 105%;
+
+      left: 0;
+      top: 0;
+
+      overflow: hidden;
+
+      -moz-transition:    width 0.5s ease-in;
+      -webkit-transition: width 0.5s ease-in;
+      -o-transition:      width 0.5s ease-in;
+      transition:         width 0.5s ease-in;
+    }
+
+    a:hover:before {
+      width: 100%;
     }
 
     body {
@@ -142,7 +168,7 @@
       float: left;
 
       color: #fff;
-      
+
     }
 
     .name {
