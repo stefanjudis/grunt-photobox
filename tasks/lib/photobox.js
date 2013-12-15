@@ -74,7 +74,10 @@ PhotoBox.prototype.createDiffImages = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
 
   this.pictures.forEach( function( picture ) {
-    picture = picture.replace( /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g, '-');
+    picture = picture.replace(
+      /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g,
+      '-'
+    );
     this.grunt.log.writeln( 'started diff for ' + picture );
 
     var oldFileExists = this.grunt.file.exists(
