@@ -61,14 +61,16 @@ A string value that is used to set the path to the generated images and **index.
 
 Per default a ```photobox``` folder will be generated and inside of that folder an index.html is located to check for broken layout.
 
-#### options.screenSizes
+#### options.screenSizes !changed since version 0.5.0
 Type: `Array`
 
-Default value: `[ '800x600' ]`
+Default value: `[ '800' ]`
 
-An array containing strings, that represents the wished dimensions of the pictures.
+An array containing strings, that represents the wished width of the taken pictures. The height will be calculated automatically depending on the given site.
 
-E.g. **'800x600'** -> width: 800px; height: 600px;
+E.g. **'800'** -> width: 800px;
+
+**NOTE: Values like '800x600' are deprecated since version 0.5.0.**
 
 #### options.urls
 Type: `Array`
@@ -102,26 +104,28 @@ Check the following commands in your environment:
 
 ```
 $ which compare
-/opt/local/bin/compare
+/opt/local/bin/convert
 ```
 ```
 $ which composite
 /opt/local/bin/composite
 ```
 
-#### options.highlightColor
+#### options.highlightColor !deprecated since version 0.5.0
 Type: `String`
 
 Default value: `crimson`
 
 If you switched on the usage of ImageMagick you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. Choose a color of this [list](http://www.imagemagick.org/script/color.php).
 
+**NOTE: This option is not suported anymore since version 0.5.0.**
+
 ### Usage Examples
 
 #### Default Options
 In this example, the default options are used to do just show what is possible. Run ```grunt photobox``` without any custom options and you will get a new file at ```photobox/index.html```.
 
-It will consist of a screenshot for the default url ( http://google.com ) in the default size ( 800x600 ).
+It will consist of a screenshot for the default url ( http://google.com ) in the default width 800px.
 
 ```js
 grunt.initConfig({
@@ -141,7 +145,7 @@ grunt.initConfig({
   photobox: {
     task: {
       options: {
-        screenSizes : [ '600x900', '1000x900', '1200x900' ],
+        screenSizes : [ '600', '1000', '1200' ],
         urls        : [ 'http://yoursite.com', 'http://yoursite.com/blog', 'http://yoursite.com/catalog' ]
       }
     }

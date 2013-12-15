@@ -4,26 +4,6 @@ var fs       = require( 'fs' ),
     grunt    = require( 'grunt' ),
     Photobox = require( '../../tasks/lib/photobox' );
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
-
 exports.photoBox = {
   setUp : function( done ) {
     // setup here if necessary
@@ -34,7 +14,7 @@ exports.photoBox = {
     var cbFunction = function() {},
         options    = {
           indexPath   : 'tmp/',
-          screenSizes : [ '1000x400' ],
+          screenSizes : [ '1000' ],
           urls        : [ 'http://google.com' ]
         },
         pb         = new Photobox( grunt, options, cbFunction );
@@ -52,7 +32,7 @@ exports.photoBox = {
     var cbFunction    = function() {},
         options       = {
           indexPath   : 'tmp/',
-          screenSizes : [ '1000x400' ],
+          screenSizes : [ '1000' ],
           urls        : [ 'http://google.com' ]
         },
         pb            = new Photobox( grunt, options, cbFunction ),
@@ -77,7 +57,7 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp/',
-            screenSizes : [ '1000x400' ],
+            screenSizes : [ '1000' ],
             urls        : [ 'http://google.com' ]
           },
           pb         = new Photobox( grunt, options, cbFunction );
@@ -90,7 +70,7 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400' ],
+            screenSizes : [ '1000' ],
             urls        : [ 'http://google.com' ]
           },
           pb         = new Photobox( grunt, options, cbFunction );
@@ -101,25 +81,34 @@ exports.photoBox = {
   },
 
 
-  getPreparedPictures : function( test ) {
-    var cbFunction = function() {},
-        options    = {
-          indexPath   : 'tmp',
-          screenSizes : [ '1000x400', '1200x600' ],
-          urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
-        },
-        pb         = new Photobox( grunt, options, cbFunction ),
-        pictures;
+  getPreparedPictures : {
+    correctFormat : function( test ) {
+      var cbFunction = function() {},
+          options    = {
+            indexPath   : 'tmp',
+            screenSizes : [ '1000', '1200' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb         = new Photobox( grunt, options, cbFunction ),
+          pictures;
 
-    pictures = pb.getPreparedPictures();
+      pictures = pb.getPreparedPictures();
 
-    test.strictEqual( pictures.length, 4 );
-    test.strictEqual( pictures[ 0 ], 'http://google.com|1000x400' );
-    test.strictEqual( pictures[ 1 ], 'http://google.com|1200x600' );
-    test.strictEqual( pictures[ 2 ], 'http://4waisenkinder.de|1000x400' );
-    test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de|1200x600' );
+      test.strictEqual( pictures.length, 4 );
+      test.strictEqual( pictures[ 0 ], 'http://google.com|1000' );
+      test.strictEqual( pictures[ 1 ], 'http://google.com|1200' );
+      test.strictEqual( pictures[ 2 ], 'http://4waisenkinder.de|1000' );
+      test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de|1200' );
 
-    test.done();
+      test.done();
+    },
+    // TODO really tried to test the
+    // grunt.fatal call but was not able to... :(
+    //
+    // Suggestions are really welcome
+    incorrectFormat : function( test ) {
+      test.done();
+    }
   },
 
 
@@ -128,7 +117,7 @@ exports.photoBox = {
       var timestampFilePath = './tmp/img/test/timestamp.json',
           options           = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb                = new Photobox( grunt, options );
@@ -145,12 +134,11 @@ exports.photoBox = {
         timestampFilePath
       );
     },
-
     fileDoesntExist : function( test ) {
       var timestampFilePath = 'img/test/timestamp.json',
           options           = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb                = new Photobox( grunt, options );
@@ -164,7 +152,7 @@ exports.photoBox = {
   getTimestamps : function( test ) {
     var options      = {
           indexPath   : 'tmp',
-          screenSizes : [ '1000x400', '1200x600' ],
+          screenSizes : [ '1000', '1200' ],
           urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
         },
         pb           = new Photobox( grunt, options ),
@@ -192,7 +180,7 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb         = new Photobox( grunt, options, cbFunction );
@@ -209,7 +197,7 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb         = new Photobox( grunt, options, cbFunction ),
@@ -235,7 +223,7 @@ exports.photoBox = {
     errorAppeared : function( test ) {
       var options         = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb              = new Photobox( grunt, options ),
@@ -262,7 +250,7 @@ exports.photoBox = {
     noErrorAppeared : function( test ) {
       var options         = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb              = new Photobox( grunt, options ),
@@ -297,7 +285,7 @@ exports.photoBox = {
     errorAppeared : function( test ) {
       var options            = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb                 = new Photobox( grunt, options ),
@@ -324,7 +312,7 @@ exports.photoBox = {
     noErrorAppeared : function( test ) {
       var options            = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb                 = new Photobox( grunt, options ),
@@ -357,7 +345,7 @@ exports.photoBox = {
           },
           options    = {
             indexPath   : 'tmp',
-            screenSizes : [ '1000x400', '1200x600' ],
+            screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb = new Photobox( grunt, options, cbFunction );
@@ -371,7 +359,7 @@ exports.photoBox = {
   writeOptionsFile : function( test ) {
     var options            = {
           indexPath   : 'tmp',
-          screenSizes : [ '1000x400' ],
+          screenSizes : [ '1000' ],
           urls        : [ 'http://google.com' ]
         },
         pb                 = new Photobox( grunt, options ),
@@ -384,7 +372,7 @@ exports.photoBox = {
     test.strictEqual( grunt.file.exists( 'tmp/options.json' ), true );
     test.strictEqual( readOptions.indexPath, 'tmp/' );
     test.strictEqual( readOptions.screenSizes.length, 1 );
-    test.strictEqual( readOptions.screenSizes[ 0 ], '1000x400' );
+    test.strictEqual( readOptions.screenSizes[ 0 ], '1000' );
     test.strictEqual( readOptions.urls.length, 1 );
     test.strictEqual( readOptions.urls[ 0 ], 'http://google.com' );
     test.done();
@@ -396,7 +384,7 @@ exports.photoBox = {
   writeTimestampFile : function( test ) {
     var options            = {
           indexPath   : 'tmp',
-          screenSizes : [ '1000x400', '1200x600' ],
+          screenSizes : [ '1000', '1200' ],
           urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
         },
         pb                 = new Photobox( grunt, options );

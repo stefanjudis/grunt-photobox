@@ -44,7 +44,7 @@ var PhotoBox = function( grunt, options, callback ) {
  * @param  {Number} code    exit code
  * @param  {String} picture name of current picture iteration
  */
-PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
+PhotoBox.prototype.compositeCallback = function( err, result, code, picture ) {
   if ( err ) {
     this.grunt.log.error( err );
   }
@@ -57,41 +57,11 @@ PhotoBox.prototype.compareCallback = function( err, result, code, picture ) {
   );
 
   this.grunt.util.spawn( {
-    cmd  : 'composite',
-    args : this.getCompositArguments( picture )
+    cmd  : 'convert',
+    args : this.getConvertArguments( picture )
   }, function( err, code, result ) {
     this.overlayCallback( err, code, result, picture );
   }.bind( this ) );
-};
-
-
-/**
- * Callback for image overlay operation
- *
- * @param  {String} err     error
- * @param  {Object} result  result
- * @param  {Number} code    exit code
- * @param  {String} picture name of current picture iteration
- *
- * @tested
- */
-PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
-  if ( err ) {
-    this.grunt.log.error( err );
-  } else {
-    this.grunt.log.ok( 'diff for ' + picture + ' generated.' );
-  }
-
-  this.grunt.log.verbose.writeln(
-    'OverlayCallback: Result for ' + picture + ' was ' + result
-  );
-  this.grunt.log.verbose.writeln(
-    'OverlayCallback: Code for ' + picture + ' was ' + code
-  );
-
-  ++this.diffCount;
-
-  this.tookDiffHandler();
 };
 
 
@@ -104,7 +74,10 @@ PhotoBox.prototype.createDiffImages = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
 
   this.pictures.forEach( function( picture ) {
-    picture = picture.replace( /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g, '-');
+    picture = picture.replace(
+      /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g,
+      '-'
+    );
     this.grunt.log.writeln( 'started diff for ' + picture );
 
     var oldFileExists = this.grunt.file.exists(
@@ -117,10 +90,10 @@ PhotoBox.prototype.createDiffImages = function() {
     if ( oldFileExists && currentFileExists ) {
 
       this.grunt.util.spawn( {
-        cmd  : 'compare',
-        args : this.getCompareArguments( picture )
+        cmd  : 'composite',
+        args : this.getCompositeArguments( picture )
       }, function( err, result, code ) {
-        this.compareCallback( err, result, code, picture );
+        this.compositeCallback( err, result, code, picture );
       }.bind ( this ) );
 
     } else {
@@ -242,19 +215,17 @@ PhotoBox.prototype.getIndexPath = function() {
 
 /**
  * Helper function to build up the arguments
- * array for the compare command
+ * array for the composite command
  *
  * @param  {String} picture picture
  * @return {Array}          Array including all arguments
  */
-PhotoBox.prototype.getCompareArguments = function( picture ) {
+PhotoBox.prototype.getCompositeArguments = function( picture ) {
   return [
-    '-compose',
-    'src',
-    '-highlight-color',
-    this.options.highlightColor,
     this.options.indexPath + 'img/current/' + picture + '.png',
     this.options.indexPath + 'img/last/' + picture + '.png',
+    '-compose',
+    'difference',
     this.options.indexPath + 'img/diff/' + picture + '-diff.png'
   ];
 };
@@ -262,17 +233,15 @@ PhotoBox.prototype.getCompareArguments = function( picture ) {
 
 /**
  * Helper function to build up the arguments
- * array for the composit command
+ * array for the convert command
  *
  * @param  {String} picture picture
  * @return {Array}          Array including all arguments
  */
-PhotoBox.prototype.getCompositArguments = function( picture ) {
+PhotoBox.prototype.getConvertArguments = function( picture ) {
   return [
-    '-alpha',
-    'on',
+    '-negate',
     this.options.indexPath + 'img/diff/' + picture + '-diff.png',
-    this.options.indexPath + 'img/last/' + picture + '.png',
     this.options.indexPath + 'img/diff/' + picture + '.png'
   ];
 };
@@ -335,7 +304,17 @@ PhotoBox.prototype.getPreparedPictures = function() {
   this.options.urls.forEach( function( url ) {
     this.options.screenSizes.forEach( function( size ) {
       pictures.push( url + '|' + size );
-    } );
+
+      if ( size.match( /x/gi ) ) {
+        this.grunt.log.warn(
+          '\nYay!!! You updated to version 0.5.0., which includes the feature of flexible height screenshots.\n' +
+          'Unfortunately the cleanest solution was to make version 0.4.x incompatible with version 0.5.0.\n' +
+          'Please check documentation how to configure \'screenSizes\' options in version 0.5.0 and later.\n\n' +
+          '--> https://github.com/stefanjudis/grunt-photobox\n'
+        );
+        this.grunt.fatal( 'Sorry have to quit. :(' );
+      }
+    }, this );
   }, this );
 
   return pictures;
@@ -416,6 +395,36 @@ PhotoBox.prototype.movePictures = function() {
       }
     );
   }
+};
+
+
+/**
+ * Callback for image overlay operation
+ *
+ * @param  {String} err     error
+ * @param  {Object} result  result
+ * @param  {Number} code    exit code
+ * @param  {String} picture name of current picture iteration
+ *
+ * @tested
+ */
+PhotoBox.prototype.overlayCallback = function( err, result, code, picture ) {
+  if ( err ) {
+    this.grunt.log.error( err );
+  } else {
+    this.grunt.log.ok( 'diff for ' + picture + ' generated.' );
+  }
+
+  this.grunt.log.verbose.writeln(
+    'OverlayCallback: Result for ' + picture + ' was ' + result
+  );
+  this.grunt.log.verbose.writeln(
+    'OverlayCallback: Code for ' + picture + ' was ' + code
+  );
+
+  ++this.diffCount;
+
+  this.tookDiffHandler();
 };
 
 
