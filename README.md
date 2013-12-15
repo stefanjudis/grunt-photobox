@@ -118,7 +118,7 @@ Default value: `crimson`
 
 If you switched on the usage of ImageMagick you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. Choose a color of this [list](http://www.imagemagick.org/script/color.php).
 
-**NOTE: This option is not suported anymore since version 0.5.0.**
+**NOTE: This option is not supported anymore since version 0.5.0.**
 
 ### Usage Examples
 
