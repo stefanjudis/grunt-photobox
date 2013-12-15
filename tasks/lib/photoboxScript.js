@@ -74,5 +74,5 @@ page.open( url, function( status ) {
     page.render( imgPath );
 
     phantom.exit();
-  }, 500 );
+  }, 1000 );
 } );
