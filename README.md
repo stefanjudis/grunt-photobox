@@ -103,7 +103,7 @@ Switch on the usage of imageMagick to see the difference of old and new images e
 Check the following commands in your environment:
 
 ```
-$ which compare
+$ which covert
 /opt/local/bin/convert
 ```
 ```
