@@ -66,7 +66,7 @@ Type: `Array`
 
 Default value: `[ '800' ]`
 
-An array containing strings, that represents the wished width of the taken pictures. The height will be calculated automatically depending on the given site.
+An array containing strings, that represents the wished width in pixels of the taken pictures. The height will be calculated automatically depending on the given site.
 
 E.g. **'800'** -> width: 800px;
 
