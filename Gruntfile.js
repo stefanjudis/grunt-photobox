@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         options : {
           indexPath      : 'photobox/',
           screenSizes    : [ '960', '350', '1200' ],
-          urls           : [ 'http://google.com' ]
+          urls           : [ 'http://www.theguardian.com/' ]
         }
       }
     },
