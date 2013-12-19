@@ -29,7 +29,7 @@ var PhotoBox = function( grunt, options, callback ) {
   this.options           = options;
   this.options.indexPath = this.getIndexPath();
   this.pictureCount      = 0;
-  this.template          = options.useImageMagick ? 'magic' : 'default';
+  this.template          = 'canvas'; //options.useImageMagick ? 'magic' : 'default';
 
   this.movePictures();
   this.pictures = this.getPreparedPictures();
