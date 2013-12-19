@@ -551,6 +551,14 @@ PhotoBox.prototype.tookPictureHandler = function() {
 
       this.createDiffImages();
     } else {
+
+      // copy worker to photobox folder
+      //grunt.file.copy( srcpath, destpath );
+      this.grunt.file.copy(
+          path.dirname( __dirname ) + '/assets/scripts/worker.js',
+          this.options.indexPath + '/scripts/worker.js'
+        );
+
       this.createIndexFile();
       // call done() to exit grunt task
       this.callback();
