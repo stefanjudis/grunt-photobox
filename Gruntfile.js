@@ -35,6 +35,7 @@ module.exports = function(grunt) {
       waisenkinder : {
         options : {
           indexPath      : 'photobox/',
+          template       : 'canvas', // 'magic' | 'default' | 'canvas'
           screenSizes    : [ '960', '350', '1200' ],
           urls           : [ 'http://www.theguardian.com/' ]
         }
