@@ -243,6 +243,14 @@
     } );
 
 
+    /**
+     * prepareDiff inits the canvas for the DIFF and
+     * sends image data to the worker
+     *
+     * @param  {Object} imgA a imgDOM element
+     * @param  {Object} imgB a img DOM element
+     * @param  {Object} cnvs a canvas DOM element
+     */
     function prepareDiff( imgA, imgB, cnvs ) {
       'use strict';
 
