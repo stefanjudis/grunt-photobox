@@ -227,7 +227,6 @@
     'use strict';
     var imagesList      = document.querySelectorAll( 'img' ),
         images          = Array.prototype.slice.call( imagesList, 0 ),
-
         lastImages,
         currentImages,
         canvasList;
@@ -257,47 +256,40 @@
       // get the real image dimensions
       var dummyImage = new Image();
       dummyImage.src = imgA.src;
-
-      cnvs.width = dummyImage.width;
-      cnvs.height = dummyImage.height;
+      cnvs.width     = dummyImage.width;
+      cnvs.height    = dummyImage.height;
 
       var ctx = cnvs.getContext('2d');
       ctx.drawImage( imgA , 0, 0 );
 
-
-      var pixelsA = ctx.getImageData(0, 0, dummyImage.width, dummyImage.height);
+      var pixelsA = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       ctx.globalAlpha = 0.5;
       ctx.drawImage( imgB, 0, 0 );
-      var pixelsB = ctx.getImageData(0, 0, dummyImage.width, dummyImage.height);
+      var pixelsB = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       var data = {
-        a: pixelsA,
-        b: pixelsB,
+        a     : pixelsA,
+        b     : pixelsB,
         config: {
           higlightcolor : '#fff000',
           threshold     : 10
         }
       };
 
-      var worker = new Worker('scripts/worker.js');
-
-      console.time('diff time');
-
+      var worker = new Worker( 'scripts/worker.js' );
       worker.postMessage( data );
-
-      worker.addEventListener('message', function(e) {
+      worker.addEventListener('message', function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0);
         console.warn('Found ', e.data.amount, 'different pixels' );
-        console.timeEnd('diff time');
       }, false);
 
     }
 
     window.addEventListener( 'load' , function() {
-      lastImages = document.querySelectorAll( '.last' );
+      lastImages    = document.querySelectorAll( '.last' );
       currentImages = document.querySelectorAll( '.current' );
-      canvasList = document.querySelectorAll( 'canvas' );
+      canvasList    = document.querySelectorAll( 'canvas' );
 
       for (var i = lastImages.length - 1; i >= 0; i--) {
         prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ] );

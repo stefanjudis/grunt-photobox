@@ -10,9 +10,9 @@ function getHighlightColor( hexValue ) {
   if ( /^#([A-Fa-f0-9]{6})$/.test( hexValue ) ) {
     // @link http://stackoverflow.com/questions/4262417/jquery-hex-to-rgb-calculation-different-between-browsers
     var hex = parseInt(hexValue.substring(1), 16),
-        r = (hex & 0xff0000) >> 16,
-        g = (hex & 0x00ff00) >> 8,
-        b = hex & 0x0000ff;
+        r   = (hex & 0xff0000) >> 16,
+        g   = (hex & 0x00ff00) >> 8,
+        b   = hex & 0x0000ff;
 
     return [r, g, b];
   } else {
@@ -33,11 +33,11 @@ function getHighlightColor( hexValue ) {
 function diff( pixelsA, pixelsB, config ) {
   'use strict';
 
-  var pixelsC = pixelsA,
-      length = pixelsA.data.length,
+  var pixelsC    = pixelsA,
+      length     = pixelsA.data.length,
       diffAmount = 0,
-      threshold = ~~config.threshold,
-      color = getHighlightColor ( config.higlightcolor ),
+      threshold  = ~~config.threshold,
+      color      = getHighlightColor ( config.higlightcolor ),
       i;
 
 
@@ -56,7 +56,7 @@ function diff( pixelsA, pixelsB, config ) {
   }
 
   var diffResult = {
-    amount : diffAmount,
+    amount    : diffAmount,
     imageData : pixelsC
   };
 
@@ -66,7 +66,7 @@ function diff( pixelsA, pixelsB, config ) {
 
 var onmessage = function( event ) {
   'use strict';
-  var data = event.data;
+  var data   = event.data;
   var result = diff( data.a, data.b, data.config );
   postMessage( result );
 };
