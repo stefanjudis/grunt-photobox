@@ -101,8 +101,8 @@ Default value: `canvas`
 A string value that is used to set the template to display your screenshots.
 Possible values:
 - 'default' -> uses css overlay to compare screenshots. use this template, if imageMagick is not installed on your system and canvas is not an option for you.
-- 'canvas'  -> uses canvas to show differences in screenshots
-- 'magic'   -> uses imageMagick to
+- 'canvas'  -> uses canvas to show differences in screenshots.
+- 'magic'   -> uses imageMagick to show the difference of old and new screenshots.
 
 #### options.useImageMagick !deprecated since version 0.6.0
 Type: `Boolean`
