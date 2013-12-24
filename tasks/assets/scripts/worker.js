@@ -47,7 +47,7 @@ function diff( pixelsA, pixelsB, config ) {
       length     = pixelsA.data.length,
       diffAmount = 0,
       threshold  = ~~config.threshold,
-      color      = getHighlightColor ( config.higlightcolor ),
+      color      = getHighlightColor ( config.higlightColor ),
       i;
 
 

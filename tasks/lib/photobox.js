@@ -136,12 +136,14 @@ PhotoBox.prototype.createIndexFile = function() {
     return prev;
   }, {});
 
+
   this.grunt.file.write(
     this.options.indexPath + 'index.html',
     this.grunt.template.process(
-      this.grunt.file.read( path.dirname( __dirname ) + '/tpl/' + this.template + '.tpl'),
+      this.grunt.file.read( path.dirname( __dirname ) + '/tpl/' + this.template + '.tpl' ),
       { data : {
         now          : + new Date(),
+        options      : this.options,
         templateData : templateData,
         timestamps   : this.getTimestamps()
       } }

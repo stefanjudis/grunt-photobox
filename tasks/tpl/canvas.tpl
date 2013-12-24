@@ -275,7 +275,7 @@
         a     : pixelsA,
         b     : pixelsB,
         config: {
-          higlightcolor : '#fff000',
+          higlightColor : '<%= options.highlightColor %>',
           threshold     : 10
         }
       };
@@ -285,7 +285,7 @@
       worker.postMessage( data );
       worker.addEventListener( 'message', function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0 );
-        console.warn('Found ', e.data.amount, 'different pixels' );
+        console.warn( 'Found ', e.data.amount, 'different pixels' );
       }, false);
 
     }

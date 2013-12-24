@@ -35,10 +35,10 @@ module.exports = function(grunt) {
       waisenkinder : {
         options : {
           indexPath      : 'photobox/',
-
+          highlightColor : '#0000ff',
           screenSizes    : [ '960', '350', '1200' ],
           template       : 'canvas',
-          urls           : [ 'http://www.theguardian.com/' ]
+          urls           : [ 'http://4waisenkinder.de' ]
         }
       }
     },
