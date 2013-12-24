@@ -46,7 +46,7 @@ Photobox helps you to not deploy any broken layout to production. It takes scree
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/default.png)
 
-#### ImageMagick representation (generated diff):
+#### ImageMagick anc Canvas representation (generated diff):
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/imageMagick.png)
 
@@ -65,6 +65,8 @@ Per default a ```photobox``` folder will be generated and inside of that folder 
 Type: `Array`
 
 Default value: `[ '800' ]`
+
+**NOTE: Values like '800x600' are deprecated since version 0.5.0.**
 
 An array containing strings, that represents the wished width in pixels of the taken pictures. The height will be calculated automatically depending on the given site.
 
@@ -100,14 +102,17 @@ Default value: `canvas`
 
 A string value that is used to set the template to display your screenshots.
 Possible values:
-- 'default' -> uses css overlay to compare screenshots. use this template, if imageMagick is not installed on your system and canvas is not an option for you.
-- 'canvas'  -> uses canvas to show differences in screenshots.
-- 'magic'   -> uses imageMagick to show the difference of old and new screenshots.
+
+- `default` -> uses CSS overlays to compare screenshots. Use this template, if ImageMagick is not installed on your system and Canvas is not an option for you.
+- `canvas`  -> uses Canvas to show differences in screenshots.
+- `magic`   -> uses ImageMagick to show the difference of old and new screenshots.
 
 #### options.useImageMagick !deprecated since version 0.6.0
 Type: `Boolean`
 
 Default value: false
+
+**NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.**
 
 Switch on the usage of imageMagick to see the difference of old and new images even clearer.
 **make sure imageMagick and included commands are installed on your system:**
@@ -122,14 +127,22 @@ $ which composite
 /opt/local/bin/composite
 ```
 
-#### options.highlightColor !deprecated since version 0.5.0
+**NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.**
+
+#### options.highlightColor !deprecated only for ImageMagick Template since version 0.5.0
 Type: `String`
 
-Default value: `crimson`
+Default value: `#ff0000`
 
-If you switched on the usage of ImageMagick you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. Choose a color of this [list](http://www.imagemagick.org/script/color.php).
+**NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.**
 
-**NOTE: This option is not supported anymore since version 0.5.0.**
+If you switched on the usage of Canvas you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. 
+
+Unfortunately I had to drop the color feature for ImageMagick, because the `compare` method does not fit the needs of Photobox and I had to switch to `composite`, which does not support any diff color. 
+
+But setting this option for Canvas mode is fine. :)
+
+**NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.**
 
 ### Usage Examples
 
