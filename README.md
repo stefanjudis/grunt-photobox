@@ -46,7 +46,7 @@ Photobox helps you to not deploy any broken layout to production. It takes scree
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/default.png)
 
-#### ImageMagick anc Canvas representation (generated diff):
+#### ImageMagick and Canvas representation (generated diff):
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/imageMagick.png)
 
