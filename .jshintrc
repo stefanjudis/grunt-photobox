@@ -12,6 +12,7 @@
   "node": true,
   "globals": {
     "phantom": false,
-    "window": false
+    "window": false,
+    "postMessage": false
   }
 }
