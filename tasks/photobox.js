@@ -22,7 +22,7 @@ module.exports = function( grunt ) {
             loadImages                    : true,
             password                      : '',
             screenSizes                   : [ '800' ],
-            useImageMagick                : false,
+            template                      : 'canvas',
             userAgent                     : 'Photobox',
             userName                      : '',
             urls                          : [ 'http://google.com' ]
