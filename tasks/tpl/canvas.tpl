@@ -223,7 +223,7 @@
   </main>
 
   <script type="text/javascript">
-  (function(){
+  ( function() {
     'use strict';
     var imagesList      = document.querySelectorAll( 'img' ),
         images          = Array.prototype.slice.call( imagesList, 0 ),
@@ -238,7 +238,7 @@
 
     images.forEach( function( image ) {
       image.onerror = placeKitten;
-      image.src = image.dataset.src;
+      image.src     = image.dataset.src;
     } );
 
 
@@ -260,11 +260,14 @@
       cnvs.height    = dummyImage.height;
 
       var ctx = cnvs.getContext('2d');
-      ctx.drawImage( imgA , 0, 0 );
 
+      // draw first image and get pixel data
+      ctx.drawImage( imgA , 0, 0 );
       var pixelsA = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       ctx.globalAlpha = 0.5;
+
+      // draw second image and get pixel data
       ctx.drawImage( imgB, 0, 0 );
       var pixelsB = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
@@ -278,9 +281,10 @@
       };
 
       var worker = new Worker( 'scripts/worker.js' );
+
       worker.postMessage( data );
-      worker.addEventListener('message', function( e ) {
-        ctx.putImageData( e.data.imageData, 0, 0);
+      worker.addEventListener( 'message', function( e ) {
+        ctx.putImageData( e.data.imageData, 0, 0 );
         console.warn('Found ', e.data.amount, 'different pixels' );
       }, false);
 
@@ -295,9 +299,9 @@
         prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ] );
       };
 
-    }, false);
+    }, false );
 
-  })();
+  } )();
   </script>
 
 </body>
