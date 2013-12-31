@@ -52,7 +52,9 @@ Photobox helps you to not deploy any broken layout to production. It takes scree
 
 ### Options
 
+
 #### options.indexPath
+
 Type: `String`
 
 Default value: `photobox/`
@@ -61,41 +63,49 @@ A string value that is used to set the path to the generated images and **index.
 
 Per default a ```photobox``` folder will be generated and inside of that folder an index.html is located to check for broken layout.
 
-#### options.screenSizes !changed since version 0.5.0
+
+#### options.screenSizes
+
 Type: `Array`
 
 Default value: `[ '800' ]`
 
-**NOTE: Values like '800x600' are deprecated since version 0.5.0.**
+**[NOTE: Values like '800x600' are deprecated since version 0.5.0.]**
 
 An array containing strings, that represents the wished width in pixels of the taken pictures. The height will be calculated automatically depending on the given site.
 
 E.g. **'800'** -> width: 800px;
 
-**NOTE: Values like '800x600' are deprecated since version 0.5.0.**
 
 #### options.urls
+
 Type: `Array`
 
 Default value: `[ 'http://google.com' ]`
 
 An array containing strings, that represents the wished urls for the photosession.
 
+
 #### options.userName
+
 Type: `String`
 
 Default value: ``
 
 A string representing the username in case of HTTP-Authentification.
 
+
 #### options.password
+
 Type: `String`
 
 Default value: ``
 
 A string representing the password in case of HTTP-Authentification.
 
+
 #### options.template
+
 Type: `String`
 
 Default value: `canvas`
@@ -107,15 +117,7 @@ Possible values:
 - `canvas`  -> uses Canvas to show differences in screenshots.
 - `magic`   -> uses ImageMagick to show the difference of old and new screenshots.
 
-#### options.useImageMagick !deprecated since version 0.6.0
-Type: `Boolean`
-
-Default value: false
-
-**NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.**
-
-Switch on the usage of imageMagick to see the difference of old and new images even clearer.
-**make sure imageMagick and included commands are installed on your system:**
+If you want to use ImageMagick by setting `options.template` to `magic` **make sure ImageMagick and included commands are installed on your system:**
 Check the following commands in your environment:
 
 ```
@@ -127,45 +129,53 @@ $ which composite
 /opt/local/bin/composite
 ```
 
-**NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.**
 
-#### options.highlightColor !deprecated only for ImageMagick Template since version 0.5.0
+#### options.useImageMagick
+
+Type: `Boolean`
+
+Default value: `false`
+
+**[NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.]**
+
+
+#### options.highlightColor 
+
+*- only `canvas` mode -*
+
 Type: `String`
 
 Default value: `#ff0000`
 
-**NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.**
+**[NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.]**
 
 If you switched on the usage of Canvas you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. 
 
-Unfortunately I had to drop the color feature for ImageMagick, because the `compare` method does not fit the needs of Photobox and I had to switch to `composite`, which does not support any diff color. 
-
-But setting this option for Canvas mode is fine. :)
-
-**NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.**
 
 ### Usage Examples
 
 #### Default Options
+
 In this example, the default options are used to do just show what is possible. Run ```grunt photobox``` without any custom options and you will get a new file at ```photobox/index.html```.
 
 It will consist of a screenshot for the default url ( http://google.com ) in the default width 800px.
 
 ```js
-grunt.initConfig({
+grunt.initConfig( {
   photobox: {
-  	task: {
-	  options: {}
-	}
+    task: {
+      options: {}
+    }
   }
-})
+});
 ```
 
 #### Custom Options
+
 Now let's customize everything for your needs.
 
 ```js
-grunt.initConfig({
+grunt.initConfig( {
   photobox: {
     task: {
       options: {
@@ -174,12 +184,47 @@ grunt.initConfig({
       }
     }
   }
-})
+} );
 ```
-
 This will generate you 9 screenshots - each url in each size.
 
+
+#### Canvas usage 
+
+```js
+grunt.initConfig( {
+  photobox : {
+    waisenkinder : {
+      options : {
+      indexPath      : 'photobox/',
+      highlightColor : '#0000ff',
+      screenSizes    : [ '960', '350', '1200' ],
+      template       : 'canvas',
+      urls           : [ 'http://4waisenkinder.de' ]
+    }
+  }
+} );
+```
+
+
+#### ImageMagick usage
+
+```js
+grunt.initConfig( {
+  photobox : {
+    waisenkinder : {
+      options : {
+      indexPath      : 'photobox/',
+      screenSizes    : [ '960', '350', '1200' ],
+      template       : 'magic',
+      urls           : [ 'http://4waisenkinder.de' ]
+    }
+  }
+} );
+```
+
 ## Contributing
+
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
