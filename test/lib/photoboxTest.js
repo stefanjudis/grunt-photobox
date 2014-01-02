@@ -353,9 +353,15 @@ exports.photoBox = {
 
 
   tookPictureHandler : {
-    allPicturesTaken : function( test ) {
+    canvasMode  : function( test ) {
       var cbFunction = function() {
+            test.ok( grunt.file.exists( 'tmp/index.html' ) );
+            test.ok( grunt.file.exists( 'tmp/scripts/worker.js' ) );
+
             test.done();
+
+            grunt.file.delete( 'tmp/index.html' );
+            grunt.file.delete( 'tmp/scripts/worker.js' );
           },
           options    = {
             indexPath   : 'tmp',
@@ -364,6 +370,43 @@ exports.photoBox = {
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
           pb = new Photobox( grunt, options, cbFunction );
+
+      pb.setPictureCount( 4 );
+      pb.tookPictureHandler();
+    },
+    defaultMode : function( test ) {
+      var cbFunction = function() {
+            test.ok( grunt.file.exists( 'tmp/index.html' ) );
+            test.ok( !grunt.file.exists( 'tmp/scripts/worker.js' ) );
+
+            test.done();
+
+            grunt.file.delete( 'tmp/index.html' );
+          },
+          options    = {
+            indexPath   : 'tmp',
+            template    : 'default',
+            screenSizes : [ '1000', '1200' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb = new Photobox( grunt, options, cbFunction );
+
+      pb.setPictureCount( 4 );
+      pb.tookPictureHandler();
+    },
+    magicMode   : function( test ) {
+      var cbFunction = function() {},
+          options    = {
+            indexPath   : 'tmp',
+            template    : 'magic',
+            screenSizes : [ '1000', '1200' ],
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+          },
+          pb = new Photobox( grunt, options, cbFunction );
+
+      pb.createDiffImages = function() {
+        test.done();
+      };
 
       pb.setPictureCount( 4 );
       pb.tookPictureHandler();
