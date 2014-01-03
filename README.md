@@ -196,11 +196,12 @@ grunt.initConfig( {
   photobox : {
     waisenkinder : {
       options : {
-      indexPath      : 'photobox/',
-      highlightColor : '#0000ff',
-      screenSizes    : [ '960', '350', '1200' ],
-      template       : 'canvas',
-      urls           : [ 'http://4waisenkinder.de' ]
+        indexPath      : 'photobox/',
+        highlightColor : '#0000ff',
+        screenSizes    : [ '960', '350', '1200' ],
+        template       : 'canvas',
+        urls           : [ 'http://4waisenkinder.de' ]
+      }
     }
   }
 } );
@@ -214,10 +215,11 @@ grunt.initConfig( {
   photobox : {
     waisenkinder : {
       options : {
-      indexPath      : 'photobox/',
-      screenSizes    : [ '960', '350', '1200' ],
-      template       : 'magic',
-      urls           : [ 'http://4waisenkinder.de' ]
+        indexPath      : 'photobox/',
+        screenSizes    : [ '960', '350', '1200' ],
+        template       : 'magic',
+        urls           : [ 'http://4waisenkinder.de' ]
+      }
     }
   }
 } );
