@@ -510,7 +510,9 @@ PhotoBox.prototype.startPhotoSession = function() {
       };
     }
 
-    this.grunt.log.verbose.writeln( 'Command: phantomjs ' + args.join( ' ' ) + '\n' );
+    this.grunt.log.verbose.writeln(
+      'Command: phantomjs ' + args.join( ' ' ) + '\n'
+    );
 
     this.grunt.util.spawn( {
       cmd  : phantomPath,

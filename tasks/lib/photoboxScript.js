@@ -10,7 +10,7 @@
 
 
 
-var system        = require ( 'system' ),
+var system        = require( 'system' ),
     webpage       = require( 'webpage' ),
     fs            = require( 'fs' ),
     page          = webpage.create(),
