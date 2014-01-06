@@ -483,17 +483,17 @@ PhotoBox.prototype.startPhotoSession = function() {
 
   this.writeTimestampFile();
 
+  this.writeOptionsFile( {
+    javascriptEnabled             : this.options.javascriptEnabled,
+    loadImages                    : this.options.localToRemoteUrlAccessEnabled,
+    localToRemoteUrlAccessEnabled : this.options.localToRemoteUrlAccessEnabled,
+    password                      : this.options.password,
+    userAgent                     : this.options.userAgent,
+    userName                      : this.options.userName
+  } );
+
   this.pictures.forEach( function( picture ) {
     this.grunt.log.writeln( 'started photo session for ' + picture );
-
-    this.writeOptionsFile( {
-      javascriptEnabled             : this.options.javascriptEnabled,
-      loadImages                    : this.options.localToRemoteUrlAccessEnabled,
-      localToRemoteUrlAccessEnabled : this.options.localToRemoteUrlAccessEnabled,
-      password                      : this.options.password,
-      userAgent                     : this.options.userAgent,
-      userName                      : this.options.userName
-    } );
 
     var args = [
       path.resolve(__dirname, 'photoboxScript.js'),
