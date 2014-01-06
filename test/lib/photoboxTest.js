@@ -374,7 +374,7 @@ exports.photoBox = {
       pb.setPictureCount( 4 );
       pb.tookPictureHandler();
     },
-    defaultMode : function( test ) {
+    cssOverlayMode : function( test ) {
       var cbFunction = function() {
             test.ok( grunt.file.exists( 'tmp/index.html' ) );
             test.ok( !grunt.file.exists( 'tmp/scripts/worker.js' ) );
@@ -385,7 +385,7 @@ exports.photoBox = {
           },
           options    = {
             indexPath   : 'tmp',
-            template    : 'default',
+            template    : 'cssOverlay',
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
