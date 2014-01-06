@@ -1,6 +1,6 @@
 # grunt-photobox
 
-[![Build Status](https://travis-ci.org/stefanjudis/grunt-photobox.png?branch=master)](https://travis-ci.org/stefanjudis/grunt-photobox) [![NPM version](https://badge.fury.io/js/grunt-photobox.png)](http://badge.fury.io/js/grunt-photobox) [![Dependency Status](https://gemnasium.com/stefanjudis/grunt-photobox.png)](https://gemnasium.com/stefanjudis/grunt-photobox) [![Code Climate](https://codeclimate.com/github/stefanjudis/grunt-photobox.png)](https://codeclimate.com/github/stefanjudis/grunt-photobox)
+[![Build Status](https://travis-ci.org/stefanjudis/grunt-photobox.png?branch=master)](https://travis-ci.org/stefanjudis/grunt-photobox) [![NPM version](https://badge.fury.io/js/grunt-photobox.png)](http://badge.fury.io/js/grunt-photobox) [![Dependency Status](https://gemnasium.com/stefanjudis/grunt-photobox.png)](https://gemnasium.com/stefanjudis/grunt-photobox) [![Code Climate](https://codeclimate.com/github/stefanjudis/grunt-photobox.png)](https://codeclimate.com/github/stefanjudis/grunt-photobox) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/photoBox.png)
 
@@ -108,12 +108,12 @@ A string representing the password in case of HTTP-Authentification.
 
 Type: `String`
 
-Default value: `canvas`
+Default value: `cssOverlay`
 
 A string value that is used to set the template to display your screenshots.
 Possible values:
 
-- `default` -> uses CSS overlays to compare screenshots. Use this template, if ImageMagick is not installed on your system and Canvas is not an option for you.
+- `cssOverlay` -> uses CSS overlays to compare screenshots. Use this template, if ImageMagick is not installed on your system and Canvas is not an option for you.
 - `canvas`  -> uses Canvas to show differences in screenshots.
 - `magic`   -> uses ImageMagick to show the difference of old and new screenshots.
 
@@ -139,7 +139,7 @@ Default value: `false`
 **[NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.]**
 
 
-#### options.highlightColor 
+#### options.highlightColor
 
 *- only `canvas` mode -*
 
@@ -149,7 +149,7 @@ Default value: `#ff0000`
 
 **[NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.]**
 
-If you switched on the usage of Canvas you have got the possibility to set the highlight color for the generated diff images to make it fit for your project. 
+If you switched on the usage of Canvas you have got the possibility to set the highlight color for the generated diff images to make it fit for your project.
 
 
 ### Usage Examples
@@ -189,18 +189,19 @@ grunt.initConfig( {
 This will generate you 9 screenshots - each url in each size.
 
 
-#### Canvas usage 
+#### Canvas usage
 
 ```js
 grunt.initConfig( {
   photobox : {
     waisenkinder : {
       options : {
-      indexPath      : 'photobox/',
-      highlightColor : '#0000ff',
-      screenSizes    : [ '960', '350', '1200' ],
-      template       : 'canvas',
-      urls           : [ 'http://4waisenkinder.de' ]
+        indexPath      : 'photobox/',
+        highlightColor : '#0000ff',
+        screenSizes    : [ '960', '350', '1200' ],
+        template       : 'canvas',
+        urls           : [ 'http://4waisenkinder.de' ]
+      }
     }
   }
 } );
@@ -214,10 +215,11 @@ grunt.initConfig( {
   photobox : {
     waisenkinder : {
       options : {
-      indexPath      : 'photobox/',
-      screenSizes    : [ '960', '350', '1200' ],
-      template       : 'magic',
-      urls           : [ 'http://4waisenkinder.de' ]
+        indexPath      : 'photobox/',
+        screenSizes    : [ '960', '350', '1200' ],
+        template       : 'magic',
+        urls           : [ 'http://4waisenkinder.de' ]
+      }
     }
   }
 } );
