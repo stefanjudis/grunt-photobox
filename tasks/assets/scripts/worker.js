@@ -48,6 +48,7 @@ function diff( pixelsA, pixelsB, config ) {
       diffAmount = 0,
       threshold  = ~~config.threshold,
       color      = getHighlightColor ( config.higlightColor ),
+      adjustment = 150,
       i;
 
 
@@ -62,6 +63,10 @@ function diff( pixelsA, pixelsB, config ) {
       pixelsC.data[ i + 1 ] = color[ 1 ]; // g
       pixelsC.data[ i + 2 ] = color[ 2 ]; // b
       diffAmount++;
+    } else {
+      pixelsC.data[ i ]     += adjustment; // r
+      pixelsC.data[ i + 1 ] += adjustment; // g
+      pixelsC.data[ i + 2 ] += adjustment; // b
     }
   }
 
