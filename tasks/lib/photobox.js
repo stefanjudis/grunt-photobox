@@ -119,7 +119,7 @@ PhotoBox.prototype.createIndexFile = function() {
 
   var templateData = this.pictures.map(
     function( picture ) {
-      var split = picture.split('|');
+      var split = picture.split('#');
 
       return {
         url : split[0],
@@ -305,7 +305,7 @@ PhotoBox.prototype.getPreparedPictures = function() {
 
   this.options.urls.forEach( function( url ) {
     this.options.screenSizes.forEach( function( size ) {
-      pictures.push( url + '|' + size );
+      pictures.push( url + '#' + size );
 
       if ( size.match( /x/gi ) ) {
         this.grunt.log.warn(
