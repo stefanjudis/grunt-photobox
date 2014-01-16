@@ -477,6 +477,8 @@ PhotoBox.prototype.setPictureCount = function( count ) {
 
 /**
  * Start a session of taking pictures
+ *
+ * @tested
  */
 PhotoBox.prototype.startPhotoSession = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED PHOTO SESSION.' );

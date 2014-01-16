@@ -352,6 +352,49 @@ exports.photoBox = {
   },
 
 
+  startPhotoSession : function( test ) {
+    var options = {
+          indexPath   : 'tmp',
+          template    : 'canvas',
+          screenSizes : [ '1000', '1200' ],
+          urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+        },
+        pb              = new Photobox( grunt, options ),
+        spawn           = grunt.util.spawn,
+        count           = 0;
+
+    grunt.util.spawn = function() {
+      count++;
+
+      test.strictEqual( typeof arguments[ 0 ], 'object' );
+      test.ok( arguments[ 0 ].cmd.match( /phantom/gi ) );
+      test.strictEqual( arguments[ 0 ].args instanceof Array, true );
+      test.strictEqual( arguments[ 0 ].args.length, 4 );
+      test.strictEqual( typeof arguments[ 0 ].opts, 'object' );
+
+      test.strictEqual( typeof arguments[ 1 ], 'function' );
+
+      if ( count === 4 ) {
+        test.strictEqual(
+          grunt.file.exists( 'tmp/img/current/timestamp.json' ),
+          true
+        );
+
+        test.strictEqual(
+          grunt.file.exists( 'tmp/options.json' ),
+          true
+        );
+
+        test.done();
+      }
+    };
+
+    pb.startPhotoSession();
+
+    grunt.util.spawn = spawn;
+  },
+
+
   tookPictureHandler : {
     canvasMode  : function( test ) {
       var cbFunction = function() {
