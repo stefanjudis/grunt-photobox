@@ -100,10 +100,10 @@ exports.photoBox = {
       pictures = pb.getPreparedPictures();
 
       test.strictEqual( pictures.length, 4 );
-      test.strictEqual( pictures[ 0 ], 'http://google.com|1000' );
-      test.strictEqual( pictures[ 1 ], 'http://google.com|1200' );
-      test.strictEqual( pictures[ 2 ], 'http://4waisenkinder.de|1000' );
-      test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de|1200' );
+      test.strictEqual( pictures[ 0 ], 'http://google.com#1000' );
+      test.strictEqual( pictures[ 1 ], 'http://google.com#1200' );
+      test.strictEqual( pictures[ 2 ], 'http://4waisenkinder.de#1000' );
+      test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de#1200' );
 
       test.done();
     },
