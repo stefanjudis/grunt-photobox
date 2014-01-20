@@ -225,15 +225,16 @@
   <script type="text/javascript">
   ( function() {
     'use strict';
-    var imagesList      = document.querySelectorAll( 'img' ),
-        images          = Array.prototype.slice.call( imagesList, 0 ),
+    var imagesList       = document.querySelectorAll( 'img' ),
+        images           = Array.prototype.slice.call( imagesList, 0 ),
+        placeholderImage = 'http://placekitten.com/',
         lastImages,
         currentImages,
         canvasList;
 
     function placeKitten() {
       var size = this.dataset.size.replace( /x/, '/')
-      this.src = 'http://placekitten.com/' + size;
+      this.src = placeholderImage + size;
     }
 
     images.forEach( function( image ) {
@@ -296,7 +297,10 @@
       canvasList    = document.querySelectorAll( 'canvas' );
 
       for (var i = lastImages.length - 1; i >= 0; i--) {
-        prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ] );
+        if ( lastImages[ i ].src.indexOf( placeholderImage ) !== 0 ) {
+          prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ] );
+        }
+
       };
 
     }, false );
