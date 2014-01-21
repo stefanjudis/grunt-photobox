@@ -49,7 +49,7 @@ function diff( pixelsA, pixelsB, config ) {
       threshold  = ~~config.threshold,
       color      = getHighlightColor ( config.higlightColor ),
       adjustment = 150,
-      filter     = 'brighter',
+      filter     = config.diffFilter,
       i;
 
 
