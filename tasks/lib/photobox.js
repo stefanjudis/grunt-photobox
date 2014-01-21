@@ -29,7 +29,12 @@ var PhotoBox = function( grunt, options, callback ) {
   this.options           = options;
   this.options.indexPath = this.getIndexPath();
   this.pictureCount      = 0;
-  this.template          = options.template;
+
+  if ( typeof options.template === 'string' ) {
+    this.template = options.template;
+  } else if ( typeof options.template === 'object' ) {
+    this.template = options.template.name;
+  }
 
   this.movePictures();
   this.pictures = this.getPreparedPictures();
@@ -42,7 +47,7 @@ var PhotoBox = function( grunt, options, callback ) {
  * @param  {String} err     error
  * @param  {Object} result  result
  * @param  {Number} code    exit code
- * @param  {String} picture name of current picture iteration
+ * @param  {String} picture name of currcopyent picture iteration
  */
 PhotoBox.prototype.compositeCallback = function( err, result, code, picture ) {
   if ( err ) {
@@ -548,14 +553,14 @@ PhotoBox.prototype.tookPictureHandler = function() {
   if ( this.pictureCount === this.pictures.length ) {
     this.grunt.log.ok( 'PHOTOBOX FINISHED PHOTO SESSION SUCCESSFULLY.' );
 
-    if ( this.options.template === 'magic' ) {
+    if ( this.template === 'magic' ) {
       this.grunt.log.writeln(
         '\nNOTE: You defined to use ImageMagick, make sure it is installed.'
       );
 
       this.createDiffImages();
     } else {
-      if ( this.options.template === 'canvas' ) {
+      if ( this.template === 'canvas' ) {
         // copy worker to photobox folder
         // grunt.file.copy( srcpath, destpath );
         this.grunt.file.copy(

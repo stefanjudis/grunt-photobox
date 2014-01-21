@@ -23,7 +23,13 @@ module.exports = function( grunt ) {
             loadImages                    : true,
             password                      : '',
             screenSizes                   : [ '800' ],
-            template                      : 'cssOverlay',
+            template                      : {
+                                              name    : 'canvas',
+                                              options : {
+                                                highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                                                diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                                              }
+                                            },
             userAgent                     : 'Photobox',
             userName                      : '',
             urls                          : [ 'http://google.com' ]
