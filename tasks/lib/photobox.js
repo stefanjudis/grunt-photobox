@@ -47,7 +47,7 @@ var PhotoBox = function( grunt, options, callback ) {
  * @param  {String} err     error
  * @param  {Object} result  result
  * @param  {Number} code    exit code
- * @param  {String} picture name of currcopyent picture iteration
+ * @param  {String} picture name of current picture iteration
  */
 PhotoBox.prototype.compositeCallback = function( err, result, code, picture ) {
   if ( err ) {
