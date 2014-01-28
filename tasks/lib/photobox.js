@@ -67,6 +67,8 @@ PhotoBox.prototype.compositeCallback = function( err, result, code, picture ) {
 
 /**
  * Actuel function to create the diff images
+ *
+ * @tested
  */
 PhotoBox.prototype.createDiffImages = function() {
   var imgPath = this.options.indexPath + 'img/' ;
@@ -74,10 +76,11 @@ PhotoBox.prototype.createDiffImages = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
 
   this.pictures.forEach( function( picture ) {
-    picture = picture.replace(
-      /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g,
-      '-'
-    ).replace( '#', '-' );
+    // TODO that can be done in on regex
+    picture = picture.replace( /(http:\/\/|https:\/\/)/, '')
+                      .replace( /(\/)|(\|)/g, '-' )
+                      .replace( '#', '-' );
+
     this.grunt.log.writeln( 'started diff for ' + picture );
 
     var oldFileExists = this.grunt.file.exists(
@@ -87,8 +90,8 @@ PhotoBox.prototype.createDiffImages = function() {
     var currentFileExists = this.grunt.file.exists(
                               this.options.indexPath + 'img/current/' + picture + '.png'
                             );
-    if ( oldFileExists && currentFileExists ) {
 
+    if ( oldFileExists && currentFileExists ) {
       this.grunt.util.spawn( {
         cmd  : 'composite',
         args : this.getCompositeArguments( picture )

@@ -29,6 +29,64 @@ exports.photoBox = {
   },
 
 
+  createDiffImages : {
+    imagesExist : function( test ) {
+      var cbFunction    = function() {},
+          options       = {
+            indexPath   : 'tmp/',
+            template    : 'magic',
+            screenSizes : [ '350' ],
+            urls        : [ 'http://google.com' ]
+          },
+          pb            = new Photobox( grunt, options, cbFunction ),
+          callback      = pb.compositeCallback;
+
+      grunt.file.copy(
+        'test/img/current/google.com-350.png',
+        'tmp/img/current/google.com-350.png'
+      );
+
+      grunt.file.copy(
+        'test/img/last/google.com-350.png',
+        'tmp/img/last/google.com-350.png'
+      );
+
+      pb.compositeCallback = function() {
+        test.strictEqual(
+          grunt.file.exists(
+            'tmp/img/diff/google.com-350-diff.png'
+          ),
+          true
+        )
+        test.done();
+      };
+
+      pb.createDiffImages();
+    },
+    imagesDoesntExist : function( test ) {
+      var cbFunction    = function() {},
+          options       = {
+            indexPath   : 'tmp/',
+            template    : 'magic',
+            screenSizes : [ '350' ],
+            urls        : [ 'http://doesnotexit.com' ]
+          },
+          pb            = new Photobox( grunt, options, cbFunction ),
+          count         = pb.diffCount;
+
+      pb.tookDiffHandler = function() {
+        test.strictEqual(
+          pb.diffCount,
+          count + 1
+        );
+
+        test.done();
+      };
+
+      pb.createDiffImages();
+    }
+  },
+
   createIndexFile : function( test ) {
     var cbFunction    = function() {},
         options       = {
