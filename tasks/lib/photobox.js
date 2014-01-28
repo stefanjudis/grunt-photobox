@@ -77,7 +77,7 @@ PhotoBox.prototype.createDiffImages = function() {
     picture = picture.replace(
       /(http:\/\/|https:\/\/)/, '').replace( /(\/)|(\|)/g,
       '-'
-    );
+    ).replace( '#', '-' );
     this.grunt.log.writeln( 'started diff for ' + picture );
 
     var oldFileExists = this.grunt.file.exists(
