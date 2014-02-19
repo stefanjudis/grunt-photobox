@@ -42,10 +42,6 @@ Photobox helps you to not deploy any broken layout to production. It takes scree
 
 **Additionally you got the feature, to keep the last photosession and to overlay old and new screenshots, to see even better if something is broken or not. BE ALWAYS SURE, THAT YOU HAVEN'T BROKEN LAYOUT THE EASY WAY.**
 
-#### Default representation (no diff generation but overlay option):
-
-![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/default.png)
-
 #### ImageMagick and Canvas representation (generated diff):
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/imageMagick.png)
@@ -113,7 +109,6 @@ Default value: `cssOverlay`
 A string value that is used to set the template to display your screenshots.
 Possible values:
 
-- `cssOverlay` -> uses CSS overlays to compare screenshots. Use this template, if ImageMagick is not installed on your system and Canvas is not an option for you.
 - `canvas`  -> uses Canvas to show differences in screenshots.
 - `magic`   -> uses ImageMagick to show the difference of old and new screenshots.
 
