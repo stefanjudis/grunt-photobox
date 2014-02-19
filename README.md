@@ -102,9 +102,9 @@ A string representing the password in case of HTTP-Authentification.
 
 #### options.template
 
-Type: `String`
+Type: `String|Object`
 
-Default value: `cssOverlay`
+Default value: `canvas`
 
 A string value that is used to set the template to display your screenshots.
 Possible values:
@@ -113,6 +113,7 @@ Possible values:
 - `magic`   -> uses ImageMagick to show the difference of old and new screenshots.
 
 If you want to use ImageMagick by setting `options.template` to `magic` **make sure ImageMagick and included commands are installed on your system:**
+
 Check the following commands in your environment:
 
 ```
@@ -124,28 +125,47 @@ $ which composite
 /opt/local/bin/composite
 ```
 
+If you want to pimp your via canvas generated diff images there the options available to pass in an object as `template` instead of a string.
 
-#### options.useImageMagick
-
-Type: `Boolean`
-
-Default value: `false`
-
-**[NOTE: This option is not supported anymore since version 0.6.0. If you want to use ImageMagick set it via `options.template`.]**
-
-
-#### options.highlightColor
-
-*- only `canvas` mode -*
+```
+options : {
+  ...
+  template       : {
+    name    : 'canvas',
+    options : {
+      highlightColor : '#0000ff', // template.options.hightlightColor || highlightcolor || default
+      diffFilter     : 'grayscale' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+    }
+  }
+  ...
+}
+```
+##### options.template.name
 
 Type: `String`
 
-Default value: `#ff0000`
+Currently only support set to `canvas`.
 
-**[NOTE: This option is not supported for ImageMagick anymore since version 0.5.0.]**
+##### options.template.options.highlightColor
 
-If you switched on the usage of Canvas you have got the possibility to set the highlight color for the generated diff images to make it fit for your project.
+Type: `String`
 
+Default value: '#0000ff'
+
+A string representing a given color for highlighted different areas.
+
+##### options.template.options.diffFilter
+
+Type: `String`
+
+Default value: `default`
+
+4 modes for diff image processing are available:
+
+- `default` - image information in diff image will not be changed
+- `grayscale` - image information in diff image will be changed to grayscale
+- `darker` - image information in diff image will be changed to a darker image
+- `lighter` - image information in diff image will be change to a brighter image
 
 ### Usage Examples
 
@@ -165,7 +185,7 @@ grunt.initConfig( {
 });
 ```
 
-#### Custom Options
+#### Options
 
 Now let's customize everything for your needs.
 
@@ -184,7 +204,7 @@ grunt.initConfig( {
 This will generate you 9 screenshots - each url in each size.
 
 
-#### Canvas usage
+#### Canvas default usage
 
 ```js
 grunt.initConfig( {
@@ -202,6 +222,26 @@ grunt.initConfig( {
 } );
 ```
 
+#### Canvas configured usage
+
+```
+grunt.initConfig( {
+  photobox : {
+    waisenkinder : {
+      indexPath      : 'photobox/',
+      screenSizes    : [ '960', '350', '1200' ],
+      template       : {
+        name    : 'canvas',
+        options : {
+          highlightColor : '#0000ff',  // template.options.hightlightColor || highlightcolor || default
+          diffFilter     : 'grayscale' //  'default' == no filter | 'grayscale' | 'darker' | 'brighter'
+        }
+      },
+      urls           : [ 'http://www.faz.net' ]
+    }
+  }
+} );
+```
 
 #### ImageMagick usage
 
