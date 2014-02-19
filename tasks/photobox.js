@@ -22,13 +22,7 @@ module.exports = function( grunt ) {
             loadImages                    : true,
             password                      : '',
             screenSizes                   : [ '800' ],
-            template                      : {
-                                              name    : 'canvas',
-                                              options : {
-                                                highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
-                                                diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
-                                              }
-                                            },
+            template                      : 'canvas',
             userAgent                     : 'Photobox',
             userName                      : '',
             urls                          : [ 'http://google.com' ]
