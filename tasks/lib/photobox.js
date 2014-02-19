@@ -390,7 +390,7 @@ PhotoBox.prototype.movePictures = function() {
   // move current picture to old pictures
   if ( !this.grunt.file.exists( this.options.indexPath + '/img/current' ) ) {
     this.grunt.log.error(
-      'No old pictures are existant. So you can compare kittens with the new pictures.'
+      'No old pictures are existant.'
     );
   } else {
     fs.renameSync(
@@ -506,7 +506,7 @@ PhotoBox.prototype.startPhotoSession = function() {
     this.grunt.log.writeln( 'started photo session for ' + picture );
 
     var args = [
-      path.resolve(__dirname, 'photoboxScript.js'),
+      path.resolve( __dirname, 'photoboxScript.js' ),
       picture,
       this.options.indexPath,
       this.options.indexPath + 'options.json'
