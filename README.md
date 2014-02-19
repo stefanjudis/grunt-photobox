@@ -125,7 +125,7 @@ $ which composite
 /opt/local/bin/composite
 ```
 
-If you want to pimp your via canvas generated diff images there the options available to pass in an object as `template` instead of a string.
+If you want to pimp your via canvas generated diff images there is the option available to pass in an object as `template` instead of a string.
 
 ```
 options : {
@@ -133,7 +133,7 @@ options : {
   template       : {
     name    : 'canvas',
     options : {
-      highlightColor : '#0000ff', // template.options.hightlightColor || highlightcolor || default
+      highlightColor : '#0000ff',  //
       diffFilter     : 'grayscale' //  default == no filter 'grayscale' | 'darker' | 'brighter'
     }
   }
@@ -144,7 +144,7 @@ options : {
 
 Type: `String`
 
-Currently only support set to `canvas`.
+Currently only supported set to `canvas`.
 
 ##### options.template.options.highlightColor
 
@@ -237,7 +237,7 @@ grunt.initConfig( {
           diffFilter     : 'grayscale' //  'default' == no filter | 'grayscale' | 'darker' | 'brighter'
         }
       },
-      urls           : [ 'http://www.faz.net' ]
+      urls           : [ 'http://4waisenkinder.de' ]
     }
   }
 } );

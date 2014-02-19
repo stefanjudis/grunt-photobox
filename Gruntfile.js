@@ -44,7 +44,7 @@ module.exports = function(grunt) {
             }
           },
                             // 'magic',
-          urls           : [ 'http://www.faz.net' ]
+          urls           : [ 'http://4waisenkinder.de' ]
         }
       }
     },
