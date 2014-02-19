@@ -294,20 +294,16 @@
     'use strict';
     var imagesList       = document.querySelectorAll( 'img' ),
         images           = Array.prototype.slice.call( imagesList, 0 ),
-        placeholderImage = 'http://placekitten.com/',
         lastImages,
         currentImages,
         canvasList,
         processing;
 
-    function placeKitten() {
-      var size = this.dataset.size.replace( /x/, '/')
-      this.src = placeholderImage + size;
-    }
-
     images.forEach( function( image ) {
-      image.onerror = placeKitten;
       image.src     = image.dataset.src;
+      image.onerror = function() {
+        event.target.dataset.status = '404';
+      }
     } );
 
 
@@ -368,14 +364,22 @@
       processing    = document.querySelectorAll( '.processing' );
 
       for (var i = lastImages.length - 1; i >= 0; i--) {
-        if ( lastImages[ i ].src.indexOf( placeholderImage ) !== 0 ) {
-          prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ], processing[ i ] );
+        if (
+          lastImages[ i ].dataset.status !== '404' &&
+          currentImages[ i ].dataset.status !== '404'
+        ) {
+          prepareDiff(
+            lastImages[ i ],
+            currentImages[ i ],
+            canvasList[ i ],
+            processing[ i ]
+          );
+        } else {
+          processing[ i ].innerHTML = 'Nothing to process here.<br>' +
+                                      'Only one image is available. :(';
         }
-
       };
-
     }, false );
-
   } )();
   </script>
 

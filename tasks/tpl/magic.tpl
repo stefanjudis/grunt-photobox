@@ -227,13 +227,7 @@
     var imagesList      = document.querySelectorAll( 'img' ),
         images          = Array.prototype.slice.call( imagesList, 0 );
 
-    function placeKitten() {
-      var size = this.dataset.size.replace( /x/, '/')
-      this.src = 'http://placekitten.com/' + size;
-    }
-
     images.forEach( function( image ) {
-      image.onerror = placeKitten;
       image.src = image.dataset.src;
     } );
 
