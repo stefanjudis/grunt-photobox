@@ -1,6 +1,6 @@
 # grunt-photobox
 
-[![Build Status](https://travis-ci.org/stefanjudis/grunt-photobox.png?branch=master)](https://travis-ci.org/stefanjudis/grunt-photobox) [![NPM version](https://badge.fury.io/js/grunt-photobox.png)](http://badge.fury.io/js/grunt-photobox) [![Dependency Status](https://gemnasium.com/stefanjudis/grunt-photobox.png)](https://gemnasium.com/stefanjudis/grunt-photobox) [![Code Climate](https://codeclimate.com/github/stefanjudis/grunt-photobox.png)](https://codeclimate.com/github/stefanjudis/grunt-photobox) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Build Status](http://img.shields.io/travis/stefanjudis/grunt-photobox.svg)](https://travis-ci.org/stefanjudis/grunt-photobox) [![NPM version](http://img.shields.io/npm/v/grunt-photobox.svg)](http://badge.fury.io/js/grunt-photobox) [![Dependency Status](http://img.shields.io/gemnasium/stefanjudis/grunt-photobox.svg)](https://gemnasium.com/stefanjudis/grunt-photobox) [![Code Climate](http://img.shields.io/codeclimate/github/stefanjudis/grunt-photobox.svg)](https://codeclimate.com/github/stefanjudis/grunt-photobox) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ![image](https://raw.github.com/stefanjudis/grunt-photobox/master/tasks/assets/img/photoBox.png)
 
