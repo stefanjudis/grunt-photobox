@@ -35,15 +35,15 @@ module.exports = function(grunt) {
       waisenkinder : {
         options : {
           indexPath      : 'photobox/',
-          highlightColor : '#0000ff',
           screenSizes    : [ '960', '350', '1200' ],
           template       : {
-                            name    : 'canvas',
-                            options : {
-                              highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
-                              diffFilter     : 'grayscale' //  default == no filter 'grayscale' | 'darker' | 'brighter'
-                            }
-                          },
+            name    : 'canvas',
+            options : {
+              highlightColor : '#0000ff', // template.options.hightlightColor || highlightcolor || default
+              diffFilter     : 'grayscale' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+            }
+          },
+                            // 'magic',
           urls           : [ 'http://www.faz.net' ]
         }
       }
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 
     // Unit tests.
     nodeunit :  {
-      tests : ['test/**/*Test.js']
+      tests : [ 'test/**/*Test.js' ]
     }
   } );
 
