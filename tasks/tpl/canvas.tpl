@@ -324,7 +324,7 @@
       cnvs.width     = dummyImage.width;
       cnvs.height    = dummyImage.height;
 
-      var ctx = cnvs.getContext('2d');
+      var ctx = cnvs.getContext( '2d' );
 
       // draw first image and get pixel data
       ctx.drawImage( imgA , 0, 0 );
@@ -340,9 +340,9 @@
         a     : pixelsA,
         b     : pixelsB,
         config: {
-          higlightColor : '<%= options.template.options.highlightColor %>',
+          higlightColor : '<%= ( options.template.options && options.template.options.highlightColor ) || "#0000ff" %>',
           threshold     : 10,
-          diffFilter    : '<%= options.template.options.diffFilter %>',
+          diffFilter    : '<%= ( options.template.options && options.template.options.diffFilter ) || "default" %>',
         }
       };
 
