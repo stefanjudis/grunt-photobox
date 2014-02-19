@@ -94,6 +94,68 @@
       box-shadow: inset 0 1px 2px #000;
     }
 
+    h3 {
+      font-weight: normal;
+      font-size: 12px;
+      text-align: center;
+      color: #fff;
+    }
+
+    #semi_border {
+      -webkit-animation-direction: normal;
+      -moz-animation-direction: normal;
+      -o-animation-direction: normal;
+      animation-direction: normal;
+      -webkit-animation-duration: 1.25s;
+      -moz-animation-duration: 1.25s;
+      -o-animation-duration: 1.25s;
+      animation-duration: 1.25s;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-iteration-count: infinite;
+      -o-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      -webkit-animation-name: semi_border;
+      -moz-animation-name: semi_border;
+      -o-animation-name: semi_border;
+      animation-name: semi_border;
+      -webkit-animation-play-state: inherit;
+      -moz-animation-play-state: inherit;
+      -o-animation-play-state: inherit;
+      animation-play-state: inherit;
+      -webkit-animation-timing-function: linear;
+      -moz-animation-timing-function: linear;
+      -o-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -webkit-animation-play-state: running;
+      -moz-animation-play-state: running;
+      -o-animation-play-state: running;
+      animation-play-state: running;
+      border: 7px solid transparent;
+      border-left-color: #ffffff;
+      border-radius: 50%;
+      height: 16px;
+      margin: auto;
+      width: 16px;
+
+    }
+
+    @-webkit-keyframes semi_border {
+      from { -webkit-transform: rotate(0); }
+      to { -webkit-transform: rotate(360deg); }
+    }
+    @-moz-keyframes semi_border {
+      from { -moz-transform: rotate(0); }
+      to { -moz-transform: rotate(360deg); }
+    }
+    @-o-keyframes semi_border {
+      from { -o-transform: rotate(0); }
+      to { -o-transform: rotate(360deg); }
+    }
+    @keyframes semi_border {
+      from { transform: rotate(0); }
+      to { transform: rotate(360deg); }
+    }
+
     button {
       margin: 0 auto;
       width: 240px;
@@ -137,10 +199,12 @@
       vertical-align: top;
     }
 
-    .col canvas,
+    .col canvas {
+      width: 100%;
+    }
+
     .col img {
       width: 100%;
-
       box-shadow: 0 1px 1px #333;
     }
 
@@ -210,6 +274,9 @@
               <p><%= timestamps.last %></p>
             </div><div class="col">
               <h2>Difference</h2>
+              <h3 class="processing">
+                <div id="semi_border"></div>
+                we are checking for different pixels..</h3>
               <canvas>canvas is not supported</canvas>
             </div><div class="col">
               <h2>New Screens</h2>
@@ -225,15 +292,17 @@
   <script type="text/javascript">
   ( function() {
     'use strict';
-    var imagesList      = document.querySelectorAll( 'img' ),
-        images          = Array.prototype.slice.call( imagesList, 0 ),
+    var imagesList       = document.querySelectorAll( 'img' ),
+        images           = Array.prototype.slice.call( imagesList, 0 ),
+        placeholderImage = 'http://placekitten.com/',
         lastImages,
         currentImages,
-        canvasList;
+        canvasList,
+        processing;
 
     function placeKitten() {
       var size = this.dataset.size.replace( /x/, '/')
-      this.src = 'http://placekitten.com/' + size;
+      this.src = placeholderImage + size;
     }
 
     images.forEach( function( image ) {
@@ -250,7 +319,7 @@
      * @param  {Object} imgB a img DOM element
      * @param  {Object} cnvs a canvas DOM element
      */
-    function prepareDiff( imgA, imgB, cnvs ) {
+    function prepareDiff( imgA, imgB, cnvs, processing ) {
       'use strict';
 
       // get the real image dimensions
@@ -275,8 +344,9 @@
         a     : pixelsA,
         b     : pixelsB,
         config: {
-          higlightColor : '<%= options.highlightColor %>',
-          threshold     : 10
+          higlightColor : '<%= options.template.options.highlightColor %>',
+          threshold     : 10,
+          diffFilter    : '<%= options.template.options.diffFilter %>',
         }
       };
 
@@ -285,6 +355,7 @@
       worker.postMessage( data );
       worker.addEventListener( 'message', function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0 );
+        processing.style.display = 'none'
         console.warn( 'Found ', e.data.amount, 'different pixels' );
       }, false);
 
@@ -293,10 +364,14 @@
     window.addEventListener( 'load' , function() {
       lastImages    = document.querySelectorAll( '.last' );
       currentImages = document.querySelectorAll( '.current' );
-      canvasList    = document.querySelectorAll( 'canvas' );
+      canvasList    = document.querySelectorAll( 'canvas' ),
+      processing    = document.querySelectorAll( '.processing' );
 
       for (var i = lastImages.length - 1; i >= 0; i--) {
-        prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ] );
+        if ( lastImages[ i ].src.indexOf( placeholderImage ) !== 0 ) {
+          prepareDiff( lastImages[ i ], currentImages[ i ], canvasList[ i ], processing[ i ] );
+        }
+
       };
 
     }, false );

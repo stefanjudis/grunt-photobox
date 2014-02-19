@@ -14,7 +14,13 @@ exports.photoBox = {
     var cbFunction = function() {},
         options    = {
           indexPath   : 'tmp/',
-          template    : 'canvas',
+          template    : {
+                name    : 'canvas',
+                options : {
+                  highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                  diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                }
+              },
           screenSizes : [ '1000' ],
           urls        : [ 'http://google.com' ]
         },
@@ -91,7 +97,13 @@ exports.photoBox = {
     var cbFunction    = function() {},
         options       = {
           indexPath   : 'tmp/',
-          template    : 'canvas',
+          template    : {
+                name    : 'canvas',
+                options : {
+                  highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                  diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                }
+              },
           screenSizes : [ '1000' ],
           urls        : [ 'http://google.com' ]
         },
@@ -117,7 +129,13 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp/',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000' ],
             urls        : [ 'http://google.com' ]
           },
@@ -131,7 +149,13 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000' ],
             urls        : [ 'http://google.com' ]
           },
@@ -148,7 +172,13 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -180,7 +210,13 @@ exports.photoBox = {
       var timestampFilePath = './tmp/img/test/timestamp.json',
           options           = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -202,7 +238,13 @@ exports.photoBox = {
       var timestampFilePath = 'img/test/timestamp.json',
           options           = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -217,7 +259,13 @@ exports.photoBox = {
   getTimestamps : function( test ) {
     var options      = {
           indexPath   : 'tmp',
-          template    : 'canvas',
+          template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
           screenSizes : [ '1000', '1200' ],
           urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
         },
@@ -246,7 +294,13 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -264,7 +318,13 @@ exports.photoBox = {
       var cbFunction = function() {},
           options    = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -291,7 +351,13 @@ exports.photoBox = {
     errorAppeared : function( test ) {
       var options         = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -319,7 +385,13 @@ exports.photoBox = {
     noErrorAppeared : function( test ) {
       var options         = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -355,7 +427,13 @@ exports.photoBox = {
     errorAppeared : function( test ) {
       var options            = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -383,7 +461,13 @@ exports.photoBox = {
     noErrorAppeared : function( test ) {
       var options            = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -413,7 +497,13 @@ exports.photoBox = {
   startPhotoSession : function( test ) {
     var options = {
           indexPath   : 'tmp',
-          template    : 'canvas',
+          template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
           screenSizes : [ '1000', '1200' ],
           urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
         },
@@ -466,7 +556,13 @@ exports.photoBox = {
           },
           options    = {
             indexPath   : 'tmp',
-            template    : 'canvas',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
             screenSizes : [ '1000', '1200' ],
             urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
           },
@@ -518,7 +614,13 @@ exports.photoBox = {
   writeOptionsFile : function( test ) {
     var options            = {
           indexPath   : 'tmp',
-          template    : 'canvas',
+          template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
           screenSizes : [ '1000' ],
           urls        : [ 'http://google.com' ]
         },
@@ -544,7 +646,13 @@ exports.photoBox = {
   writeTimestampFile : function( test ) {
     var options            = {
           indexPath   : 'tmp',
-          template    : 'canvas',
+          template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
           screenSizes : [ '1000', '1200' ],
           urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
         },

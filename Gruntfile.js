@@ -37,8 +37,14 @@ module.exports = function(grunt) {
           indexPath      : 'photobox/',
           highlightColor : '#0000ff',
           screenSizes    : [ '960', '350', '1200' ],
-          template       : 'canvas',
-          urls           : [ 'http://4waisenkinder.de' ]
+          template       : {
+                            name    : 'canvas',
+                            options : {
+                              highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                              diffFilter     : 'grayscale' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                            }
+                          },
+          urls           : [ 'http://www.faz.net' ]
         }
       }
     },

@@ -48,6 +48,8 @@ function diff( pixelsA, pixelsB, config ) {
       diffAmount = 0,
       threshold  = ~~config.threshold,
       color      = getHighlightColor ( config.higlightColor ),
+      adjustment = 150,
+      filter     = config.diffFilter,
       i;
 
 
@@ -62,6 +64,24 @@ function diff( pixelsA, pixelsB, config ) {
       pixelsC.data[ i + 1 ] = color[ 1 ]; // g
       pixelsC.data[ i + 2 ] = color[ 2 ]; // b
       diffAmount++;
+    } else {
+      // no difference found
+      if ( filter === 'brighter' ) {
+        pixelsC.data[ i ]     += adjustment; // r
+        pixelsC.data[ i + 1 ] += adjustment; // g
+        pixelsC.data[ i + 2 ] += adjustment; // b
+      } else if ( filter === 'darker' ) {
+        pixelsC.data[ i ]     -= adjustment; // r
+        pixelsC.data[ i + 1 ] -= adjustment; // g
+        pixelsC.data[ i + 2 ] -= adjustment; // b
+      } else if ( filter === 'grayscale' ) {
+
+        var y = 0.2126 * pixelsC.data[ i ] +
+                0.7152 * pixelsC.data[ i + 1 ] +
+                0.0722 * pixelsC.data[ i + 2 ];
+
+        pixelsC.data[ i ] = pixelsC.data[ i + 1 ] = pixelsC.data[ i + 2 ] = y;
+      }
     }
   }
 
