@@ -10,28 +10,66 @@ exports.photoBox = {
     done();
   },
 
-  constructor : function( test ) {
-    var cbFunction = function() {},
-        options    = {
-          indexPath   : 'tmp/',
-          template    : {
-                name    : 'canvas',
-                options : {
-                  highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
-                  diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
-                }
-              },
-          screenSizes : [ '1000' ],
-          urls        : [ 'http://google.com' ]
-        },
-        pb         = new Photobox( grunt, options, cbFunction );
+  constructor : {
+    general : function( test ) {
+      var cbFunction = function() {},
+          options    = {
+            indexPath   : 'tmp/',
+            template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
+            screenSizes : [ '1000' ],
+            urls        : [ 'http://google.com' ]
+          },
+          pb         = new Photobox( grunt, options, cbFunction );
 
-    test.strictEqual( pb.getCallback(), cbFunction );
-    test.strictEqual( pb.getOptions(), options );
-    test.strictEqual( pb.getPictureCount(), 0 );
-    // will be tested in more detail later on
-    test.ok( pb.getPictures()[ 0 ] );
-    test.done();
+      test.strictEqual( pb.getCallback(), cbFunction );
+      test.strictEqual( pb.getOptions(), options );
+      test.strictEqual( pb.getPictureCount(), 0 );
+      // will be tested in more detail later on
+      test.ok( pb.getPictures()[ 0 ] );
+      test.done();
+    },
+    template : {
+      templateIsSetAsString : function( test ) {
+        var cbFunction = function() {},
+            options    = {
+              indexPath   : 'tmp/',
+              template    : 'magic',
+              screenSizes : [ '1000' ],
+              urls        : [ 'http://google.com' ]
+            },
+            pb         = new Photobox( grunt, options, cbFunction );
+
+        test.strictEqual( pb.template, 'magic' );
+
+        test.done();
+      },
+      templateIsSetAsObject : function( test ) {
+        var cbFunction = function() {},
+            options    = {
+              indexPath   : 'tmp/',
+              template    : {
+                    name    : 'canvas',
+                    options : {
+                      highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                      diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                    }
+                  },
+              screenSizes : [ '1000' ],
+              urls        : [ 'http://google.com' ]
+            },
+            pb         = new Photobox( grunt, options, cbFunction );
+
+        test.strictEqual( pb.template, 'canvas' );
+
+        test.done();
+      }
+    }
   },
 
 
@@ -63,7 +101,7 @@ exports.photoBox = {
             'tmp/img/diff/google.com-350-diff.png'
           ),
           true
-        )
+        );
         test.done();
       };
 
@@ -334,7 +372,7 @@ exports.photoBox = {
       grunt.log.error = function( msg ) {
         test.strictEqual(
           msg,
-          'No old pictures are existant. So you can compare kittens with the new pictures.'
+          'No old pictures are existant.'
         );
 
         test.done();
