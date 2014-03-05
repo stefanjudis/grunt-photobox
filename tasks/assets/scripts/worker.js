@@ -55,8 +55,8 @@ function diff( pixelsA, pixelsB, config ) {
 
   for ( i = 0; i < length; i += 4 ) {
     if (
-         Math.abs( pixelsA.data[ i ]     - pixelsB.data[ i ] )      > threshold &&
-         Math.abs( pixelsA.data[ i + 1 ] - pixelsB.data[ i + 1 ] )  > threshold &&
+         Math.abs( pixelsA.data[ i ]     - pixelsB.data[ i ] )      > threshold ||
+         Math.abs( pixelsA.data[ i + 1 ] - pixelsB.data[ i + 1 ] )  > threshold ||
          Math.abs( pixelsA.data[ i + 2 ] - pixelsB.data[ i + 2 ]  ) > threshold
        )
     {
