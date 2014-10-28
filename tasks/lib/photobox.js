@@ -506,6 +506,7 @@ PhotoBox.prototype.startPhotoSession = function() {
     this.grunt.log.writeln( 'started photo session for ' + picture );
 
     var args = [
+      '--ssl-protocol=any',
       path.resolve( __dirname, 'photoboxScript.js' ),
       picture,
       this.options.indexPath,
