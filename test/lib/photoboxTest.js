@@ -555,7 +555,7 @@ exports.photoBox = {
       test.strictEqual( typeof arguments[ 0 ], 'object' );
       test.ok( arguments[ 0 ].cmd.match( /phantom/gi ) );
       test.strictEqual( arguments[ 0 ].args instanceof Array, true );
-      test.strictEqual( arguments[ 0 ].args.length, 4 );
+      test.strictEqual( arguments[ 0 ].args.length, 5 );
       test.strictEqual( typeof arguments[ 0 ].opts, 'object' );
 
       test.strictEqual( typeof arguments[ 1 ], 'function' );
