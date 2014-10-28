@@ -264,6 +264,12 @@ grunt.initConfig( {
 
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+## Donating
+
+Support this project and others by [stefanjudis](https://www.gittip.com/stefanjudis/) via [gittip](https://www.gittip.com/stefanjudis/).
+
+[![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/stefanjudis/)
+
 ## Release History
 
 Please check release history at [Github](https://github.com/stefanjudis/grunt-photobox/releases). :)
