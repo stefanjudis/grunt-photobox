@@ -29,9 +29,9 @@ In your project's Gruntfile, add a section named `photobox` to the data object p
 ```js
 grunt.initConfig({
   photobox: {
-  	task : {
+    task : {
       options: {
-      	// Task-specific options go here.
+        // Task-specific options go here.
       }
     }
   },
@@ -80,6 +80,15 @@ Type: `Array`
 Default value: `[ 'http://google.com' ]`
 
 An array containing strings, that represents the wished urls for the photosession.
+
+
+#### options.relativePaths
+
+Type: `Boolean`
+
+Default value: `false`
+
+If final images should contain only realative urls.
 
 
 #### options.userName

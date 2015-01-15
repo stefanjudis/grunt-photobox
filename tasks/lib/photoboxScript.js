@@ -18,6 +18,7 @@ var system        = require ( 'system' ),
     split         = picture.split( '#' ),
     url           = split[ 0 ],
     width         = +split[ 1 ],
+    image         = split[ 2 ],
     indexPath     = system.args[ 2 ],
     settings      = fs.read( indexPath + 'options.json' );
 
@@ -66,11 +67,11 @@ page.open( url, function( status ) {
 
     var imgPath = indexPath +
                     'img/current/' +
-                    url.replace( /(http:\/\/|https:\/\/)/, '').replace( /\//g, '-') +
+                    image +
                     '-' + width +
                     '.png';
 
-    console.log( 'Rendering ' + imgPath );
+    console.log( 'Rendering ' + picture, width);
     page.render( imgPath );
 
     phantom.exit();

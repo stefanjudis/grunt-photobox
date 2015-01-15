@@ -505,10 +505,15 @@ PhotoBox.prototype.startPhotoSession = function() {
   this.pictures.forEach( function( picture ) {
     this.grunt.log.writeln( 'started photo session for ' + picture );
 
+    var parsedImage = require( 'url' ).parse(picture);
+    var finalImage = ((!this.options.relativePaths ? parsedImage.host + '/' : '') +
+                   (parsedImage.path !== '/' ? parsedImage.path : 'index').replace(/^\//, '') +
+                   (parsedImage.query ? '?' + parsedImage.query : '')).replace( /^www\./g, '').replace( /\//g, '-');
+
     var args = [
       '--ssl-protocol=any',
       path.resolve( __dirname, 'photoboxScript.js' ),
-      picture,
+      picture + '#' + finalImage,
       this.options.indexPath,
       this.options.indexPath + 'options.json'
     ];
