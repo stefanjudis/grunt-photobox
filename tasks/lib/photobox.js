@@ -10,7 +10,7 @@
 
 var fs           = require( 'fs' ),
     path         = require( 'path' ),
-    filenamify   = require('filenamify'),
+    filenamify   = require( 'filenamify' ),
     phantomjs    = require( 'phantomjs' ),
     phantomPath  = phantomjs.path;
 
@@ -508,8 +508,8 @@ PhotoBox.prototype.startPhotoSession = function() {
 
     var parsedImage = require( 'url' ).parse(picture);
     var finalImage = ((!this.options.relativePaths ? parsedImage.host + '/' : '') +
-                   (parsedImage.path !== '/' ? parsedImage.path : 'index').replace(/^\//, '') +
-                   (parsedImage.query ? '?' + parsedImage.query : '')).replace( /^www\./g, '');
+                     (parsedImage.path !== '/' ? parsedImage.path : 'index').replace(/^\//, '') +
+                     (parsedImage.query ? '?' + parsedImage.query : '')).replace( /^www\./g, '');
 
     var args = [
       '--ssl-protocol=any',
