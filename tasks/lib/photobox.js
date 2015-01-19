@@ -82,10 +82,7 @@ PhotoBox.prototype.createDiffImages = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
 
   this.pictures.forEach( function( picture ) {
-    // TODO that can be done in on regex
-    picture = picture.replace( /(http:\/\/|https:\/\/)/, '')
-                      .replace( /(\/)|(\|)/g, '-' )
-                      .replace( '#', '-' );
+    picture = this.getUrlFilename( picture.replace('#', '-') );
 
     this.grunt.log.writeln( 'started diff for ' + picture );
 
