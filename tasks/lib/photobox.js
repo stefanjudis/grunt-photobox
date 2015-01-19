@@ -492,7 +492,7 @@ PhotoBox.prototype.getUrlFilename = function( url ) {
   var parsedImage = require( 'url' ).parse( url );
   var finalImage = (
                      ( !this.options.relativePaths ? parsedImage.host + '/' : '' ) +
-                     ( parsedImage.path !== '/' ? parsedImage.path : 'index' ).replace( /^\//, '' ) +
+                     ( ( parsedImage.path !== '/' || !this.options.relativePaths ) ? parsedImage.path : 'index' ).replace( /^\//, '' ) +
                      ( parsedImage.query ?  '/' + parsedImage.query : '' )
                    ).replace( /^www\./g, '' );
 
