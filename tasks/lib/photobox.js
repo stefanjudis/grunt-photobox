@@ -131,10 +131,10 @@ PhotoBox.prototype.createIndexFile = function() {
       var split = picture.split('#');
 
       return {
-        url : split[0],
+        url : this.getUrlFilename( split[0] ),
         size: split[1]
       };
-    }
+    }.bind(this)
   ).reduce( function( prev, current ) {
     if ( !prev[ current.url ] ) {
       prev[ current.url ] = [];
@@ -485,6 +485,24 @@ PhotoBox.prototype.setPictureCount = function( count ) {
 
 
 /**
+ * Get the filename from the url
+ * @param  {String} url of the page
+ * @return {String} filename of the url
+ *
+ * @tested
+ */
+PhotoBox.prototype.getUrlFilename = function( url ) {
+  var parsedImage = require( 'url' ).parse( url );
+  var finalImage = (
+                     ( !this.options.relativePaths ? parsedImage.host + '/' : '' ) +
+                     ( parsedImage.path !== '/' ? parsedImage.path : 'index' ).replace( /^\//, '' ) +
+                     ( parsedImage.query ?  '/' + parsedImage.query : '' )
+                   ).replace( /^www\./g, '' );
+
+  return filenamify( finalImage, { replacement: '-' } );
+};
+
+/**
  * Start a session of taking pictures
  *
  * @tested
@@ -506,15 +524,10 @@ PhotoBox.prototype.startPhotoSession = function() {
   this.pictures.forEach( function( picture ) {
     this.grunt.log.writeln( 'started photo session for ' + picture );
 
-    var parsedImage = require( 'url' ).parse(picture);
-    var finalImage = ((!this.options.relativePaths ? parsedImage.host + '/' : '') +
-                     (parsedImage.path !== '/' ? parsedImage.path : 'index').replace(/^\//, '') +
-                     (parsedImage.query ? '?' + parsedImage.query : '')).replace( /^www\./g, '');
-
     var args = [
       '--ssl-protocol=any',
       path.resolve( __dirname, 'photoboxScript.js' ),
-      picture + '#' + filenamify(finalImage, {replacement: '-'}),
+      picture + '#' + this.getUrlFilename( picture ),
       this.options.indexPath,
       this.options.indexPath + 'options.json'
     ];
