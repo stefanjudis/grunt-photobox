@@ -255,37 +255,64 @@
       background-color: #0F3340;
       box-shadow: inset 0 1px 2px #000;
     }
+
+    .filter {
+      font-size: 1.2em;
+      color: white;
+      padding: 30px 0 0 40px;
+    }
+
+    .filter p {
+      margin: 8px 0;
+    }
+
+    .filter input {
+      border: 1px solid white;
+      padding: 3px;
+      margin-left: 5px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
   <h1><i></i>Photobox</h1>
   <main class="">
-    <% _.each( _.keys( templateData ), function( url ) { %>
-      <% var name  = url.replace( /(http:\/\/|https:\/\/)/, '' ).replace( /\//g, '-' ); %>
-      <div class="name"><a href="<%= url %>" data-name="<%= name %>" target="_blank"><%= name %></a></div>
+    <div class="filter">
+      <p>Show only modified: <input type="checkbox" name="modified" class="checkbox"></p>
+      <p>Treshold: <input type="number" name="treshold" value="0" class="treshold"></p>
+    </div>
 
-      <% _.each( templateData[ url ], function( size ) {%>
-        <div class="row">
-          <div class="size"><%= size %></div>
-          <div class="colContainer">
-            <div class="col">
-              <h2>Old screens</h2>
-              <img src="" class="last" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
-              <p><%= timestamps.last %></p>
-            </div><div class="col">
-              <h2>Difference</h2>
-              <h3 class="processing">
-                <div id="semi_border"></div>
-                we are checking for different pixels..</h3>
-              <canvas>canvas is not supported</canvas>
-            </div><div class="col">
-              <h2>New Screens</h2>
-              <img src="" class="current" data-src="img/current/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
-              <p><%= timestamps.current %></p>
+    <% _.each( _.keys( templateData ), function( url ) { %>
+      <div class="wrap">
+        <% var name  = url.replace( /(http:\/\/|https:\/\/)/, '' ).replace( /\//g, '-' ); %>
+        <div class="name"><a href="<%= url %>" data-name="<%= name %>" target="_blank"><%= name %></a></div>
+
+        <% _.each( templateData[ url ], function( size ) {%>
+          <div class="row">
+            <div class="size"><%= size %></div>
+            <div class="colContainer">
+              <div class="col">
+                <h2>Old screens</h2>
+                <img src="" class="last" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
+                <p><%= timestamps.last %></p>
+              </div><div class="col">
+                <h2>Difference</h2>
+                <h3 class="processing">
+                  <div id="semi_border"></div>
+                  we are checking for different pixels..</h3>
+                <canvas>canvas is not supported</canvas>
+              </div><div class="col">
+                <h2>New Screens</h2>
+                <img src="" class="current" data-src="img/current/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
+                <p><%= timestamps.current %></p>
+              </div>
             </div>
           </div>
-        </div>
-      <% } );%>
+        <% } );%>
+      </div>
     <% } );%>
   </main>
 
@@ -305,6 +332,50 @@
         event.target.dataset.status = '404';
       }
     } );
+
+    /**
+     * Get the closest parent element by class name (similiar to jquery parent())
+     * @param  {dom} element
+     * @param  {string} class selector
+     * @return {dom|false} closest matched selector, or false for no match
+     */
+    function getClosestClass ( elem, selector ) {
+      var firstChar = selector.charAt(0);
+      // Get closest match
+      for ( ; elem && elem !== document; elem = elem.parentNode ) {
+        if ( elem.classList.contains( selector.substr(1) ) ) {
+            return elem;
+        }
+      }
+      return false;
+    }
+
+    /**
+     * Plug in filter event so we can show just screenshot that have some different pixels
+     * @return {void}
+     */
+    function filter () {
+      var checkbox = document.querySelector('.checkbox');
+      document.querySelector('.checkbox').onclick = function(){
+        if ( checkbox.checked ) {
+          var rows = document.querySelectorAll('[data-pixels]');
+          var treshold = Number(document.querySelector('.treshold').value);
+
+          [].forEach.call(rows, function (row) {
+            if ( Number(row.getAttribute('data-pixels')) < treshold ) {
+              row.classList.add('hidden');
+            }
+          });
+        } else {
+          [].forEach.call(document.querySelectorAll('[data-pixels]'), function (row) {
+            row.classList.remove('hidden');
+          });
+
+        }
+      };
+    }
+
+    filter();
 
 
     /**
@@ -351,8 +422,9 @@
       worker.postMessage( data );
       worker.addEventListener( 'message', function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0 );
-        processing.style.display = 'none'
+        processing.style.display = 'none';
         console.warn( 'Found ', e.data.amount, 'different pixels' );
+        (getClosestClass(imgA, '.wrap')).setAttribute('data-pixels', e.data.amount);
       }, false);
 
     }
