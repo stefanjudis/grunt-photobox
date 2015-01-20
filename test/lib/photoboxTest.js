@@ -34,6 +34,28 @@ exports.photoBox = {
       test.ok( pb.getPictures()[ 0 ] );
       test.done();
     },
+    relativeImagesExist : function( test ) {
+      var options       = {
+            indexPath     : 'tmp/',
+            relativePaths : true,
+            template      : 'magic',
+            screenSizes   : [ '350' ],
+            urls          : [ 'http://google.com' ]
+          };
+
+      var cbFunction = function() {
+        test.strictEqual(
+          grunt.file.exists(
+            'tmp/img/current/index-350.png'
+          ),
+          true
+        );
+        test.done();
+      };
+
+      var pb  = new Photobox( grunt, options, cbFunction );
+      pb.startPhotoSession();
+    },
     template : {
       templateIsSetAsString : function( test ) {
         var cbFunction = function() {},

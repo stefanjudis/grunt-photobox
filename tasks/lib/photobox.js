@@ -10,6 +10,7 @@
 
 var fs           = require( 'fs' ),
     path         = require( 'path' ),
+    filenamify   = require( 'filenamify' ),
     phantomjs    = require( 'phantomjs' ),
     phantomPath  = phantomjs.path;
 
@@ -81,10 +82,7 @@ PhotoBox.prototype.createDiffImages = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
 
   this.pictures.forEach( function( picture ) {
-    // TODO that can be done in on regex
-    picture = picture.replace( /(http:\/\/|https:\/\/)/, '')
-                      .replace( /(\/)|(\|)/g, '-' )
-                      .replace( '#', '-' );
+    picture = this.getUrlFilename( picture.replace('#', '-') );
 
     this.grunt.log.writeln( 'started diff for ' + picture );
 
@@ -130,10 +128,10 @@ PhotoBox.prototype.createIndexFile = function() {
       var split = picture.split('#');
 
       return {
-        url : split[0],
+        url : this.getUrlFilename( split[0] ),
         size: split[1]
       };
-    }
+    }.bind(this)
   ).reduce( function( prev, current ) {
     if ( !prev[ current.url ] ) {
       prev[ current.url ] = [];
@@ -484,6 +482,24 @@ PhotoBox.prototype.setPictureCount = function( count ) {
 
 
 /**
+ * Get the filename from the url
+ * @param  {String} url of the page
+ * @return {String} filename of the url
+ *
+ * @tested
+ */
+PhotoBox.prototype.getUrlFilename = function( url ) {
+  var parsedImage = require( 'url' ).parse( url );
+  var finalImage = (
+                     ( !this.options.relativePaths ? parsedImage.host + '/' : '' ) +
+                     ( ( parsedImage.path !== '/' || !this.options.relativePaths ) ? parsedImage.path : 'index' ).replace( /^\//, '' ) +
+                     ( parsedImage.query ?  '/' + parsedImage.query : '' )
+                   ).replace( /^www\./g, '' );
+
+  return filenamify( finalImage, { replacement: '-' } );
+};
+
+/**
  * Start a session of taking pictures
  *
  * @tested
@@ -508,7 +524,7 @@ PhotoBox.prototype.startPhotoSession = function() {
     var args = [
       '--ssl-protocol=any',
       path.resolve( __dirname, 'photoboxScript.js' ),
-      picture,
+      picture + '#' + this.getUrlFilename( picture ),
       this.options.indexPath,
       this.options.indexPath + 'options.json'
     ];

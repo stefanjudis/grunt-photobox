@@ -20,6 +20,7 @@ module.exports = function( grunt ) {
             javascriptEnabled             : true,
             localToRemoteUrlAccessEnabled : true,
             loadImages                    : true,
+            relativePaths                 : false,
             password                      : '',
             screenSizes                   : [ '800' ],
             template                      : 'canvas',
