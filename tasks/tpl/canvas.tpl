@@ -259,7 +259,7 @@
     .filter {
       font-size: 1.2em;
       color: white;
-      padding: 30px 0 0 40px;
+      padding: 30px 0 0 30px;
     }
 
     .filter p {
