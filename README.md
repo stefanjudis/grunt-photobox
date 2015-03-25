@@ -126,7 +126,7 @@ If you want to use ImageMagick by setting `options.template` to `magic` **make s
 Check the following commands in your environment:
 
 ```
-$ which covert
+$ which convert
 /opt/local/bin/convert
 ```
 ```
