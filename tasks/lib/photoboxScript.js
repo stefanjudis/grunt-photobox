@@ -75,5 +75,5 @@ page.open( url, function( status ) {
     page.render( imgPath );
 
     phantom.exit();
-  }, 1000 );
+  }, page.settings.timeOut );
 } );
