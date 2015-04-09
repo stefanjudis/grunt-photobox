@@ -515,7 +515,8 @@ PhotoBox.prototype.startPhotoSession = function() {
     localToRemoteUrlAccessEnabled : this.options.localToRemoteUrlAccessEnabled,
     password                      : this.options.password,
     userAgent                     : this.options.userAgent,
-    userName                      : this.options.userName
+    userName                      : this.options.userName,
+    timeOut                      : this.options.timeOut
   } );
 
   this.pictures.forEach( function( picture ) {
