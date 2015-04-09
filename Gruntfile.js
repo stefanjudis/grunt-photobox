@@ -35,6 +35,7 @@ module.exports = function(grunt) {
       waisenkinder : {
         options : {
           indexPath      : 'photobox/',
+          timeOut      : 1000,
           screenSizes    : [ '960', '350', '1200' ],
           template       : {
             name    : 'canvas',
