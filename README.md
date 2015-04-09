@@ -175,7 +175,7 @@ Default value: `default`
 - `grayscale` - image information in diff image will be changed to grayscale
 - `darker` - image information in diff image will be changed to a darker image
 - `brighter` - image information in diff image will be change to a brighter image
-- 
+
 
 #### options.timeOut
 
