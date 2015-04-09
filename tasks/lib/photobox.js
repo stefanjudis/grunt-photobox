@@ -82,7 +82,7 @@ PhotoBox.prototype.createDiffImages = function() {
   this.grunt.log.subhead( 'PHOTOBOX STARTED DIFF GENERATION.');
 
   this.pictures.forEach( function( picture ) {
-    picture = this.getUrlFilename( picture.replace('#', '-') );
+    picture = this.getUrlFilename( picture.replace('@', '-') );
 
     this.grunt.log.writeln( 'started diff for ' + picture );
 
@@ -125,10 +125,10 @@ PhotoBox.prototype.createIndexFile = function() {
 
   var templateData = this.pictures.map(
     function( picture ) {
-      var split = picture.split('#');
+      var split = picture.split('@');
 
       return {
-        url : this.getUrlFilename( split[0] ),
+        url : this.getUrlFilename( split[0].replace(this.options.hashBang, '_') ),
         size: split[1]
       };
     }.bind(this)
@@ -311,7 +311,7 @@ PhotoBox.prototype.getPreparedPictures = function() {
 
   this.options.urls.forEach( function( url ) {
     this.options.screenSizes.forEach( function( size ) {
-      pictures.push( url + '#' + size );
+      pictures.push( url + '@' + size );
 
       if ( size.match( /x/gi ) ) {
         this.grunt.log.warn(
@@ -493,7 +493,8 @@ PhotoBox.prototype.getUrlFilename = function( url ) {
   var finalImage = (
                      ( !this.options.relativePaths ? parsedImage.host + '/' : '' ) +
                      ( ( parsedImage.path !== '/' || !this.options.relativePaths ) ? parsedImage.path : 'index' ).replace( /^\//, '' ) +
-                     ( parsedImage.query ?  '/' + parsedImage.query : '' )
+                     ( parsedImage.query ?  '/' + parsedImage.query : '' ) +
+                     ( parsedImage.hash ?  '/' + parsedImage.hash : '' )
                    ).replace( /^www\./g, '' );
 
   return filenamify( finalImage, { replacement: '-' } );
@@ -516,7 +517,8 @@ PhotoBox.prototype.startPhotoSession = function() {
     password                      : this.options.password,
     userAgent                     : this.options.userAgent,
     userName                      : this.options.userName,
-    timeOut                      : this.options.timeOut
+    timeOut                      : this.options.timeOut,
+    hashBang                      : this.options.hashBang
   } );
 
   this.pictures.forEach( function( picture ) {
@@ -525,7 +527,7 @@ PhotoBox.prototype.startPhotoSession = function() {
     var args = [
       '--ssl-protocol=any',
       path.resolve( __dirname, 'photoboxScript.js' ),
-      picture + '#' + this.getUrlFilename( picture ),
+      picture + '@' + this.getUrlFilename( picture ),
       this.options.indexPath,
       this.options.indexPath + 'options.json'
     ];

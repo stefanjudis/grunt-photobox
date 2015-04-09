@@ -15,7 +15,7 @@ var system        = require ( 'system' ),
     fs            = require( 'fs' ),
     page          = webpage.create(),
     picture       = system.args[ 1 ],
-    split         = picture.split( '#' ),
+    split         = picture.split( '@' ),
     url           = split[ 0 ],
     width         = +split[ 1 ],
     image         = split[ 2 ],
@@ -64,6 +64,8 @@ page.open( url, function( status ) {
       height : height,
       width  : width
     };
+    
+    image = image.replace(page.settings.hashBang, '_');
 
     var imgPath = indexPath +
                     'img/current/' +
