@@ -270,7 +270,7 @@
           <div class="colContainer">
             <div class="col">
               <h2>Old screens</h2>
-              <img src="" class="last" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
+              <img src="" class="last" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>" id="<%= name %>-<%= size %>">
               <p><%= timestamps.last %></p>
             </div><div class="col">
               <h2>Difference</h2>
@@ -311,34 +311,36 @@
      * prepareDiff inits the canvas for the DIFF and
      * sends image data to the worker
      *
-     * @param  {Object} imgA a imgDOM element
-     * @param  {Object} imgB a img DOM element
+     * @param  {Object} imgLast a imgDOM element
+     * @param  {Object} imgCurrent a img DOM element
      * @param  {Object} cnvs a canvas DOM element
      */
-    function prepareDiff( imgA, imgB, cnvs, processing ) {
+    function prepareDiff( imgLast, imgCurrent, cnvs, processing ) {
       'use strict';
 
       // get the real image dimensions
       var dummyImage = new Image();
-      dummyImage.src = imgA.src;
+      dummyImage.src = imgLast.src;
+      var imgId          = imgLast.id;
       cnvs.width     = dummyImage.width;
       cnvs.height    = dummyImage.height;
 
       var ctx = cnvs.getContext( '2d' );
 
       // draw first image and get pixel data
-      ctx.drawImage( imgA , 0, 0 );
+      ctx.drawImage( imgLast , 0, 0 );
       var pixelsA = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       ctx.globalAlpha = 0.5;
 
       // draw second image and get pixel data
-      ctx.drawImage( imgB, 0, 0 );
+      ctx.drawImage( imgCurrent, 0, 0 );
       var pixelsB = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       var data = {
         a     : pixelsA,
         b     : pixelsB,
+        imgId : imgId,
         config: {
           higlightColor : '<%= ( options.template.options && options.template.options.highlightColor ) || "#0000ff" %>',
           threshold     : 10,
@@ -352,7 +354,7 @@
       worker.onmessage = function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0 );
         processing.style.display = 'none'
-        console.warn( 'Found ', e.data.amount, 'different pixels' );
+        console.warn( 'Found ', e.data.amount, 'different pixels' , e.data.imgId);
       };
 
     }

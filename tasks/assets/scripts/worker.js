@@ -98,6 +98,7 @@ this.onmessage = function( event ) {
   'use strict';
   var data   = event.data;
   var result = diff( data.a, data.b, data.config );
+  result.imgId = data.imgId;
   postMessage( result );
 };
 
