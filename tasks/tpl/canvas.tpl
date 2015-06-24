@@ -349,11 +349,11 @@
       var worker = new Worker( 'scripts/worker.js' );
 
       worker.postMessage( data );
-      worker.addEventListener( 'message', function( e ) {
+      worker.onmessage = function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0 );
         processing.style.display = 'none'
         console.warn( 'Found ', e.data.amount, 'different pixels' );
-      }, false);
+      };
 
     }
 
