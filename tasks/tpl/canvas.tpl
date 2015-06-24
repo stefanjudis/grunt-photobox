@@ -255,11 +255,35 @@
       background-color: #0F3340;
       box-shadow: inset 0 1px 2px #000;
     }
+
+
+    #error-display {
+        display: none;
+    }
+
+    #error-display > h1 {
+        line-height: 2em;
+        height: 2em;
+        padding: 0 0 0 1em;
+        font-size: 2em;
+    }
+
+    .error-list li,
+    .error-list a {
+      text-decoration: underline;
+      color: #191970;
+      font-size: 1.5em;
+    }
+
+
   </style>
 </head>
 <body>
   <h1><i></i>Photobox</h1>
   <main class="">
+    <div id="error-display"><h1>Found Deltas in these Screens</h1>
+        <ul class="error-list"></ul>
+    </div>
     <% _.each( _.keys( templateData ), function( url ) { %>
       <% var name  = url.replace( /(http:\/\/|https:\/\/)/, '' ).replace( /\//g, '-' ); %>
       <div class="name"><a href="<%= url %>" data-name="<%= name %>" target="_blank"><%= name %></a></div>
@@ -306,6 +330,29 @@
       }
     } );
 
+    var appendError = (function () {
+        var firstCall = true;
+
+        return function appendError (imgId) {
+            var
+            errorList = document.querySelectorAll( '.error-list' )[0];
+
+            if (firstCall) {
+                firstCall = false;
+                document.querySelectorAll( '#error-display' )[0].style.display = 'inline';
+            }
+
+            errorList.innerHTML += [
+                '<li>',
+                '<a href="#',
+                imgId,
+                '">',
+                imgId,
+                '</a>',
+                '</li>'
+            ].join('');
+        };
+    }());
 
     /**
      * prepareDiff inits the canvas for the DIFF and
@@ -355,6 +402,9 @@
         ctx.putImageData( e.data.imageData, 0, 0 );
         processing.style.display = 'none'
         console.warn( 'Found ', e.data.amount, 'different pixels' , e.data.imgId);
+        if (e.data.amount > 0) {
+            appendError(e.data.imgId);
+        }
       };
 
     }
