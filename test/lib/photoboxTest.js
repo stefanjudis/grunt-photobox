@@ -235,23 +235,28 @@ exports.photoBox = {
             template    : {
                   name    : 'canvas',
                   options : {
+                    hashBang: '#!',
                     highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
                     diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
                   }
                 },
             screenSizes : [ '1000', '1200' ],
-            urls        : [ 'http://google.com', 'http://4waisenkinder.de' ]
+            urls        : [ 'http://google.com', 'http://4waisenkinder.de', 'http://4waisenkinder.de#myhash', 'http://4waisenkinder.de/#!/myhash' ]
           },
           pb         = new Photobox( grunt, options, cbFunction ),
           pictures;
 
       pictures = pb.getPreparedPictures();
 
-      test.strictEqual( pictures.length, 4 );
-      test.strictEqual( pictures[ 0 ], 'http://google.com#1000' );
-      test.strictEqual( pictures[ 1 ], 'http://google.com#1200' );
-      test.strictEqual( pictures[ 2 ], 'http://4waisenkinder.de#1000' );
-      test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de#1200' );
+      test.strictEqual( pictures.length, 8 );
+      test.strictEqual( pictures[ 0 ], 'http://google.com@1000' );
+      test.strictEqual( pictures[ 1 ], 'http://google.com@1200' );
+      test.strictEqual( pictures[ 2 ], 'http://4waisenkinder.de@1000' );
+      test.strictEqual( pictures[ 3 ], 'http://4waisenkinder.de@1200' );
+      test.strictEqual( pictures[ 4 ], 'http://4waisenkinder.de#myhash@1000' );
+      test.strictEqual( pictures[ 5 ], 'http://4waisenkinder.de#myhash@1200' );
+      test.strictEqual( pictures[ 6 ], 'http://4waisenkinder.de/#!/myhash@1000' );
+      test.strictEqual( pictures[ 7 ], 'http://4waisenkinder.de/#!/myhash@1200' );
 
       test.done();
     },
