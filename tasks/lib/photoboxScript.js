@@ -20,6 +20,7 @@ var system        = require ( 'system' ),
     width         = +split[ 1 ],
     image         = split[ 2 ],
     indexPath     = system.args[ 2 ],
+    timeOut       = 1000,
     settings      = fs.read( indexPath + 'options.json' );
 
 if ( settings !== '{}' ) {
@@ -28,6 +29,7 @@ if ( settings !== '{}' ) {
     settings = JSON.parse( settings );
 
     page.settings = settings;
+    timeOut = settings.timeOut || timeOut;
   } catch( e ) {
     console.warn( 'CONSOLE: Error parsing settings | ' + e );
 
@@ -75,5 +77,5 @@ page.open( url, function( status ) {
     page.render( imgPath );
 
     phantom.exit();
-  }, 1000 );
+  }, timeOut );
 } );

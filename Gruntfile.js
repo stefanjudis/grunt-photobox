@@ -44,7 +44,8 @@ module.exports = function(grunt) {
             }
           },
                             // 'magic',
-          urls           : [ 'http://4waisenkinder.de' ]
+          urls           : [ 'http://4waisenkinder.de' ],
+          timeOut : 1000
         }
       }
     },
