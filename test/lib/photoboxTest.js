@@ -713,5 +713,38 @@ exports.photoBox = {
     test.done();
 
     grunt.file.delete( 'tmp/img/current/timestamp.json' );
+  },
+
+  setTimeOut : function ( test ) {
+    var options            = {
+          indexPath   : 'tmp',
+          template    : {
+                  name    : 'canvas',
+                  options : {
+                    highlightColor : '#ff0000', // template.options.hightlightColor || highlightcolor || default
+                    diffFilter     : 'default' //  default == no filter 'grayscale' | 'darker' | 'brighter'
+                  }
+                },
+          screenSizes : [ '1000' ],
+          urls        : [ 'http://google.com' ],
+          timeOut     : 2000
+        },
+        pb                 = new Photobox( grunt, options ),
+        readOptions;
+
+    pb.writeOptionsFile( options );
+
+    readOptions = JSON.parse( grunt.file.read( 'tmp/options.json' ) );
+
+    test.strictEqual( grunt.file.exists( 'tmp/options.json' ), true );
+    test.strictEqual( readOptions.indexPath, 'tmp/' );
+    test.strictEqual( readOptions.screenSizes.length, 1 );
+    test.strictEqual( readOptions.screenSizes[ 0 ], '1000' );
+    test.strictEqual( readOptions.urls.length, 1 );
+    test.strictEqual( readOptions.urls[ 0 ], 'http://google.com' );
+    test.strictEqual( readOptions.timeOut, 2000 );
+    test.done();
+
+    grunt.file.delete( 'tmp/options.json' );
   }
 };
