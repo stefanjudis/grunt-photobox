@@ -255,11 +255,35 @@
       background-color: #0F3340;
       box-shadow: inset 0 1px 2px #000;
     }
+
+
+    #error-display {
+        display: none;
+    }
+
+    #error-display > h1 {
+        line-height: 2em;
+        height: 2em;
+        padding: 0 0 0 1em;
+        font-size: 2em;
+    }
+
+    .error-list li,
+    .error-list a {
+      text-decoration: underline;
+      color: #191970;
+      font-size: 1.5em;
+    }
+
+
   </style>
 </head>
 <body>
   <h1><i></i>Photobox</h1>
   <main class="">
+    <div id="error-display"><h1>Found Deltas in these Screens</h1>
+        <ul class="error-list"></ul>
+    </div>
     <% _.each( _.keys( templateData ), function( url ) { %>
       <% var name  = url.replace( /(http:\/\/|https:\/\/)/, '' ).replace( /\//g, '-' ); %>
       <div class="name"><a href="<%= url %>" data-name="<%= name %>" target="_blank"><%= name %></a></div>
@@ -270,7 +294,7 @@
           <div class="colContainer">
             <div class="col">
               <h2>Old screens</h2>
-              <img src="" class="last" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>">
+              <img src="" class="last" data-src="img/last/<%= name %>-<%= size %>.png?<%= now %>" data-size="<%= size %>" id="<%= name %>-<%= size %>">
               <p><%= timestamps.last %></p>
             </div><div class="col">
               <h2>Difference</h2>
@@ -306,39 +330,64 @@
       }
     } );
 
+    var appendError = (function () {
+        var firstCall = true;
+
+        return function appendError (imgId) {
+            var
+            errorList = document.querySelectorAll( '.error-list' )[0];
+
+            if (firstCall) {
+                firstCall = false;
+                document.querySelectorAll( '#error-display' )[0].style.display = 'inline';
+            }
+
+            errorList.innerHTML += [
+                '<li>',
+                '<a href="#',
+                imgId,
+                '">',
+                imgId,
+                '</a>',
+                '</li>'
+            ].join('');
+        };
+    }());
 
     /**
      * prepareDiff inits the canvas for the DIFF and
      * sends image data to the worker
      *
-     * @param  {Object} imgA a imgDOM element
-     * @param  {Object} imgB a img DOM element
+     * @param  {Object} imgLast a imgDOM element
+     * @param  {Object} imgCurrent a img DOM element
      * @param  {Object} cnvs a canvas DOM element
      */
-    function prepareDiff( imgA, imgB, cnvs, processing ) {
+    function prepareDiff( imgLast, imgCurrent, cnvs, processing ) {
       'use strict';
 
       // get the real image dimensions
       var dummyImage = new Image();
-      dummyImage.src = imgA.src;
+      dummyImage.src = imgLast.src;
+      var imgId          = imgLast.id;
       cnvs.width     = dummyImage.width;
       cnvs.height    = dummyImage.height;
 
       var ctx = cnvs.getContext( '2d' );
 
       // draw first image and get pixel data
-      ctx.drawImage( imgA , 0, 0 );
+      ctx.drawImage( imgLast , 0, 0 );
       var pixelsA = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       ctx.globalAlpha = 0.5;
 
       // draw second image and get pixel data
-      ctx.drawImage( imgB, 0, 0 );
+      ctx.drawImage( imgCurrent, 0, 0 );
       var pixelsB = ctx.getImageData( 0, 0, dummyImage.width, dummyImage.height );
 
       var data = {
         a     : pixelsA,
         b     : pixelsB,
+        imgId : imgId,
         config: {
           higlightColor : '<%= ( options.template.options && options.template.options.highlightColor ) || "#0000ff" %>',
           threshold     : 10,
@@ -352,7 +401,10 @@
       worker.onmessage = function( e ) {
         ctx.putImageData( e.data.imageData, 0, 0 );
         processing.style.display = 'none'
-        console.warn( 'Found ', e.data.amount, 'different pixels' );
+        console.warn( 'Found ', e.data.amount, 'different pixels' , e.data.imgId);
+        if (e.data.amount > 0) {
+            appendError(e.data.imgId);
+        }
       };
 
     }
